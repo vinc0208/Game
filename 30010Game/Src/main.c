@@ -3,6 +3,7 @@
 
 int main(void)
 {
+	uart_init(9600);
 	while(1){
 		printf("YEEEE");
 	}
