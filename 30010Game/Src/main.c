@@ -5,6 +5,9 @@ int main(void)
 {
 
 	uart_init(9600);
+
+	configt15(); //Initialize time
+
 	if(0){
 		clrscr();
 		int x=1,y=1,X=20,Y=10,dire=1;
