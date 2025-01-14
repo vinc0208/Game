@@ -101,3 +101,41 @@ void configt15(void){
 
 }
 
+void lcd_write_string(char* string, uint8_t slice, uint16_t line, uint8_t* buffer){
+	uint8_t strleng = strlen(string);
+	uint8_t temp1[strleng]; //We make an array with the length of string to hold the individual values of each character
+	uint16_t u;
+	u = (line-1)*128; //Fordi der er 128 pr linje
+
+	for (uint8_t i=0; i<strleng; i++){ //We put all characters of the string into temp1
+		temp1[i] = (int)string[i];
+	}
+
+	for (uint8_t i=0; i<strleng; i++){ //We take all the numbers we got from the string pointer and reduce them by 32
+		temp1[i] -= 0x20;
+	}
+
+	for (uint8_t i=0; i<strleng; i++){ //We have two for loops so we can for each character put the 5 values needed to make that character on the LCD
+		uint8_t z = temp1[i];
+		for (uint8_t j=0; j<5; j++){
+			buffer[u+(i*6)+slice+j] = character_data[z][j];
+		}
+	}
+}
+
+void lcd_update(char* string, char* tbu, uint8_t slice, uint16_t line, uint8_t* buffer){
+	uint8_t strleng = strlen(string);
+	uint8_t tbuleng = strlen(tbu);
+
+	char temp2[strleng+tbuleng+1];
+
+	for (uint8_t i=0; i<=strleng; i++){
+		temp2[i] = (int)string[i];
+	}
+	for (uint8_t i=0; i<=tbuleng; i++){
+		temp2[i+strleng] = (int)tbu[i];
+	}
+
+	lcd_write_string(temp2, slice, line, buffer);
+}
+

@@ -13,6 +13,11 @@ typedef struct {
 } TimeFormat;
 TimeFormat TimeMaster;
 
+typedef struct {
+	int life, score, ammo;
+} stats;
+stats player;
+
 #ifndef HARDWARE_INTERFACE_FUNCTIONS_H_
 #define HARDWARE_INTERFACE_FUNCTIONS_H_
 
