@@ -215,4 +215,84 @@ void drawAsteroid(int x,int y,short style){
 	}
 
 }
+void drawPowerup(int x, int y, short type){
+	//1=dmg up (red),2 Score mult (purple), 3 ammo up (brown),4 speed up(blue)
+	gotoxy(x-1,y);
+	if(type==1){
+		fgcolor(1);
+	} else if(type==2) {
+		fgcolor(5);
+	}else if(type==3) {
+		fgcolor(3);
+	}else if(type==4) {
+		fgcolor(4);
+	} else{
+		fgcolor(15); //white is the error color
+	} printf("%c%c",219,219);
+}
 
+
+void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, char* txt, short style){
+	int i; //uses for loops to build a frame based on style
+	if (style==1){
+		for(i=0;i<y2-y1;i++){
+			gotoxy(x1,y1+i);
+			printf("%c",186);
+			gotoxy(x2,y1+i);
+			printf("%c",186);
+		}
+		for(i=0;i<x2-x1;i++){
+			gotoxy(x1+i,y1);
+			printf("%c",205);
+			gotoxy(x1+i,y2);
+			printf("%c",205);
+		}
+		gotoxy(x1+5,y1); // here corners and the text is added
+		printf("%c[%dm", ESC,7);
+		printf("%s",txt);
+		printf("%c[%dm", ESC,27);
+		gotoxy(x1,y1);
+		printf("%c",201);
+		gotoxy(x1,y2);
+		printf("%c",200);
+		gotoxy(x2,y1);
+		printf("%c",187);
+		gotoxy(x2,y2);
+		printf("%c",188);
+
+	} else{
+		for(i=0;i<x2-x1;i++){
+			gotoxy(x1+i,y1);
+			printf("%c",254);
+			gotoxy(x1+i,y2);
+			printf("%c",254);
+		}
+		for(i=0;i<y2-y1;i++){
+			gotoxy(x1,y1+i);
+			printf("%c",254);
+			gotoxy(x2,y1+i);
+			printf("%c",254);
+		}
+		printf("%c[%dm", ESC,7);
+		gotoxy(x1+5,y1);
+		printf("%s",txt);
+		printf("%c[%dm", ESC,27);
+		gotoxy(x1,y1);
+		printf("%c",254);
+		gotoxy(x1,y2);
+		printf("%c",254);
+		gotoxy(x2,y1);
+		printf("%c",254);
+		gotoxy(x2,y2);
+		printf("%c",254);
+	}}
+/*  Value      foreground     Value     foreground
+    ------------------------------------------------
+      0        Black            8       Dark Gray
+      1        Red              9       Light Red
+      2        Green           10       Light Green
+      3        Brown           11       Yellow
+      4        Blue            12       Light Blue
+      5        Purple          13       Light Purple
+      6        Cyan            14       Light Cyan
+      7        Light Gray      15       White      */
