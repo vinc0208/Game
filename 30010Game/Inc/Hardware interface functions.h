@@ -32,6 +32,9 @@ void ResetTime();
 
 char uartKeyRead();
 
+void menuSelect(int menu, int* level);
+int menuConfirm(int menu, uint8_t sel);
+
 
 
 #endif /* HARDWARE_INTERFACE_FUNCTIONS_H_ */
