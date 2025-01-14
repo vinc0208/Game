@@ -62,7 +62,7 @@ char uartKeyRead(){
 
 }*/
 
-void TIM1_BRK_TIM15_IRQHandler(void) {
+void TIM1_BRK_TIM15_IRQHandler(void) { //Needed to count the time
 	TimeMaster15.msecond += 1;
 	if (TimeMaster15.msecond >= 10){
 		TimeMaster15.msecond %= 10;
@@ -83,7 +83,7 @@ void TIM1_BRK_TIM15_IRQHandler(void) {
 	TIM15->SR &= ~0x0001; // Clear interrupt bit
  }
 
-void Timer15Config(void){
+void Timer15Config(void){ //Needed to have time
 	RCC->APB2ENR |= RCC_APB2Periph_TIM15; // Enable clock line to timer 15;
 	TIM15->CR1 &= ~(0x0001<<0); // Configure timer 15
 	TIM15->CR1 &= ~(0x0001<<1);
@@ -104,8 +104,21 @@ void Timer15Config(void){
 
 }
 
-void StartTime(){
+void StartTime(){ //Starts time
+	NVIC_EnableIRQ(TIM1_BRK_TIM15_IRQn); // Enable interrupt
+}
 
+void StopTime(){ //Stops time
+	NVIC_DisableIRQ(TIM1_BRK_TIM15_IRQn); // Disable interrupt
+}
+
+void ResetTime(){ //Resets the time
+	NVIC_DisableIRQ(TIM1_BRK_TIM15_IRQn); // Disable interrupt
+	TimeMaster15.hour = 0;
+	TimeMaster15.minute = 0;
+	TimeMaster15.second = 0;
+	TimeMaster15.hsecond = 0;
+	TimeMaster15.msecond = 0;
 }
 
 void lcd_write_string(char* string, uint8_t slice, uint16_t line, uint8_t* buffer){
