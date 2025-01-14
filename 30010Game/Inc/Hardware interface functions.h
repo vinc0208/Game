@@ -13,6 +13,8 @@
 
 void uartStringModifier(char arr[]);
 
+char uartKeyRead();
+
 
 
 #endif /* HARDWARE_INTERFACE_FUNCTIONS_H_ */
