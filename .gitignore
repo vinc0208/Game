@@ -205,3 +205,6 @@
 30010Game/Startup/startup_stm32f302r8tx.s
 30010Game/STM32F302R8TX_FLASH.ld
 30010Game/30010Game.launch
+30010Game/Debug/Src/charset.d
+30010Game/Debug/Src/charset.o
+30010Game/Debug/Src/charset.su

@@ -12,6 +12,9 @@
 #define ESC 0x1B
 #include <stdint.h> // whatever
 #include <stdio.h>
+#include "Hardware interface functions.h"
+#include "charset.h"
+#include <string.h>
 
 
 void uartStringModifier(char arr[]){
@@ -60,27 +63,27 @@ char uartKeyRead(){
 }*/
 
 void TIM1_BRK_TIM15_IRQHandler(void) {
-	TimeMaster.msecond += 1;
-	if (TimeMaster.msecond >= 10){
-		TimeMaster.msecond %= 10;
-		TimeMaster.hsecond += 1;
+	TimeMaster15.msecond += 1;
+	if (TimeMaster15.msecond >= 10){
+		TimeMaster15.msecond %= 10;
+		TimeMaster15.hsecond += 1;
 	}
-	if (TimeMaster.hsecond >= 100){
-		TimeMaster.hsecond %= 100;
-		TimeMaster.second += 1;
+	if (TimeMaster15.hsecond >= 100){
+		TimeMaster15.hsecond %= 100;
+		TimeMaster15.second += 1;
 	}
-	if (TimeMaster.second >= 60){
-		TimeMaster.second %= 60;
-		TimeMaster.minute += 1;
+	if (TimeMaster15.second >= 60){
+		TimeMaster15.second %= 60;
+		TimeMaster15.minute += 1;
 	}
-	if (TimeMaster.minute >= 60){
-		TimeMaster.minute %= 60;
-		TimeMaster.hour += 1;
+	if (TimeMaster15.minute >= 60){
+		TimeMaster15.minute %= 60;
+		TimeMaster15.hour += 1;
 	}
 	TIM15->SR &= ~0x0001; // Clear interrupt bit
  }
 
-void configt15(void){
+void Timer15Config(void){
 	RCC->APB2ENR |= RCC_APB2Periph_TIM15; // Enable clock line to timer 15;
 	TIM15->CR1 &= ~(0x0001<<0); // Configure timer 15
 	TIM15->CR1 &= ~(0x0001<<1);
@@ -98,6 +101,10 @@ void configt15(void){
 	TIM15->DIER |= 0x0001; // Enable timer 15 interrupts
 	NVIC_SetPriority(TIM1_BRK_TIM15_IRQn, 1); // Set interrupt priority
 	NVIC_EnableIRQ(TIM1_BRK_TIM15_IRQn); // Enable interrupt
+
+}
+
+void StartTime(){
 
 }
 
