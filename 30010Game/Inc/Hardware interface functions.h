@@ -8,6 +8,11 @@
 #include "stdio.h"
 #include "stdint.h"
 
+typedef struct {
+	uint16_t hour, minute, second, hsecond, msecond;
+} TimeFormat;
+TimeFormat TimeMaster;
+
 #ifndef HARDWARE_INTERFACE_FUNCTIONS_H_
 #define HARDWARE_INTERFACE_FUNCTIONS_H_
 
