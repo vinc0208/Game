@@ -23,6 +23,12 @@ typedef struct { //define asteroids as a position and on/off bol
 	int32_t x,y,status;
 } asteroid;
 
+typedef struct {
+//define enemies as a position, direction([1,8]),hp and velocity.
+	//status is an on/off bol indicating wether it is alive
+	int32_t x,y,velx, vely,hp,status,dir;
+} enemy;
+
 
 
 

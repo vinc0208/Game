@@ -108,13 +108,13 @@ void drawSpaceship(int x,int y,short style,int direction){
 			gotoxy(x,y);
 			printf("%c",219);
 }}}
-void drawEnemy(int x,int y, int direction){
+void drawEnemy(enemy*ene){
 	int8_t i=0,size=3; //setup size
-		gotoxy(x-1,y-1);
+		gotoxy(ene->x-1,ene->y-1);
 		fgcolor(2);
-		if(direction==1 ||direction==2){
+		if(ene->dir==1 ||ene->dir==5){
 			printf("%c%c%c%c%c[%dD%c[%dB%c%c%c%c",220,220,220,220,ESC,4,ESC,1,223,223,223,223);
-			if(direction==1){
+			if(ene->dir==1){
 				fgcolor(5);
 				printf("%c[%dA%c[%dD%c%c[%dD%c",ESC,1,ESC,1,187,ESC,4,201);
 				fgcolor(6);
@@ -125,82 +125,82 @@ void drawEnemy(int x,int y, int direction){
 				fgcolor(6);
 				printf("%c%c",223,223);
 			}}
-		if(direction==3 ||direction==4){ //next direction here but same structure for all
+		if(ene->dir==7 ||ene->dir==3){ //next direction here but same structure for all
 				for(i=0;i<size-1;i++){
 					printf("%c",220);
 				}
-				gotoxy(x-1,y);
+				gotoxy(ene->x-1,ene->y);
 				for(i=0;i<size-1;i++){
 					printf("%c",219);
 				}
-				gotoxy(x-1,y+1);
+				gotoxy(ene->x-1,ene->y+1);
 				for(i=0;i<size-1;i++){
 					printf("%c",223);
 				}
 				fgcolor(6);
-				if (direction==3){
-					gotoxy(x-1,y);
+				if (ene->dir==7){
+					gotoxy(ene->x-1,ene->y);
 					printf("%c",219);
 					fgcolor(5);
 					printf("%c[%dD%c[%dA%c%c[%dD%c[%dB%c",ESC,1,ESC,1,201,ESC,1,ESC,2,200);
 				} else{
-					gotoxy(x,y);
+					gotoxy(ene->x,ene->y);
 					printf("%c",219);
 					fgcolor(5);
 					printf("%c[%dD%c[%dA%c%c[%dD%c[%dB%c",ESC,1,ESC,1,187,ESC,1,ESC,2,188);
 				}}
-		if(direction==5 ||direction==6){
-				gotoxy(x,y-1);
+		if(ene->dir==4 ||ene->dir==8){
+				gotoxy(ene->x,ene->y-1);
 				for(i=0;i<size-1;i++){
 					printf("%c",220);
 				}
-				gotoxy(x-2,y);
+				gotoxy(ene->x-2,ene->y);
 				printf("%c",220);
 				for(i=0;i<size-1;i++){
 					printf("%c",219);
 				}
 				printf("%c",223);
-				gotoxy(x-2,y+1);
+				gotoxy(ene->x-2,ene->y+1);
 				for(i=0;i<size-1;i++){
 					printf("%c",223);
 				}
 				fgcolor(6);
-				if (direction==5){
-					gotoxy(x-1,y);
+				if (ene->dir==4){
+					gotoxy(ene->x-1,ene->y);
 					printf("%c",219);
 					fgcolor(5);
 					printf("%c[%dA%c%c[%dD%c[%dB%c",ESC,1,201,ESC,3,ESC,1,201);
 
 				} else{
-					gotoxy(x,y);
+					gotoxy(ene->x,ene->y);
 					printf("%c",219);
 					fgcolor(5);
 					printf("%c%c[%dD%c[%dB%c",188,ESC,3,ESC,1,188);
 				}}
-		if(direction==7 ||direction==8){
-				gotoxy(x-2,y-1);
+		if(ene->dir==2 ||ene->dir==6){
+				gotoxy(ene->x-2,ene->y-1);
 				for(i=0;i<size-1;i++){
 					printf("%c",220);
 				}
-				gotoxy(x-2,y);
+				gotoxy(ene->x-2,ene->y);
 				printf("%c",223);
 				for(i=0;i<size-1;i++){
 					printf("%c",219);
 				}
 				printf("%c",220);
-				gotoxy(x,y+1);
+				gotoxy(ene->x,ene->y+1);
 				for(i=0;i<size-1;i++){
 					printf("%c",223);
 				}
 				fgcolor(6);
-					if (direction==7){
-					gotoxy(x,y);
+					if (ene->dir==2){
+					gotoxy(ene->x,ene->y);
 					printf("%c",219);
 					fgcolor(5);
 					printf("%c%c[%dD%c[%dA%c",187,ESC,3,ESC,1,187);
 
 				} else{
-					gotoxy(x-1,y);
+					gotoxy(ene->x-1,ene->y);
 					printf("%c",219);
 					fgcolor(5);
 					printf("%c[%dB%c%c[%dD%c[%dA%c",ESC,1,200,ESC,3,ESC,1,200);
@@ -313,6 +313,36 @@ void initAsteroid(asteroid* all_asteroids,int n_ast){
 
 		all_asteroids[i].status=1; // indicates that they are active when true
 		drawAsteroid(&all_asteroids[i],2); //finishes by drawing them
+		}}
+
+//generates almost randomly placed enemies and draws them
+void initEnemy(enemy* all_enemies,int n_ene){
+	int i,k;
+	for(i=0;i<n_ene;i++){
+		k=rand() % (3 + 1); // assigns each a random part of the screen in which to appear
+		if(k==0){
+			all_enemies[i].x=rand() % (185 - 5 + 1)+ 5; // assigns initial coords to each enemy
+			all_enemies[i].y=rand() % (18 - 3 + 1)+ 3;
+			all_enemies[i].dir=5;
+		} else if(k==1){
+			all_enemies[i].x=rand() % (185 - 5 + 1)+ 5;
+			all_enemies[i].y=rand() % (45 - 30 + 1)+ 30;
+			all_enemies[i].dir=1;
+		}else if(k==2){
+			all_enemies[i].x=rand() % (85 - 5 + 1)+ 5;
+			all_enemies[i].y=rand() % (45 - 3 + 1)+ 3;
+			all_enemies[i].dir=3;
+		}else if(k==3){
+			all_enemies[i].x=rand() % (185 - 105 + 1)+ 105;
+			all_enemies[i].y=rand() % (45 - 3 + 1)+ 3;
+			all_enemies[i].dir=7;
+		}
+
+		all_enemies[i].hp=1;
+		all_enemies[i].vely=1;
+		all_enemies[i].velx=1;
+		all_enemies[i].status=1; // indicates that they are active when true
+		drawEnemy(&all_enemies[i]); //finishes by drawing them
 		}}
 
 
