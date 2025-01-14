@@ -7,10 +7,12 @@
 #include "stm32f30x_conf.h" // STM32 config
 #include "30010_io.h"
 #include <Graphics functions.h>
+
 #include <ansi.h>
 #define ESC 0x1B
 #include <stdint.h> // whatever
 #include <stdio.h>
+#include <stdlib.h>
 
 void drawSpaceship(int x,int y,short style,int direction){
 	int8_t i=0,size=3; //setup size
@@ -203,14 +205,17 @@ void drawEnemy(int x,int y, int direction){
 					fgcolor(5);
 					printf("%c[%dB%c%c[%dD%c[%dA%c",ESC,1,200,ESC,3,ESC,1,200);
 		}}}
-void drawAsteroid(int x,int y,short style){
-	gotoxy(x-1,y-1);
+void drawAsteroid(asteroid*ast,short style){
+	gotoxy(ast->x-1,ast->y-1);
+	char* krater="o";
 	fgcolor(7);
 	if(style==1){
 	 printf("%c%c%c%c[%dB%c[%dD%c%c%c%c%c%c[%dD%c[%dB%c%c%c",220,178,220,ESC,1,ESC,4,176,178,178,178,176,ESC,4,ESC,1,223,178,223);
 	} else{
-		gotoxy(x-3,y-1);
-	printf("%c%c%c%c%c[%dB%c[%dD%c%c%c%c%c%c%c[%dB%c[%dD%c%c%c%c%c%c%c[%dB%c[%dD%c%c%c%c",176,177,178,178,ESC,1,ESC,5,176,177,178,219,219,178,ESC,1,ESC,6,176,177,178,219,219,178,ESC,1,ESC,5,176,177,178,178);
+		gotoxy(ast->x-3,ast->y-1);
+	printf("%c%c%c%c%c%c[%dB%c[%dD%c%c%c",176,177,178,178,177,ESC,1,ESC,6,176,177,178);
+	printf("%s",krater);
+	printf("%c%c%c%c[%dB%c[%dD%c%c%c%c%c%c%c%c[%dB%c[%dD%c%c%c%c%c",219,178,177,ESC,1,ESC,7,176,177,178,219,219,178,177,ESC,1,ESC,6,176,177,178,178,177);
 
 	}
 
@@ -286,6 +291,33 @@ void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, char* txt, short styl
 		gotoxy(x2,y2);
 		printf("%c",254);
 	}}
+
+//generates almost randomly placed asteroids and draws them
+void initAsteroid(asteroid* all_asteroids,int n_ast){
+	int i,k;
+	for(i=0;i<n_ast;i++){
+		k=rand() % (3 + 1); // assigns each a random part of the screen in which to appear
+		if(k==0){
+			all_asteroids[i].x=rand() % (185 - 5 + 1)+ 5; // assigns initial coords to each asteroid
+			all_asteroids[i].y=rand() % (18 - 3 + 1)+ 3;
+		} else if(k==1){
+			all_asteroids[i].x=rand() % (185 - 5 + 1)+ 5;
+			all_asteroids[i].y=rand() % (45 - 30 + 1)+ 30;
+		}else if(k==2){
+			all_asteroids[i].x=rand() % (85 - 5 + 1)+ 5;
+			all_asteroids[i].y=rand() % (45 - 3 + 1)+ 3;
+		}else if(k==3){
+			all_asteroids[i].x=rand() % (185 - 105 + 1)+ 105;
+			all_asteroids[i].y=rand() % (45 - 3 + 1)+ 3;
+		}
+
+		all_asteroids[i].status=1; // indicates that they are active when true
+		drawAsteroid(&all_asteroids[i],2); //finishes by drawing them
+		}}
+
+
+
+
 /*  Value      foreground     Value     foreground
     ------------------------------------------------
       0        Black            8       Dark Gray

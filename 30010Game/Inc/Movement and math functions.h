@@ -19,6 +19,11 @@ typedef struct {
 } point;
 
 
+typedef struct { //define asteroids as a position and on/off bol
+	int32_t x,y,status;
+} asteroid;
+
+
 
 
 
