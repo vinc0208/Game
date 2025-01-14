@@ -11,7 +11,7 @@
 typedef struct {
 	uint16_t hour, minute, second, hsecond, msecond;
 } TimeFormat;
-TimeFormat TimeMaster15; //The reason why we have a global variable here is because we need to be able to access the time anywhere
+TimeFormat TimeMaster15; // The reason why we have a global variable here is because we need to be able to access the time anywhere
 
 typedef struct {
 	int life, score, ammo;

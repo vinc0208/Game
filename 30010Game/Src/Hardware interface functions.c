@@ -121,6 +121,18 @@ void ResetTime(){ //Resets the time
 	TimeMaster15.msecond = 0;
 }
 
+//Work in progress (Jens)
+/*void IncreasingSpeed(){
+	int32_t static speed = 1;
+	TimeFormat SpeedIncrease; //Maybe use global variable instead?
+	SpeedIncrease = TimeMaster15;
+
+	if ((TimeMaster15.second % 10) == 0){
+		speed += 1;
+		SpeedIncrease.second *= (speed/2);
+	}
+}*/
+
 void lcd_write_string(char* string, uint8_t slice, uint16_t line, uint8_t* buffer){
 	uint8_t strleng = strlen(string);
 	uint8_t temp1[strleng]; //We make an array with the length of string to hold the individual values of each character
