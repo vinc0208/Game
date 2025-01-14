@@ -14,6 +14,10 @@ typedef struct {
 	int32_t x,y, velx, vely;
 } posdata;
 
+typedef struct {
+	int32_t x,y, velx, vely;
+} point;
+
 
 
 

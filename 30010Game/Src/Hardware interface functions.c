@@ -13,6 +13,7 @@
 #include <stdint.h> // whatever
 #include <stdio.h>
 
+
 void uartStringModifier(char arr[]){
 	int static n = 0;
 	char static i = 0;
@@ -34,4 +35,27 @@ void uartStringModifier(char arr[]){
 	}
 
 }
+
+char uartKeyRead(){
+	return uart_get_char();
+}
+
+/*uint8_t menuSelect(char menuName[]){
+	uint8_t static sel = 1;
+	uint8_t static options = 2;
+	point static sellocations[3];
+
+
+	if(menuName == "Main Menu"){
+		options = 3;
+
+	}else if(menuName == "Help"){
+		options = 1;
+	}else if(menuName == "Difficulty"){
+		options = 1;
+	}
+
+
+
+}*/
 
