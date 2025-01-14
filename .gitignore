@@ -204,3 +204,4 @@
 30010Game/SPL/src/stm32f30x_wwdg.c
 30010Game/Startup/startup_stm32f302r8tx.s
 30010Game/STM32F302R8TX_FLASH.ld
+30010Game/30010Game.launch
