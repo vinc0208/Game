@@ -10,10 +10,12 @@
 #include <Movement and math functions.h>
 
 void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, char* txt, short style);
-void drawSpaceship(int x,int y,short style,int direction);
+void drawSpaceship(spaceship*shp);
 void drawEnemy(enemy*ene);
 void drawAsteroid(asteroid* ast,short style);
 void drawPowerup(int x, int y, short type);
 void initAsteroid(asteroid* all_asteroids,int n_ast);
 void initEnemy(enemy* all_enemies,int n_ene);
+void initSpaceship(spaceship* ship,int difficulty);
+void initBullet(bullet * bul,int maxn_bull);
 #endif /* GRAPHICS_FUNCTIONS_H_ */

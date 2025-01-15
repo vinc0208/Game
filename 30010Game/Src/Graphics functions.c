@@ -14,98 +14,151 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void drawSpaceship(int x,int y,short style,int direction){
+
+//bullets require a direction from the player and a "powerup" state from bullet status
+void drawBullet(spaceship *ship,bullet*bul){
+	fgcolor(11);
+		if(bul->status==0){
+			//if it is not active dont draw it
+		} else if(bul->status==1){; //corresponds to 1 dmg
+			if(ship->dir==1){
+				bul->dir=ship->dir;
+				bul->x=ship->x;
+				bul->y=ship->y-2;
+				gotoxy(bul->x,bul->y);
+				printf("|");
+			}else if(ship->dir==5){
+				bul->x=ship->x,bul->dir=ship->dir;
+				bul->y=ship->y+1;
+				gotoxy(bul->x,bul->y);
+				printf("|");
+			}else if(ship->dir==2){
+				bul->x=ship->x+1,bul->dir=ship->dir;
+				bul->y=ship->y-1;
+				gotoxy(bul->x,bul->y);
+				printf("/");
+			}else if(ship->dir==3){
+				bul->x=ship->x+2,bul->dir=ship->dir;
+				bul->y=ship->y;
+				gotoxy(bul->x,bul->y);
+				printf("-");
+			}else if(ship->dir==7){
+				bul->x=ship->x-2,bul->dir=ship->dir;
+				bul->y=ship->y;
+				gotoxy(bul->x,bul->y);
+				printf("-");
+			}else if(ship->dir==4){
+				bul->x=ship->x+1,bul->dir=ship->dir;
+				bul->y=ship->y+1;
+				gotoxy(bul->x,bul->y);
+				printf("%c",92);
+			}else if(ship->dir==6){
+				bul->x=ship->x-2,bul->dir=ship->dir;
+				bul->y=ship->y+1;
+				gotoxy(bul->x,bul->y);
+				printf("/");
+			}else if(ship->dir==8){
+				bul->x=ship->x-2,bul->dir=ship->dir;
+				bul->y=ship->y-1;
+				gotoxy(bul->x,bul->y);
+				printf("%c",92);
+			}}
+
+
+
+
+}
+void drawSpaceship(spaceship*shp){
 	int8_t i=0,size=3; //setup size
-	gotoxy(x-1,y-1);
-	if(style==1){ //setup coloration based on style
+	gotoxy(shp->x-1,shp->y-1);
+	if(shp->style==1){ //setup coloration based on style
 		fgcolor(1);
-	} else if(style==0){
+	} else if(shp->style==0){
 		fgcolor(11);
 	} else {
 		fgcolor(2);
 	}
 	//based on direction one block is called
-
-	if(direction==1 ||direction==2){
+	if(shp->dir==1 ||shp->dir==5){
 		for(i=0;i<size+1;i++){
 			printf("%c",220); //draws base
 		}
-		gotoxy(x-1,y);
+		gotoxy(shp->x-1,shp->y);
 		for(i=0;i<size+1;i++){
 			printf("%c",223);
 		}
 		fgcolor(6); //drawing window color
-		if (direction==1){ //drawing window
-			gotoxy(x,y-1);
+		if (shp->dir==1){ //drawing window
+			gotoxy(shp->x,shp->y-1);
 			printf("%c%c",220,220);
 		} else{
-			gotoxy(x,y);
+			gotoxy(shp->x,shp->y);
 			printf("%c%c",223,223);
 		}}
-	if(direction==3 ||direction==4){ //next direction here but same structure for all
+	if(shp->dir==7 ||shp->dir==3){ //next direction here but same structure for all
 		for(i=0;i<size-1;i++){
 			printf("%c",220);
 		}
-		gotoxy(x-1,y);
+		gotoxy(shp->x-1,shp->y);
 		for(i=0;i<size-1;i++){
 			printf("%c",219);
 		}
-		gotoxy(x-1,y+1);
+		gotoxy(shp->x-1,shp->y+1);
 		for(i=0;i<size-1;i++){
 			printf("%c",223);
 		}
 		fgcolor(6);
-		if (direction==3){
-			gotoxy(x-1,y);
+		if (shp->dir==7){
+			gotoxy(shp->x-1,shp->y);
 		} else{
-			gotoxy(x,y);
+			gotoxy(shp->x,shp->y);
 		} printf("%c",219);
 		}
-	if(direction==5 ||direction==6){
-		gotoxy(x,y-1);
+	if(shp->dir==8 ||shp->dir==4){
+		gotoxy(shp->x,shp->y-1);
 		for(i=0;i<size-1;i++){
 			printf("%c",220);
 		}
-		gotoxy(x-2,y);
+		gotoxy(shp->x-2,shp->y);
 		printf("%c",220);
 		for(i=0;i<size-1;i++){
 			printf("%c",219);
 		}
 		printf("%c",223);
-		gotoxy(x-2,y+1);
+		gotoxy(shp->x-2,shp->y+1);
 		for(i=0;i<size-1;i++){
 			printf("%c",223);
 		}
 		fgcolor(6);
-		if (direction==5){
-			gotoxy(x-1,y);
+		if (shp->dir==8){
+			gotoxy(shp->x-1,shp->y);
 			printf("%c",219);
 		} else{
-			gotoxy(x,y);
+			gotoxy(shp->x,shp->y);
 			printf("%c",219);
 
 		}}
-	if(direction==7 ||direction==8){
-		gotoxy(x-2,y-1);
+	if(shp->dir==2 ||shp->dir==6){
+		gotoxy(shp->x-2,shp->y-1);
 		for(i=0;i<size-1;i++){
 			printf("%c",220);
 		}
-		gotoxy(x-2,y);
+		gotoxy(shp->x-2,shp->y);
 		printf("%c",223);
 		for(i=0;i<size-1;i++){
 			printf("%c",219);
 		}
 		printf("%c",220);
-		gotoxy(x,y+1);
+		gotoxy(shp->x,shp->y+1);
 		for(i=0;i<size-1;i++){
 			printf("%c",223);
 		}
 		fgcolor(6);
-			if (direction==8){
-			gotoxy(x-1,y);
+			if (shp->dir==6){
+			gotoxy(shp->x-1,shp->y);
 		printf("%c",219);
 		} else{
-			gotoxy(x,y);
+			gotoxy(shp->x,shp->y);
 			printf("%c",219);
 }}}
 void drawEnemy(enemy*ene){
@@ -315,6 +368,30 @@ void initAsteroid(asteroid* all_asteroids,int n_ast){
 		drawAsteroid(&all_asteroids[i],2); //finishes by drawing them
 		}}
 
+void initBullet(bullet* bul,int maxn_bull){
+	//x,y and dir for all bullets get a junk value
+	//status is turned off as no bullets are fired on game start
+	int i;
+	for(i=0;i<maxn_bull;i++){
+		bul[i].status=0;
+		bul[i].x=0;
+		bul[i].y=0;
+		bul[i].dir=1;
+	}}
+
+
+
+void initSpaceship(spaceship* ship,int difficulty){
+	//x,y,hp,status,dir,are set to default values
+	ship->x=95;
+	ship->y=25;
+	ship->hp=6-difficulty;
+	ship->dir=1;
+	ship->status=1; // indicates that they are active when true
+	drawSpaceship(&ship);
+}
+
+
 //generates almost randomly placed enemies and draws them
 void initEnemy(enemy* all_enemies,int n_ene){
 	int i,k;
@@ -323,7 +400,7 @@ void initEnemy(enemy* all_enemies,int n_ene){
 		if(k==0){
 			all_enemies[i].x=rand() % (185 - 5 + 1)+ 5; // assigns initial coords to each enemy
 			all_enemies[i].y=rand() % (18 - 3 + 1)+ 3;
-			all_enemies[i].dir=5;
+			all_enemies[i].dir=5; // a direction somewhat facing the player
 		} else if(k==1){
 			all_enemies[i].x=rand() % (185 - 5 + 1)+ 5;
 			all_enemies[i].y=rand() % (45 - 30 + 1)+ 30;
@@ -338,7 +415,7 @@ void initEnemy(enemy* all_enemies,int n_ene){
 			all_enemies[i].dir=7;
 		}
 
-		all_enemies[i].hp=1;
+		all_enemies[i].hp=1; //setting default values which can be changed later
 		all_enemies[i].vely=1;
 		all_enemies[i].velx=1;
 		all_enemies[i].status=1; // indicates that they are active when true
