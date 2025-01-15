@@ -2,12 +2,13 @@
 #include "30010_io.h" 		// Input/output library for this course
 #include <Graphics functions.h>
 #include "Hardware interface functions.h"
+#include "Menu functions.h"
 #include <stdlib.h>
 #include <string.h>
 
 int main(void) {
 
-	uart_init(9600);
+	uart_init(115200);
 
 	//Initialize time
 	Timer15Config();
@@ -33,13 +34,15 @@ int main(void) {
 	*/
 
 
-	lcd_init();
+	/*lcd_init();
 	uint8_t buffer[512];
 	memset(buffer,0x00,512);
 	initJoystick();
 	init_lcd(buffer);
-	init_radar(buffer);
+	init_radar(buffer);*/
+	int level = 10;
+
 	while(1){
-		radar(buffer);
+		menuSelect(0, &level);
 	}
 }

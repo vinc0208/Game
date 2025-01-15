@@ -32,9 +32,6 @@ void ResetTime();
 
 char uartKeyRead();
 
-void menuSelect(int menu, int* level);
-int menuConfirm(int menu, uint8_t sel);
-
 void initJoystick();
 uint8_t readJoystick();
 
