@@ -328,6 +328,7 @@ int menuConfirm(int menu, uint8_t sel){
 	}else{
 		return 0;
 	}
+
 }
 
 
@@ -526,8 +527,6 @@ void radar(uint8_t* buffer) {
 		for (uint8_t j=0; j<5; j++) {
 			buffer[(line-1)*128+slice+j] = game_char_data[6][j];
 		}
-		lcd_push_buffer(buffer);
-		X = readJoystick();
 		if (!((0x0001 << 0) & X) || !((0x0001 << 3) & X)) {
 			init_radar(buffer);
 			break;
@@ -540,8 +539,6 @@ void radar(uint8_t* buffer) {
 		for (uint8_t j=0; j<5; j++) {
 			buffer[(line-1)*128+slice+j] = game_char_data[4][j];
 		}
-		lcd_push_buffer(buffer);
-		X = readJoystick();
 		if (!((0x0001 << 0) & X) || !((0x0001 << 2) & X)) {
 			init_radar(buffer);
 			break;
@@ -554,8 +551,6 @@ void radar(uint8_t* buffer) {
 		for (uint8_t j=0; j<5; j++) {
 			buffer[(line-1)*128+slice+j] = game_char_data[13][j];
 		}
-		lcd_push_buffer(buffer);
-		X = readJoystick();
 		if (!((0x0001 << 1) & X) || !((0x0001 << 3) & X)) {
 			init_radar(buffer);
 			break;
@@ -568,8 +563,6 @@ void radar(uint8_t* buffer) {
 		for (uint8_t j=0; j<5; j++) {
 			buffer[(line-1)*128+slice+j] = game_char_data[11][j];
 		}
-		lcd_push_buffer(buffer);
-		X = readJoystick();
 		if (!((0x0001 << 1) & X) || !((0x0001 << 2) & X)) {
 			init_radar(buffer);
 			break;
