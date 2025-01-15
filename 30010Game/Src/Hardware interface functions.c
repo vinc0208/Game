@@ -68,6 +68,7 @@ void TIM1_BRK_TIM15_IRQHandler(void) { //Needed to count the time
 	if (TimeMaster15.msecond >= 10){
 		TimeMaster15.msecond %= 10;
 		TimeMaster15.hsecond += 1;
+		SpeedIncrease.hsecond += 1;
 	}
 	if (TimeMaster15.hsecond >= 100){
 		TimeMaster15.hsecond %= 100;
@@ -122,17 +123,21 @@ void ResetTime(){ //Resets the time
 	TimeMaster15.msecond = 0;
 }
 
-//Work in progress (Jens)
-/*void IncreasingSpeed(){
-	int32_t static speed = 1;
-	TimeFormat SpeedIncrease; //Maybe use global variable instead?
-	SpeedIncrease = TimeMaster15;
-
-	if ((TimeMaster15.second % 10) == 0){
-		speed += 1;
-		SpeedIncrease.second *= (speed/2);
+void GameSpeed(int* level){
+	if (SpeedIncrease.hsecond >= *level){
+		SpeedIncrease.hsecond %= *level;
+		SpeedIncrease.second += 1;
 	}
-}*/
+	if (SpeedIncrease.second >= 60){
+		SpeedIncrease.second %= 60;
+		SpeedIncrease.minute += 1;
+	}
+	if (SpeedIncrease.minute >= 60){
+		SpeedIncrease.minute %= 60;
+		SpeedIncrease.hour += 1;
+	}
+}
+
 
 void lcd_write_string(char* string, uint8_t slice, uint16_t line, uint8_t* buffer){
 	uint8_t strleng = strlen(string);

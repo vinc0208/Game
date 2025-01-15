@@ -29,6 +29,17 @@ typedef struct {
 	int32_t x,y,velx, vely,hp,status,dir;
 } enemy;
 
+typedef struct {
+//define bullets as a position and a direction([1,8]).
+	//status is an on/off bol indicating wether it is active and it's dmg.
+	int32_t x,y,status,dir;
+} bullet;
+
+typedef struct {
+//define enemies as a position, direction([1,8]),hp and velocity.
+	//status is an on/off bol indicating wether it is alive
+	int32_t x,y,hp,status,dir,style;
+} spaceship;
 
 
 

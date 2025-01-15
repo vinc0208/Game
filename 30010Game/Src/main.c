@@ -5,6 +5,7 @@
 #include "Menu functions.h"
 #include <stdlib.h>
 #include <string.h>
+#include "ansi.h"
 
 int main(void) {
 
