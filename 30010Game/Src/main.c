@@ -32,6 +32,11 @@ int main(void) {
 	GPIOA->MODER &= ~(0x00000003 << (9 * 2));
 	GPIOA->MODER |= (0x00000001 << (9 * 2));
 
+	//Turn all lights off to begin with
+	GPIOA->ODR |= (0x0001 << 9);
+	GPIOC->ODR |= (0x0001 << 7);
+	GPIOB->ODR |= (0x0001 << 4);
+
 
 	//Transmit byte array
 		uint8_t buffer[512];
