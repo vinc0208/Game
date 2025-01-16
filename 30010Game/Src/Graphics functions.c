@@ -410,7 +410,7 @@ void initSpaceship(spaceship* ship,int difficulty, int style){
 	ship->x=95;
 	ship->y=25;
 	ship->hp=6-difficulty;
-	ship->dir=2;
+	ship->dir=1;
 	ship->style=style;
 	ship->status=1; // indicates that they are active when true
 	drawSpaceship(ship);
