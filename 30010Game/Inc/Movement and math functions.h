@@ -31,15 +31,23 @@ typedef struct {
 
 typedef struct {
 //define bullets as a position and a direction([1,8]).
-	//status is an on/off bol indicating wether it is active and it's dmg.
+	//status is an on/off bol indicating wether the bullet is active
+	//status>0 corresponds to it's dmg.
 	int32_t x,y,status,dir;
 } bullet;
 
 typedef struct {
-//define enemies as a position, direction([1,8]),hp and velocity.
+//define the player spaceship as a position, direction([1,8]),hp and style.
 	//status is an on/off bol indicating wether it is alive
 	int32_t x,y,hp,status,dir,style;
 } spaceship;
+
+typedef struct {
+//define powerups as a position and a status.
+	//status is an on/off bol indicating wether it is active.
+	// status>1 determines type of the powerup
+	int32_t x,y,status;
+} powerup;
 
 
 

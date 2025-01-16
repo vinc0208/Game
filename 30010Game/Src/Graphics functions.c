@@ -14,6 +14,65 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//draws a window as decribed in the excersises
+void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, char* txt, short style){
+	int i; //uses for loops to build a frame based on style
+	if (style==1){
+		for(i=0;i<y2-y1;i++){
+			gotoxy(x1,y1+i);
+			printf("%c",186);
+			gotoxy(x2,y1+i);
+			printf("%c",186);
+		}
+		for(i=0;i<x2-x1;i++){
+			gotoxy(x1+i,y1);
+			printf("%c",205);
+			gotoxy(x1+i,y2);
+			printf("%c",205);
+		}
+		gotoxy(x1+5,y1); // here corners and the text is added
+		printf("%c[%dm", ESC,7);
+		printf("%s",txt);
+		printf("%c[%dm", ESC,27);
+		gotoxy(x1,y1);
+		printf("%c",201);
+		gotoxy(x1,y2);
+		printf("%c",200);
+		gotoxy(x2,y1);
+		printf("%c",187);
+		gotoxy(x2,y2);
+		printf("%c",188);
+
+	} else{
+		for(i=0;i<x2-x1;i++){
+			gotoxy(x1+i,y1);
+			printf("%c",254);
+			gotoxy(x1+i,y2);
+			printf("%c",254);
+		}
+		for(i=0;i<y2-y1;i++){
+			gotoxy(x1,y1+i);
+			printf("%c",254);
+			gotoxy(x2,y1+i);
+			printf("%c",254);
+		}
+		printf("%c[%dm", ESC,7);
+		gotoxy(x1+5,y1);
+		printf("%s",txt);
+		printf("%c[%dm", ESC,27);
+		gotoxy(x1,y1);
+		printf("%c",254);
+		gotoxy(x1,y2);
+		printf("%c",254);
+		gotoxy(x2,y1);
+		printf("%c",254);
+		gotoxy(x2,y2);
+		printf("%c",254);
+	}}
+
+
+
+
 
 //bullets require a direction from the player and a "powerup" state from bullet status
 void drawBullet(spaceship *ship,bullet*bul){
@@ -68,6 +127,7 @@ void drawBullet(spaceship *ship,bullet*bul){
 
 
 }
+//draws the spaceship at a designated location facing a designated angle
 void drawSpaceship(spaceship*shp){
 	int8_t i=0,size=3; //setup size
 	gotoxy(shp->x-1,shp->y-1);
@@ -161,6 +221,7 @@ void drawSpaceship(spaceship*shp){
 			gotoxy(shp->x,shp->y);
 			printf("%c",219);
 }}}
+//draws an enemy
 void drawEnemy(enemy*ene){
 	int8_t i=0,size=3; //setup size
 		gotoxy(ene->x-1,ene->y-1);
@@ -258,6 +319,7 @@ void drawEnemy(enemy*ene){
 					fgcolor(5);
 					printf("%c[%dB%c%c[%dD%c[%dA%c",ESC,1,200,ESC,3,ESC,1,200);
 		}}}
+//draws an asteroid
 void drawAsteroid(asteroid*ast,short style){
 	gotoxy(ast->x-1,ast->y-1);
 	char* krater="o";
@@ -273,125 +335,57 @@ void drawAsteroid(asteroid*ast,short style){
 	}
 
 }
-void drawPowerup(int x, int y, short type){
+//draws a random powerup at an intended position
+void drawPowerup(powerup *pow){
 	//1=dmg up (red),2 Score mult (purple), 3 ammo up (brown),4 speed up(blue)
-	gotoxy(x-1,y);
-	if(type==1){
+
+	gotoxy(pow->x-1,pow->y);
+	if(pow->status==0){
+		//dont draw if it's not real
+	}else if(pow->status==1){
 		fgcolor(1);
-	} else if(type==2) {
+	} else if(pow->status==2) {
 		fgcolor(5);
-	}else if(type==3) {
+	}else if(pow->status==3) {
 		fgcolor(3);
-	}else if(type==4) {
+	}else if(pow->status==4) {
 		fgcolor(4);
 	} else{
-		fgcolor(15); //white is the error color
+		fgcolor(15); //white is an error color
 	} printf("%c%c",219,219);
 }
-
-
-void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, char* txt, short style){
-	int i; //uses for loops to build a frame based on style
-	if (style==1){
-		for(i=0;i<y2-y1;i++){
-			gotoxy(x1,y1+i);
-			printf("%c",186);
-			gotoxy(x2,y1+i);
-			printf("%c",186);
-		}
-		for(i=0;i<x2-x1;i++){
-			gotoxy(x1+i,y1);
-			printf("%c",205);
-			gotoxy(x1+i,y2);
-			printf("%c",205);
-		}
-		gotoxy(x1+5,y1); // here corners and the text is added
-		printf("%c[%dm", ESC,7);
-		printf("%s",txt);
-		printf("%c[%dm", ESC,27);
-		gotoxy(x1,y1);
-		printf("%c",201);
-		gotoxy(x1,y2);
-		printf("%c",200);
-		gotoxy(x2,y1);
-		printf("%c",187);
-		gotoxy(x2,y2);
-		printf("%c",188);
-
-	} else{
-		for(i=0;i<x2-x1;i++){
-			gotoxy(x1+i,y1);
-			printf("%c",254);
-			gotoxy(x1+i,y2);
-			printf("%c",254);
-		}
-		for(i=0;i<y2-y1;i++){
-			gotoxy(x1,y1+i);
-			printf("%c",254);
-			gotoxy(x2,y1+i);
-			printf("%c",254);
-		}
-		printf("%c[%dm", ESC,7);
-		gotoxy(x1+5,y1);
-		printf("%s",txt);
-		printf("%c[%dm", ESC,27);
-		gotoxy(x1,y1);
-		printf("%c",254);
-		gotoxy(x1,y2);
-		printf("%c",254);
-		gotoxy(x2,y1);
-		printf("%c",254);
-		gotoxy(x2,y2);
-		printf("%c",254);
-	}}
-
-//generates almost randomly placed asteroids and draws them
-void initAsteroid(asteroid* all_asteroids,int n_ast){
-	int i,k;
-	for(i=0;i<n_ast;i++){
-		k=rand() % (3 + 1); // assigns each a random part of the screen in which to appear
-		if(k==0){
-			all_asteroids[i].x=rand() % (185 - 5 + 1)+ 5; // assigns initial coords to each asteroid
-			all_asteroids[i].y=rand() % (18 - 3 + 1)+ 3;
-		} else if(k==1){
-			all_asteroids[i].x=rand() % (185 - 5 + 1)+ 5;
-			all_asteroids[i].y=rand() % (45 - 30 + 1)+ 30;
-		}else if(k==2){
-			all_asteroids[i].x=rand() % (85 - 5 + 1)+ 5;
-			all_asteroids[i].y=rand() % (45 - 3 + 1)+ 3;
-		}else if(k==3){
-			all_asteroids[i].x=rand() % (185 - 105 + 1)+ 105;
-			all_asteroids[i].y=rand() % (45 - 3 + 1)+ 3;
-		}
-
-		all_asteroids[i].status=1; // indicates that they are active when true
-		drawAsteroid(&all_asteroids[i],2); //finishes by drawing them
-		}}
-
-void initBullet(bullet* bul,int maxn_bull){
+//turns all bullets off and puts them at (0,0)
+void initBullet(bullet* bul,int n_bull){
 	//x,y and dir for all bullets get a junk value
 	//status is turned off as no bullets are fired on game start
 	int i;
-	for(i=0;i<maxn_bull;i++){
+	for(i=0;i<n_bull;i++){
 		bul[i].status=0;
 		bul[i].x=0;
 		bul[i].y=0;
 		bul[i].dir=1;
 	}}
-
-
-
-void initSpaceship(spaceship* ship,int difficulty){
+//turns all powerups off and puts them at (0,0)
+void initPowerup(powerup *pow,int n_pow){
+	//x and y for all powerups get a junk value
+	//status is turned off as no powerups are present on game start
+	int i;
+	for(i=0;i<n_pow;i++){
+		pow[i].status=0;
+		pow[i].x=0;
+		pow[i].y=0;
+	}}
+//initializes spaceship and draws it in the center
+void initSpaceship(spaceship* ship,int difficulty, int style){
 	//x,y,hp,status,dir,are set to default values
 	ship->x=95;
 	ship->y=25;
 	ship->hp=6-difficulty;
 	ship->dir=1;
+	ship->style=style;
 	ship->status=1; // indicates that they are active when true
-	drawSpaceship(&ship);
+	drawSpaceship(ship);
 }
-
-
 //generates almost randomly placed enemies and draws them
 void initEnemy(enemy* all_enemies,int n_ene){
 	int i,k;
@@ -420,6 +414,28 @@ void initEnemy(enemy* all_enemies,int n_ene){
 		all_enemies[i].velx=1;
 		all_enemies[i].status=1; // indicates that they are active when true
 		drawEnemy(&all_enemies[i]); //finishes by drawing them
+		}}
+//generates almost randomly placed asteroids and draws them
+void initAsteroid(asteroid* all_asteroids,int n_ast){
+	int i,k;
+	for(i=0;i<n_ast;i++){
+		k=rand() % (3 + 1); // assigns each a random part of the screen in which to appear
+		if(k==0){
+			all_asteroids[i].x=rand() % (185 - 5 + 1)+ 5; // assigns initial coords to each asteroid
+			all_asteroids[i].y=rand() % (18 - 3 + 1)+ 3;
+		} else if(k==1){
+			all_asteroids[i].x=rand() % (185 - 5 + 1)+ 5;
+			all_asteroids[i].y=rand() % (45 - 30 + 1)+ 30;
+		}else if(k==2){
+			all_asteroids[i].x=rand() % (85 - 5 + 1)+ 5;
+			all_asteroids[i].y=rand() % (45 - 3 + 1)+ 3;
+		}else if(k==3){
+			all_asteroids[i].x=rand() % (185 - 105 + 1)+ 105;
+			all_asteroids[i].y=rand() % (45 - 3 + 1)+ 3;
+		}
+
+		all_asteroids[i].status=1; // indicates that they are active when true
+		drawAsteroid(&all_asteroids[i],2); //finishes by drawing them
 		}}
 
 
