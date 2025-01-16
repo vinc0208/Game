@@ -26,20 +26,20 @@ typedef struct { //define asteroids as a position and on/off bol
 typedef struct {
 //define enemies as a position, direction([1,8]),hp and velocity.
 	//status is an on/off bol indicating wether it is alive
-	int8_t x,y,velx, vely,hp,status,dir;
+	int16_t x,y,velx, vely,hp,status,dir;
 } enemy;
 
 typedef struct {
 //define bullets as a position and a direction([1,8]).
 	//status is an on/off bol indicating wether the bullet is active
 	//status>0 corresponds to it's dmg.
-	int8_t x,y,velx,vely,status,dir;
+	int16_t x,y,velx,vely,status,dir;
 } bullet;
 
 typedef struct {
 //define the player spaceship as a position, direction([1,8]),hp and style.
 	//status is an on/off bol indicating wether it is alive
-	int8_t x,y,hp,status,dir,style;
+	int16_t x,y,hp,status,dir,style;
 } spaceship;
 
 typedef struct {
@@ -52,7 +52,7 @@ typedef struct {
 
 
 //functions
-void UpdateObjPos(enemy* all_ene,bullet* all_bul,int n_ene, int n_bul);
+void UpdateObjPos(spaceship* ship,enemy* all_ene,bullet* all_bul,int n_ene, int n_bul);
 
 
 

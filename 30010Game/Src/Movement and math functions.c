@@ -31,15 +31,21 @@ return i << 2;
 //Math
 
 
-int32_t vesinus(int angle){
-	int32_t index=angle%512;
-	if (angle<0){
-		index+=512;
+int16_t vecsinus(int angle) {						//Without expand and printFix
+	int step = round(angle * 512.0 / 360.0);
+	if (step < 0) {
+		int n = floor(~step / 512);
+		step += (n+1)*512;
+	} else {
+		int n = floor(step / 512);
+		step -= n*512;
 	}
-	return (SIN[index]);
+	int y = SIN[step];
+	return y;
 }
+
 int32_t vecosinus(int angle){
-	return vesinus(angle+128);
+	return vecsinus(angle+180);
 }
 int32_t sinus(int angle){
 	int32_t index=angle%512;
@@ -56,7 +62,7 @@ int32_t cosinus(int angle){
 //Movement
 
 //updates obejcts with movement independent of the player
-void UpdateObjPos(enemy* all_ene,bullet* all_bul,int n_ene, int n_bul){
+void UpdateObjPos(spaceship* ship,enemy* all_ene,bullet* all_bul,int n_ene, int n_bul){
 	int i,k;
 	//bullets first
 	for(i=0;i<n_bul;i++){
@@ -76,23 +82,50 @@ void UpdateObjPos(enemy* all_ene,bullet* all_bul,int n_ene, int n_bul){
 	for(i=0;i<n_ene;i++){
 			if(all_ene[i].status!=0){ //check status
 				if(CheckOnScr(all_ene[i].x,all_ene[i].y)==0){
-					all_ene[i].status=0; // deactivate and delete enemies going off screen
+					all_ene[i].status=0; // deactivate and delete enemies that are off screen
 					gotoxy(all_ene[i].x-1,all_ene[i].y-1);
+					printf("     ");
+					gotoxy(all_ene[i].x-3,all_ene[i].y);
 					printf("      ");
-					gotoxy(all_ene[i].x-1,all_ene[i].y);
-					printf("      ");
-					gotoxy(all_ene[i].x-1,all_ene[i].y+1);
+					gotoxy(all_ene[i].x-2,all_ene[i].y+1);
 					printf("      ");
 				} else {
-					gotoxy(all_ene[i].x-1,all_ene[i].y-1); //delete old image
+					gotoxy(all_ene[i].x-2,all_ene[i].y-1); //delete old image
+					printf("     ");
+					gotoxy(all_ene[i].x-3,all_ene[i].y);
 					printf("      ");
-					gotoxy(all_ene[i].x-1,all_ene[i].y);
-					printf("      ");
-					gotoxy(all_ene[i].x-1,all_ene[i].y+1);
-					printf("      ");
-					/*
-					all_ene[i].x+= all_ene[i].velx;
-					all_ene[i].y+= all_ene[i].vely;
-					drawEnemy(&all_ene[i]);
-				*/}}}
-}
+					gotoxy(all_ene[i].x-2,all_ene[i].y+1);
+					printf("      "); //the following is the enemy movement algorithm
+					//it looks at their position relative to the spaceship and moves them toward it
+					//to avoid making them go conga at the ships coords, they check the ratio between x and y as well
+					if((all_ene[i].x > ship->x) && (all_ene[i].y>ship->y) && !(abs(all_ene[i].x-95) / abs(all_ene[i].y-25) >=4 ) && !(abs(all_ene[i].y-25) / abs(all_ene[i].x-95) >=1 )){ //ship->x=95 ship->y=25
+						all_ene[i].x-= 3;  // position is then updated
+						all_ene[i].y-= 1;
+						all_ene[i].dir=8; //and direction
+					} else if((all_ene[i].x < ship->x) && (all_ene[i].y>ship->y)&& !(abs(all_ene[i].x-95) / abs(all_ene[i].y-25) >=4 )  && !(abs(all_ene[i].y-25) / abs(all_ene[i].x-95) >=1 )){
+						all_ene[i].x+= 3;
+						all_ene[i].y-= 1;
+						all_ene[i].dir=2;
+					}else if((all_ene[i].x < ship->x) && (all_ene[i].y < ship->y)&& !(abs(all_ene[i].x-95) / abs(all_ene[i].y-25) >=4 )  && !(abs(all_ene[i].y-25) / abs(all_ene[i].x-95) >=1 )){
+						all_ene[i].x+= 3;
+						all_ene[i].y+= 1;
+						all_ene[i].dir=4;
+					}else if((all_ene[i].x > ship->x) && (all_ene[i].y < ship->y) && !(abs(all_ene[i].x-95) / abs(all_ene[i].y-25) >=4 )  && !(abs(all_ene[i].y-25) / abs(all_ene[i].x-95) >=1 )){
+						all_ene[i].x-= 3;
+						all_ene[i].y+= 1;
+						all_ene[i].dir=6;
+					}else if(((all_ene[i].x) < (ship->x))  && !(abs(all_ene[i].y-25) / abs(all_ene[i].x-95) >=1 )){
+						all_ene[i].x+= 3;
+						all_ene[i].dir=3;
+					}else if((all_ene[i].x > ship->x) && !(abs(all_ene[i].y-25) / abs(all_ene[i].x-95) >=1 )){
+						all_ene[i].x-= 3;
+						all_ene[i].dir=7;
+					}else if(all_ene[i].y > ship->y){
+						all_ene[i].y-= 1;
+						all_ene[i].dir=1;
+					}else if(all_ene[i].y < ship->y){
+						all_ene[i].y+= 1;
+						all_ene[i].dir=5;
+					}
+					//drawEnemy(&all_ene[i]); //one could draw each enemy after updating their position
+				}}}}

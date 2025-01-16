@@ -308,7 +308,7 @@ void drawEnemy(enemy*ene){
 					printf("%c",223);
 				}
 				fgcolor(6);
-				if (ene->dir==4){
+				if (ene->dir==8){
 					gotoxy(ene->x-1,ene->y);
 					printf("%c",219);
 					fgcolor(5);

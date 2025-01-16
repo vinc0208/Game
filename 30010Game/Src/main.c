@@ -15,7 +15,6 @@ int main(void) {
 	//set the seed
 	srand(5);
 
-
 	//The commented code below is simply for showing LCD things, not needed atm, but uncomment to see
 	/*
 	//Prepare byte array and strings to be updated
@@ -49,23 +48,31 @@ int main(void) {
 
 	/* //this block initializes the game
 		clrscr(); //clear screen and set starting parameters
-		uint8_t n_bul=5, difficulty=2,style=1,n_ene = 2+difficulty,n_ast=5,n_pow=5;
-		bullet testbul[n_bul]; // make arrays of all objects
+		uint8_t n_bul=5, difficulty=2,style=1,n_ene = 20+difficulty,n_ast=5,n_pow=5,i;
+		bullet all_bullets[n_bul]; // make arrays of all objects
 		asteroid all_asteroids[n_ast];
 		enemy all_enemies[n_ene];
 		powerup all_powerups[n_pow];
 		spaceship playership;
 
 		initSpaceship(&playership,difficulty,style); //initialize and draw all objects
-		initBullet(&testbul, n_bul);
+		initBullet(&all_bullets, n_bul);
 		initPowerup(&all_powerups,n_pow);
 		initEnemy(&all_enemies,n_ene);
-		initAsteroid(&all_asteroids,n_ast);
-		*/
+		initAsteroid(&all_asteroids,n_ast);*/
+
+
 
 
 
 	while(1){
 		menuSelect(0, &level);
+
+
+		/*UpdateObjPos(&playership,&all_enemies,&all_bullets,n_ene, n_bul);
+		for(i=0;i<n_ene;i++){
+			drawEnemy(&all_enemies[i]);
+		}*/
+
 	}
 }
