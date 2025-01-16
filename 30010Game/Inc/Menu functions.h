@@ -16,6 +16,8 @@ void mainMenu();
 void helpMenu();
 void diffMenu();
 void printMode(int lvl);
+void deathMenu();
+void pauseMenu();
 
 
 #endif /* MENU_FUNCTIONS_H_ */

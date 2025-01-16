@@ -14,6 +14,8 @@
 #include "stm32f30x_conf.h"
 #include "30010_io.h" 		// Input/output library for this course
 #include "sinusoid.h"
+#include "Graphics functions.h"
+
 //Typedefs
 void printFix(int32_t i) {
 	// Prints a signed 16.16 fixed point number
