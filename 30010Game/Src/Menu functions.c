@@ -24,6 +24,7 @@ void menuSelect(int menu, int* level){
 	char static c = 0;
 	int static currmenu;
 	int static first = 1;
+	int static lvl = 0;
 
 	if(first == 1){
 		currmenu = menu;
@@ -35,7 +36,7 @@ void menuSelect(int menu, int* level){
 		    helpMenu();
 		    break;
 		  case 2:
-		    //diffMenu();
+		    diffMenu();
 		    break;
 		  case 3:
 		    //deathMenu();
@@ -106,17 +107,17 @@ void menuSelect(int menu, int* level){
 	    }
 	    break;
 	  case 119: //W
-	    if(currmenu == 2){
+	    if((currmenu == 2) && (lvl < 2)){
 	    	//increment level
-	    	*level++;
-	    	printf("Level++\n");
+	    	lvl++;
+	    	printMode(lvl);
 	    }
 	    break;
 	  case 115: //S
-	    if(currmenu == 2){
+	    if((currmenu == 2) && (lvl > 0)){
 	    	//decrement level
-	    	*level--;
-	    	printf("Level--\n");
+	    	lvl--;
+	    	printMode(lvl);
 	    }
 	    break;
 	  case 13:
@@ -126,6 +127,7 @@ void menuSelect(int menu, int* level){
     	sel = 0;
 		break;
 	}
+	*level = lvl;
 
 }
 
@@ -141,14 +143,10 @@ int menuConfirm(int menu, uint8_t sel){
 		    break;
 		  case 1:
 		    helpMenu();
-			  printf("\n");
-			  printf("help");
 			  return 1;
 		    break;
 		  case 2:
-		    //difficulty
-			  printf("\n");
-			  printf("difficulty");
+		    diffMenu();
 			  return 2;
 		    break;
 		}
@@ -187,6 +185,8 @@ int menuConfirm(int menu, uint8_t sel){
 	}else{
 		return 0;
 	}
+
+	return 0;
 }
 
 void mainMenu(){
@@ -196,7 +196,7 @@ void mainMenu(){
 	reverse(0);
 	srand(5);
 		//draw stars
-		for(uint8_t i = 0; i<75; i++){
+		for(uint8_t i = 0; i<100; i++){
 			uint8_t x = rand() % 189;
 			uint8_t y = rand() % 50;
 			gotoxy(x,y);
@@ -353,5 +353,129 @@ void helpMenu(){
 	//Controls at bottom of screen
 	gotoxy(140,50);
 	printf("Press ENTER to return to Main Menu");
+
+}
+
+void diffMenu(){
+	clrscr();
+
+	//draw stars
+	for(uint8_t i = 0; i<100; i++){
+		uint8_t x = rand() % 189;
+		uint8_t y = rand() % 50;
+		gotoxy(x,y);
+		printf("%c",250);
+	}
+
+	//Mode text
+	gotoxy(80,9);
+	printf(" __  __           _ ");
+	gotoxy(80,10);
+	printf("|  %c/  | ___   __| | __",92);
+	gotoxy(80,11);
+	printf("| |%c/| |/ _ %c / _` |/ _ %c",92,92,92);
+	gotoxy(80,12);
+	printf("| |  | | %c_%c | %c_| |  __/",40,41,40);
+	gotoxy(80,13);
+	printf("|_|  |_|%c___/ %c__,_|%c___|",92,92,92);
+
+	//Instructions
+	gotoxy(50,20);
+	printf("Here you can select the difficulty mode of the game!");
+	gotoxy(50,22);
+	printf("Just press W for mode increase and S for mode decrease");
+
+	//Controls at bottom of screen
+	gotoxy(140,50);
+	printf("Press ENTER to return to Main Menu");
+
+}
+
+void printMode(int lvl){
+	switch (lvl) {
+	  case 0:
+		  //Erase old mode
+		  gotoxy(75,30);
+		  printf("                                     ");
+		  gotoxy(75,31);
+		  printf("                                     ");
+		  gotoxy(75,32);
+		  printf("                                     ");
+		  gotoxy(75,33);
+		  printf("                                     ");
+		  gotoxy(75,34);
+		  printf("                                     ");
+		  gotoxy(75,35);
+		  printf("                                     ");
+
+		  //Print mode Easy
+		  gotoxy(75,30);
+	      printf("      _____  ");
+	      gotoxy(75,31);
+	      printf("     | ____|__ _ ___ _   _ ");
+	      gotoxy(75,32);
+	      printf("     |  _| / _` / __| | | |");
+	      gotoxy(75,33);
+	      printf("     | |__| %c_| %c__ %c |_| |",40,92,92);
+	      gotoxy(75,34);
+	      printf("     |_____%c__,_|___/%c__, |",92,92);
+	      gotoxy(75,35);
+	      printf("                     |___/   ");
+	    break;
+	  case 1:
+		  //Erase old mode
+		  gotoxy(75,30);
+		  printf("                                     ");
+		  gotoxy(75,31);
+		  printf("                                     ");
+		  gotoxy(75,32);
+		  printf("                                     ");
+		  gotoxy(75,33);
+		  printf("                                     ");
+		  gotoxy(75,34);
+		  printf("                                     ");
+		  gotoxy(75,35);
+		  printf("                                     ");
+
+		  //Print mode Normal
+		  gotoxy(75,30);
+	      printf(" _   _                            _");
+	      gotoxy(75,31);
+	      printf("| %c | | ___  _ __ _ __ ___   __ _| |",92);
+	      gotoxy(75,32);
+	      printf("|  %c| |/ _ %c| '__| '_ ` _ %c / _` | |",92,92,92);
+	      gotoxy(75,33);
+	      printf("| |%c  | %c_%c | |  | | | | | | %c_| | |",92,40,41,40);
+	      gotoxy(75,34);
+	      printf("|_| %c_|%c___/|_|  |_| |_| |_|%c__,_|_|",92,92,92);
+	    break;
+	  case 2:
+		  //Erase old mode
+		  gotoxy(75,30);
+		  printf("                                     ");
+		  gotoxy(75,31);
+		  printf("                                     ");
+		  gotoxy(75,32);
+		  printf("                                     ");
+		  gotoxy(75,33);
+		  printf("                                     ");
+		  gotoxy(75,34);
+		  printf("                                     ");
+		  gotoxy(75,35);
+		  printf("                                     ");
+
+		  //Print mode Hard
+		  gotoxy(75,30);
+	      printf("     _   _               _");
+	      gotoxy(75,31);
+	      printf("    | | | | __ _ _ __ __| |");
+	      gotoxy(75,32);
+	      printf("    | |_| |/ _` | '__/ _` |");
+	      gotoxy(75,33);
+	      printf("    |  _  | %c_| | | | %c_| |",40,40);
+	      gotoxy(75,34);
+	      printf("    |_| |_|%c__,_|_|  %c__,_|",92,92);
+	    break;
+	}
 
 }
