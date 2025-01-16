@@ -32,7 +32,7 @@ void menuSelect(int menu, int* level){
 		    mainMenu();
 		    break;
 		  case 1:
-		    //helpMenu();
+		    helpMenu();
 		    break;
 		  case 2:
 		    //diffMenu();
@@ -140,7 +140,7 @@ int menuConfirm(int menu, uint8_t sel){
 			  return 0;
 		    break;
 		  case 1:
-		    //help()
+		    helpMenu();
 			  printf("\n");
 			  printf("help");
 			  return 1;
@@ -311,7 +311,7 @@ void helpMenu(){
 
 	srand(5);
 	//draw stars
-	for(uint8_t i = 0; i<75; i++){
+	for(uint8_t i = 0; i<100; i++){
 		uint8_t x = rand() % 189;
 		uint8_t y = rand() % 50;
 		gotoxy(x,y);
@@ -319,22 +319,36 @@ void helpMenu(){
 	}
 
 	//Help print
-	gotoxy(80,5);
-	printf(" _   _      _ ");
-	gotoxy(80,6);
-	printf("| | | | ___| |_ __");
-	gotoxy(80,7);
-	printf("| |_| |/ _ %c | '_ %c ",92,92);
-	gotoxy(80,8);
-	printf("|  _  |  __/ | |_%c |",41);
 	gotoxy(80,9);
-	printf("|_| |_|%c___|_| .__/ ",92);
+	printf(" _   _      _ ");
 	gotoxy(80,10);
+	printf("| | | | ___| |_ __");
+	gotoxy(80,11);
+	printf("| |_| |/ _ %c | '_ %c ",92,92);
+	gotoxy(80,12);
+	printf("|  _  |  __/ | |_%c |",41);
+	gotoxy(80,13);
+	printf("|_| |_|%c___|_| .__/ ",92);
+	gotoxy(80,14);
 	printf("             |_|");
 
 	//Help text
-	gotoxy(40,10);
-	printf("Welcome to Space Game! This is a short guide as to how the game is played\n");
+	gotoxy(50,20);
+	printf("Welcome to Space Game! This is a short guide as to how the game is played");
+	gotoxy(50,22);
+	printf("You are an invasive alien species, and your recent invasion of earth just failed..");
+	gotoxy(50,24);
+	printf("Millions of your kin are dead, and now the earthlings are launching a counter attack.");
+	gotoxy(50,26);
+	printf("Filled with sorrow and anger, you must fight back and survive against these monsters!");
+	gotoxy(50,30);
+	printf("Just use your spaceship controls: A & D to rotate and W & D to go forwards/backwards.");
+	gotoxy(50,32);
+	printf("Press SPACE to shoot, and don't hesitate!");
+	gotoxy(50,34);
+	printf("New supply packages and upgrades will be sent to you over time. Good luck");
+
+
 
 	//Controls at bottom of screen
 	gotoxy(140,50);
