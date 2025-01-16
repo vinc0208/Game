@@ -66,6 +66,8 @@ int main(void) {
 	//joystick_2_radar(buffer);
 	*/
 
+	//print_bullet(2, 0);
+	printf("%x", *bullet_char_data[0]);
 
 	int level = 10;
 
