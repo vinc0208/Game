@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "ansi.h"
-
+#include "sinusoid.h"
 int main(void) {
 
 	uart_init(115200);
