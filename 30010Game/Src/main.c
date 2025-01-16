@@ -10,14 +10,10 @@
 int main(void) {
 
 	uart_init(115200);
-
 	//Initialize time
 	Timer15Config();
 	//set the seed
 	srand(5);
-
-
-
 
 
 	//The commented code below is simply for showing LCD things, not needed atm, but uncomment to see
@@ -53,7 +49,7 @@ int main(void) {
 
 	/* //this block initializes the game
 		clrscr(); //clear screen and set starting parameters
-		int n_bul=5, difficulty=2,style=1,n_ene = 2+difficulty,n_ast=5,n_pow=5;
+		uint8_t n_bul=5, difficulty=2,style=1,n_ene = 2+difficulty,n_ast=5,n_pow=5;
 		bullet testbul[n_bul]; // make arrays of all objects
 		asteroid all_asteroids[n_ast];
 		enemy all_enemies[n_ene];
