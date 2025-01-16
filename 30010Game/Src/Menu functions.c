@@ -213,11 +213,13 @@ void mainMenu(){
 		shp1.x = 2;
 		shp1.y = y;
 		shp1.dir = 3;
+		shp1.style = 0;
 
 		spaceship shp2;
 		shp2.x = 185;
 		shp2.y = y;
 		shp2.dir = 7;
+		shp2.style = 1;
 
 		while(1){
 			if(TimeMaster15.hsecond % 4 == 0){
@@ -249,17 +251,17 @@ void mainMenu(){
 
 		fgcolor(15);
 		//Title print
-		gotoxy(40,10);
+		gotoxy(43,10);
 		printf("     _______  ______      ___       ______  _______      _______      ___       ___  ___   _______ ");
-		gotoxy(40,11);
+		gotoxy(43,11);
 		printf("    /       ||   _  %c    /   %c     /      ||   ____|    /  _____|    /   %c     |   %c/   | |   ____|",92,92,92,92);
-		gotoxy(40,12);
+		gotoxy(43,12);
 		printf("   |   (----`|  |_)  |  /  ^  %c   |  ,----'|  |__      |  |  __     /  ^  %c    |  %c  /  | |  |__   ",92,92,92);
-		gotoxy(40,13);
+		gotoxy(43,13);
 		printf("    %c   %c    |   ___/  /  /_%c  %c  |  |     |   __|     |  | |_ |   /  /_%c  %c   |  |%c/|  | |   __| ",92,92,92,92,92,92,92);
-		gotoxy(40,14);
+		gotoxy(43,14);
 		printf(".----)   |   |  |     /  _____  %c |  `----.|  |____    |  |__| |  /  _____  %c  |  |  |  | |  |___",92,92);
-		gotoxy(40,15);
+		gotoxy(43,15);
 		printf("|_______/    | _|    /__/     %c__%c %c______||_______|    %c______| /__/     %c__%c |__|  |__| |_______|",92,92,92,92,92,92);
 
 		//Start print
