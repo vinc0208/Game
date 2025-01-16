@@ -68,7 +68,6 @@ void TIM1_BRK_TIM15_IRQHandler(void) { //Needed to count the time
 	if (TimeMaster15.msecond >= 10){
 		TimeMaster15.msecond %= 10;
 		TimeMaster15.hsecond += 1;
-		SpeedIncrease.hsecond += 1;
 	}
 	if (TimeMaster15.hsecond >= 100){
 		TimeMaster15.hsecond %= 100;
@@ -123,21 +122,17 @@ void ResetTime(){ //Resets the time
 	TimeMaster15.msecond = 0;
 }
 
-void GameSpeed(int* level){
-	if (SpeedIncrease.hsecond >= *level){
-		SpeedIncrease.hsecond %= *level;
-		SpeedIncrease.second += 1;
-	}
-	if (SpeedIncrease.second >= 60){
-		SpeedIncrease.second %= 60;
-		SpeedIncrease.minute += 1;
-	}
-	if (SpeedIncrease.minute >= 60){
-		SpeedIncrease.minute %= 60;
-		SpeedIncrease.hour += 1;
-	}
-}
+//Work in progress (Jens)
+/*void IncreasingSpeed(){
+	int32_t static speed = 1;
+	TimeFormat SpeedIncrease; //Maybe use global variable instead?
+	SpeedIncrease = TimeMaster15;
 
+	if ((TimeMaster15.second % 10) == 0){
+		speed += 1;
+		SpeedIncrease.second *= (speed/2);
+	}
+}*/
 
 void lcd_write_string(char* string, uint8_t slice, uint16_t line, uint8_t* buffer){
 	uint8_t strleng = strlen(string);
@@ -176,6 +171,165 @@ void lcd_update(char* string, char* tbu, uint8_t slice, uint16_t line, uint8_t* 
 
 	lcd_write_string(temp2, slice, line, buffer);
 }
+
+void menuSelect(int menu, int* level){
+	//For menu input: 0 = main menu, 1 = help, 2 = difficulty, 3 = death, 4 = pause
+	uint8_t static sel = 0;
+	uint8_t static options;
+	point static selXY[5];
+	char static c = 0;
+	int static currmenu;
+	int static first = 1;
+
+	if(first == 1){
+		currmenu = menu;
+		first = 0;
+	}
+
+	c = uartKeyRead();
+
+
+	switch (currmenu) {
+	  case 0:
+		selXY[0].x = 1;
+		selXY[0].y = 1;
+		selXY[1].x = 10;
+		selXY[1].y = 1;
+		selXY[2].x = 20;
+		selXY[2].y = 1;
+		options = 3;
+		break;
+	  case 1:
+		selXY[0].x = 5;
+		selXY[0].y = 1;
+		options = 1;
+		break;
+	  case 2:
+		selXY[0].x = 5;
+		selXY[0].y = 1;
+		options = 1;
+		break;
+	  case 3:
+		selXY[0].x = 5;
+		selXY[0].y = 1;
+		selXY[1].x = 15;
+		selXY[1].y = 1;
+		options = 2;
+		break;
+	  case 4:
+		selXY[0].x = 5;
+		selXY[0].y = 1;
+		selXY[1].x = 15;
+		selXY[1].y = 1;
+		options = 2;
+		break;
+		}
+
+	switch (c) {
+	  case 97: //A
+	    if(sel > 0){
+	    	gotoxy(selXY[sel].x, selXY[sel].y);
+	    	printf(" ");
+	    	sel--;
+	    	gotoxy(selXY[sel].x, selXY[sel].y);
+	    	printf("%c", 205);
+	    }
+	    break;
+	  case 100: //D
+	    if(sel < options-1){
+	    	gotoxy(selXY[sel].x, selXY[sel].y);
+	    	printf(" ");
+	    	sel++;
+	    	gotoxy(selXY[sel].x, selXY[sel].y);
+	    	printf("%c", 205);
+	    }
+	    break;
+	  case 119: //W
+	    if(currmenu == 2){
+	    	//increment level
+	    	*level++;
+	    	printf("Level++\n");
+	    }
+	    break;
+	  case 115: //S
+	    if(currmenu == 2){
+	    	//decrement level
+	    	*level--;
+	    	printf("Level--\n");
+	    }
+	    break;
+	  case 13:
+		currmenu = menuConfirm(currmenu, sel);
+    	gotoxy(selXY[sel].x, selXY[sel].y);
+    	printf(" ");
+    	sel = 0;
+		break;
+	}
+
+}
+
+int menuConfirm(int menu, uint8_t sel){
+	if(menu == 0){
+		switch (sel) {
+		  case 0:
+		    //initGame()
+			  printf("\n");
+			  printf("INITGAME");
+			  return 0;
+		    break;
+		  case 1:
+		    //help()
+			  printf("\n");
+			  printf("help");
+			  return 1;
+		    break;
+		  case 2:
+		    //difficulty
+			  printf("\n");
+			  printf("difficulty");
+			  return 2;
+		    break;
+		}
+	}else if((menu == 1) || (menu == 2)){
+		//main menu
+		printf("\n");
+		printf("Main menu");
+		return 0;
+	}else if(menu == 3){
+		switch (sel) {
+		  case 0:
+		    //initGame()
+			  printf("\n");
+			  printf("initgame");
+			  return 0;
+		    break;
+		  case 1:
+		    //mainMenu()
+			  printf("\n");
+			  printf("mainMenu");
+			  return 0;
+		    break;
+		}
+	}else if(menu == 4){
+		switch (sel) {
+		  case 0:
+		    //resume()
+			  printf("\n");
+			  printf("resume");
+			  return 0;
+		    break;
+		  case 1:
+		    //mainMenu()
+			  printf("\n");
+			  printf("mainMenu");
+			  return 0;
+		    break;
+		}
+	}else{
+		return 0;
+	}
+}
+
 
 
 /*****************************/
@@ -269,11 +423,11 @@ void init_radar(uint8_t *buffer) {
 	uint8_t line;
 	for (line=0; line<2; line++) {
 		for (i=0; i<15; i++) {
-			buffer[line*128 + slice + i] = game_char_data[0][1];
+			buffer[line*128 + slice + i] = game_char_data[0][1];			//Clears radar
 		}
 	}
 	line = 2, slice = 113;
-	buffer[(line-1)*128 + slice] = 0x01;
+	buffer[(line-1)*128 + slice] = 0x01;									//Adds radar center
 	lcd_push_buffer(buffer);
 }
 
@@ -282,14 +436,14 @@ void init_lcd(uint8_t* buffer) {
 	uint8_t j;
 	for (j=0; j<2; j++) {
 		for (i=0; i<4; i++) {
-			buffer[128*i + 93 +j*2] = game_char_data[24][0];
+			buffer[128*i + 93 +j*2] = game_char_data[24][0];				//Creates division lines
 		}
 	}
 	for (uint8_t l=0; l<2; l++) {
 		for (i=0; i<5; i++) {
 			for (j=0; j<5; j++) {
 				uint8_t n = 19 + i - 5*l;
-				buffer[(l+2)*128 + i*6 + 99 + j] = game_char_data[n][j];
+				buffer[(l+2)*128 + i*6 + 99 + j] = game_char_data[n][j];	//Creates radar text
 			}
 		}
 	}
@@ -297,13 +451,13 @@ void init_lcd(uint8_t* buffer) {
 
 }
 
-void radar(uint8_t* buffer, uint8_t angle, uint8_t* prevangle) {
+void radar(uint8_t* buffer, uint8_t angle, int *prevangle) {
 	uint8_t slice, line;
 
-	if ((angle == *prevangle) || (angle == 0)) {
+	if ((angle == &prevangle) || (angle == 0)) {
 		init_radar(buffer);
 	}
-	if (angle == 3) {						//Right
+	if (angle == 3) {				//Right
 		slice = 116;
 		line = 1;
 		for (uint8_t j=0; j<5; j++) {
@@ -343,7 +497,7 @@ void radar(uint8_t* buffer, uint8_t angle, uint8_t* prevangle) {
 		}
 		lcd_push_buffer(buffer);
 
-	} else if (angle == 2) {				//Up-right
+	} else if (angle == 2) {				// Up-right
 		slice = 116;
 		line = 1;
 		for (uint8_t j=0; j<5; j++) {
@@ -375,11 +529,14 @@ void radar(uint8_t* buffer, uint8_t angle, uint8_t* prevangle) {
 		}
 		lcd_push_buffer(buffer);
 	}
-	*prevangle = angle;
+	prevangle = angle;
 }
 
 
 void joystick_2_radar(uint8_t* buffer) {
+	memset(buffer,0x00,512);
+	initJoystick();
+	init_lcd(buffer);
 
 	uint8_t prevangle = -1;
 	uint8_t angle = 0;
@@ -452,10 +609,6 @@ void joystick_2_radar(uint8_t* buffer) {
 			if (!((0x0001 << 1) & X) || !((0x0001 << 2) & X)) {
 				break;
 			}
-		}
-
-		if ((0x0001 << 5) & X) {
-			break;
 		}
 	}
 }

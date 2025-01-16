@@ -1,0 +1,16 @@
+/*
+ * Bulletchar.h
+ *
+ *  Created on: 16. jan. 2025
+ *      Author: Bruger
+ */
+
+#ifndef BULLETCHAR_H_
+#define BULLETCHAR_H_
+
+#include "stdio.h"
+#include "stdint.h"
+
+extern char bullet_char_data[][12];
+
+#endif /* BULLETCHAR_H_ */

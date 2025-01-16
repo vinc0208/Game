@@ -55,21 +55,15 @@ int main(void) {
 	*/
 
 
-
-	/*
-	// Sets up radar image and initializes joystick input to test radar.
+	/*lcd_init();
 	uint8_t buffer[512];
 	memset(buffer,0x00,512);
 	initJoystick();
-	lcd_init();
 	init_lcd(buffer);
-	//joystick_2_radar(buffer);
-	*/
-
-	//print_bullet(2, 0);
-	printf("%x", *bullet_char_data[0]);
-
+	init_radar(buffer);*/
 	int level = 10;
+
+
 
 
 

@@ -297,13 +297,12 @@ void init_lcd(uint8_t* buffer) {
 
 }
 
-void radar(uint8_t* buffer, uint8_t angle, uint8_t* prevangle) {
+void radar(uint8_t* buffer) {
+	uint8_t X = readJoystick();
 	uint8_t slice, line;
 
-	if ((angle == *prevangle) || (angle == 0)) {
-		init_radar(buffer);
-	}
-	if (angle == 3) {						//Right
+
+	while (((0x0001 << 3) & X) && !((0x0001 << 0) & X) && !((0x0001 << 1) & X)) {	//Right
 		slice = 116;
 		line = 1;
 		for (uint8_t j=0; j<5; j++) {
@@ -314,16 +313,28 @@ void radar(uint8_t* buffer, uint8_t angle, uint8_t* prevangle) {
 			buffer[(line-1)*128+slice+j] = game_char_data[10][j];
 		}
 		lcd_push_buffer(buffer);
+		X = readJoystick();
+		if (!((0x0001 << 3) & X) || ((0x0001 << 0) & X) || ((0x0001 << 1) & X)) { 	//If not pointing right or pointing up or down: break
+			init_radar(buffer);
+			break;
+		}
+	}
 
-	}	else if (angle == 1) {				//Up
+	while (((0x0001 << 0) & X) && !((0x0001 << 3) & X) && !((0x0001 << 2) & X)) {	//Up
 		slice = 111;
 		line = 1;
 		for (uint8_t j=0; j<5; j++) {
 			buffer[(line-1)*128+slice+j] = game_char_data[5][j];
 		}
 		lcd_push_buffer(buffer);
+		X = readJoystick();
+		if (!((0x0001 << 0) & X) || ((0x0001 << 0) & X) || ((0x0001 << 1) & X)) {
+			init_radar(buffer);
+			break;
+		}
+	}
 
-	} else if (angle == 7) {				//Left
+	while (((0x0001 << 2) & X) && !((0x0001 << 0) & X) && !((0x0001 << 1) & X)) {	//Left
 		slice = 106;
 		line = 1;
 		for (uint8_t j=0; j<5; j++) {
@@ -334,128 +345,81 @@ void radar(uint8_t* buffer, uint8_t angle, uint8_t* prevangle) {
 			buffer[(line-1)*128+slice+j] = game_char_data[8][j];
 		}
 		lcd_push_buffer(buffer);
+		X = readJoystick();
+		if (!((0x0001 << 2) & X) || ((0x0001 << 0) & X) || ((0x0001 << 1) & X)) {
+			init_radar(buffer);
+			break;
+		}
+	}
 
-	} else if (angle == 5) {				//Down
+	while (((0x0001 << 1) & X) && !((0x0001 << 3) & X) && !((0x0001 << 2) & X)) {	//Down
 		slice = 111;
 		line = 2;
 		for (uint8_t j=0; j<5; j++) {
 			buffer[(line-1)*128+slice+j] = game_char_data[12][j];
 		}
 		lcd_push_buffer(buffer);
+		X = readJoystick();
+		if (!((0x0001 << 1) & X) || ((0x0001 << 3) & X) || ((0x0001 << 2) & X)) {
+			init_radar(buffer);
+			break;
+		}
+	}
 
-	} else if (angle == 2) {				//Up-right
+	while (((0x0001 << 0) & X) && ((0x0001 << 3) & X)) {		// Up-right
 		slice = 116;
 		line = 1;
 		for (uint8_t j=0; j<5; j++) {
 			buffer[(line-1)*128+slice+j] = game_char_data[6][j];
 		}
 		lcd_push_buffer(buffer);
+		X = readJoystick();
+		if (!((0x0001 << 0) & X) || !((0x0001 << 3) & X)) {
+			init_radar(buffer);
+			break;
+		}
+	}
 
-	} else if (angle == 8) {				//Up-left
+	while (((0x0001 << 0) & X) && ((0x0001 << 2) & X)) {		//Up-left
 		slice = 106;
 		line = 1;
 		for (uint8_t j=0; j<5; j++) {
 			buffer[(line-1)*128+slice+j] = game_char_data[4][j];
 		}
 		lcd_push_buffer(buffer);
+		X = readJoystick();
+		if (!((0x0001 << 0) & X) || !((0x0001 << 2) & X)) {
+			init_radar(buffer);
+			break;
+		}
+	}
 
-	} else if (angle == 4) {				//Down-right
+	while (((0x0001 << 1) & X) && ((0x0001 << 3) & X)) {		//Down-right
 		slice = 116;
 		line = 2;
 		for (uint8_t j=0; j<5; j++) {
 			buffer[(line-1)*128+slice+j] = game_char_data[13][j];
 		}
 		lcd_push_buffer(buffer);
+		X = readJoystick();
+		if (!((0x0001 << 1) & X) || !((0x0001 << 3) & X)) {
+			init_radar(buffer);
+			break;
+		}
+	}
 
-	} else if (angle == 6) {				//Down-left
+	while (((0x0001 << 1) & X) && ((0x0001 << 2) & X)) {		//Down-left
 		slice = 106;
 		line = 2;
 		for (uint8_t j=0; j<5; j++) {
 			buffer[(line-1)*128+slice+j] = game_char_data[11][j];
 		}
 		lcd_push_buffer(buffer);
-	}
-	*prevangle = angle;
-}
-
-
-void joystick_2_radar(uint8_t* buffer) {
-
-	uint8_t prevangle = -1;
-	uint8_t angle = 0;
-
-	while(1) {
-		uint8_t X = readJoystick();
-		while(((0x0001 << 3) & X) && !((0x0001 << 0) & X) && !((0x0001 << 1) & X)) { 	//Right
-			angle = 3;
-			radar(buffer, angle, prevangle);
-			X = readJoystick();
-			if (!((0x0001 << 3) & X) || ((0x0001 << 0) & X) || ((0x0001 << 1) & X)) { 	//If not pointing right or pointing up or down: break
-				break;
-			}
-		}
-
-		while (((0x0001 << 0) & X) && !((0x0001 << 3) & X) && !((0x0001 << 2) & X)) {	//Up
-			angle = 1;
-			radar(buffer, angle, prevangle);
-			X = readJoystick();
-			if (!((0x0001 << 0) & X) || ((0x0001 << 0) & X) || ((0x0001 << 1) & X)) { 	//If not pointing right or pointing up or down: break
-				break;
-			}
-		}
-
-		while (((0x0001 << 2) & X) && !((0x0001 << 0) & X) && !((0x0001 << 1) & X)) {	//Left
-			angle = 7;
-			radar(buffer, angle, prevangle);
-			X = readJoystick();
-			if (!((0x0001 << 2) & X) || ((0x0001 << 0) & X) || ((0x0001 << 1) & X)) {
-				break;
-			}
-		}
-
-		while (((0x0001 << 1) & X) && !((0x0001 << 3) & X) && !((0x0001 << 2) & X)) {	//Down
-			angle = 5;
-			radar(buffer, angle, prevangle);
-			X = readJoystick();
-			if (!((0x0001 << 1) & X) || ((0x0001 << 3) & X) || ((0x0001 << 2) & X)) {
-				break;
-			}
-		}
-
-		while (((0x0001 << 0) & X) && ((0x0001 << 3) & X)) {		// Up-right
-			angle = 2;
-			radar(buffer, angle, prevangle);
-			if (!((0x0001 << 0) & X) || !((0x0001 << 3) & X)) {
-				break;
-			}
-		}
-
-		while (((0x0001 << 0) & X) && ((0x0001 << 2) & X)) {		//Up-left
-			angle = 8;
-			radar(buffer, angle, prevangle);
-			if (!((0x0001 << 0) & X) || !((0x0001 << 2) & X)) {
-				break;
-			}
-		}
-
-		while (((0x0001 << 1) & X) && ((0x0001 << 3) & X)) {		//Down-right
-			angle = 4;
-			radar(buffer, angle, prevangle);
-			if (!((0x0001 << 1) & X) || !((0x0001 << 3) & X)) {
-				break;
-			}
-		}
-
-		while (((0x0001 << 1) & X) && ((0x0001 << 2) & X)) {		//Down-left
-			angle = 6;
-			radar(buffer, angle, prevangle);
-			if (!((0x0001 << 1) & X) || !((0x0001 << 2) & X)) {
-				break;
-			}
-		}
-
-		if ((0x0001 << 5) & X) {
+		X = readJoystick();
+		if (!((0x0001 << 1) & X) || !((0x0001 << 2) & X)) {
+			init_radar(buffer);
 			break;
 		}
 	}
 }
+
