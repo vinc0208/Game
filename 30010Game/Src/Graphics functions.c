@@ -74,8 +74,11 @@ void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, char* txt, short styl
 
 
 
-//bullets require a direction from the player and a "powerup" state from bullet status
-void drawBullet(spaceship *ship,bullet*bul){
+//bullets require a direction from the player and a "powerup" state from bullet status.
+//this function is for FIRING BULLETS ONLY as it places them at the spaceship if they are active.
+//consider changing function to take player input and setting bullet status from Powerup array (by searching for an active dmg power with status=1)
+//to make it actually fire the bullet rather than initializing its trajectory
+void fireBullet(spaceship *ship,bullet*bul){
 	fgcolor(11);
 		if(bul->status==0){
 			//if it is not active dont draw it
@@ -84,42 +87,58 @@ void drawBullet(spaceship *ship,bullet*bul){
 				bul->dir=ship->dir;
 				bul->x=ship->x;
 				bul->y=ship->y-2;
+				bul->velx=0;
+				bul->vely=-1;
 				gotoxy(bul->x,bul->y);
 				printf("|");
 			}else if(ship->dir==5){
 				bul->x=ship->x,bul->dir=ship->dir;
 				bul->y=ship->y+1;
+				bul->velx=0;
+				bul->vely=1;
 				gotoxy(bul->x,bul->y);
 				printf("|");
 			}else if(ship->dir==2){
 				bul->x=ship->x+1,bul->dir=ship->dir;
 				bul->y=ship->y-1;
+				bul->velx=3;
+				bul->vely=-1;
 				gotoxy(bul->x,bul->y);
 				printf("/");
 			}else if(ship->dir==3){
 				bul->x=ship->x+2,bul->dir=ship->dir;
 				bul->y=ship->y;
 				gotoxy(bul->x,bul->y);
+				bul->velx=1;
+				bul->vely=0;
 				printf("-");
 			}else if(ship->dir==7){
 				bul->x=ship->x-2,bul->dir=ship->dir;
 				bul->y=ship->y;
 				gotoxy(bul->x,bul->y);
+				bul->velx=-1;
+				bul->vely=0;
 				printf("-");
 			}else if(ship->dir==4){
 				bul->x=ship->x+1,bul->dir=ship->dir;
 				bul->y=ship->y+1;
 				gotoxy(bul->x,bul->y);
+				bul->velx=3;
+				bul->vely=1;
 				printf("%c",92);
 			}else if(ship->dir==6){
 				bul->x=ship->x-2,bul->dir=ship->dir;
 				bul->y=ship->y+1;
 				gotoxy(bul->x,bul->y);
+				bul->velx=-3;
+				bul->vely=1;
 				printf("/");
 			}else if(ship->dir==8){
 				bul->x=ship->x-2,bul->dir=ship->dir;
 				bul->y=ship->y-1;
 				gotoxy(bul->x,bul->y);
+				bul->velx=0;
+				bul->vely=1;
 				printf("%c",92);
 			}}
 
@@ -381,7 +400,7 @@ void initSpaceship(spaceship* ship,int difficulty, int style){
 	ship->x=95;
 	ship->y=25;
 	ship->hp=6-difficulty;
-	ship->dir=1;
+	ship->dir=2;
 	ship->style=style;
 	ship->status=1; // indicates that they are active when true
 	drawSpaceship(ship);
@@ -438,6 +457,40 @@ void initAsteroid(asteroid* all_asteroids,int n_ast){
 		drawAsteroid(&all_asteroids[i],2); //finishes by drawing them
 		}}
 
+
+
+
+// draw a bullet that has already been fired
+void drawBullet(bullet*bul){
+	fgcolor(11);
+		if(bul->status==0){
+			//if it is not active dont draw it
+		} else if(bul->status==1){; //corresponds to 1 dmg
+			if(bul->dir==1){
+				gotoxy(bul->x,bul->y);
+				printf("|");
+			}else if(bul->dir==5){
+				gotoxy(bul->x,bul->y);
+				printf("|");
+			}else if(bul->dir==2){
+				gotoxy(bul->x,bul->y);
+				printf("/");
+			}else if(bul->dir==3){
+				gotoxy(bul->x,bul->y);
+				printf("-");
+			}else if(bul->dir==7){
+				gotoxy(bul->x,bul->y);
+				printf("-");
+			}else if(bul->dir==4){
+				gotoxy(bul->x,bul->y);
+				printf("%c",92);
+			}else if(bul->dir==6){
+				gotoxy(bul->x,bul->y);
+				printf("/");
+			}else if(bul->dir==8){
+				gotoxy(bul->x,bul->y);
+				printf("%c",92);
+			}}}
 
 
 

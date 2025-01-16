@@ -10,28 +10,10 @@
 int main(void) {
 
 	uart_init(115200);
-
 	//Initialize time
 	Timer15Config();
 	//set the seed
 	srand(5);
- 	/* //this block initializes the game
-	clrscr(); //clear screen and set starting parameters
-	int n_bul=5, difficulty=2,style=1,n_ene = 2+difficulty,n_ast=5,n_pow=5;
-	bullet testbul[n_bul]; // make arrays of all objects
-	asteroid all_asteroids[n_ast];
-	enemy all_enemies[n_ene];
-	powerup all_powerups[n_pow];
-	spaceship playership;
-
-	initSpaceship(&playership,difficulty,style); //initialize and draw all objects
-	initBullet(&testbul, n_bul);
-	initPowerup(&all_powerups,n_pow);
-	initEnemy(&all_enemies,n_ene);
-	initAsteroid(&all_asteroids,n_ast);
-	*/
-
-
 
 
 	//The commented code below is simply for showing LCD things, not needed atm, but uncomment to see
@@ -55,19 +37,31 @@ int main(void) {
 	*/
 
 
-
-	/*
-	// Sets up radar image and initializes joystick input to test radar.
+	/*lcd_init();
 	uint8_t buffer[512];
 	memset(buffer,0x00,512);
 	initJoystick();
-	lcd_init();
 	init_lcd(buffer);
-	//joystick_2_radar(buffer);
-	*/
-
-
+	init_radar(buffer);*/
 	int level = 10;
+
+
+
+	/* //this block initializes the game
+		clrscr(); //clear screen and set starting parameters
+		uint8_t n_bul=5, difficulty=2,style=1,n_ene = 2+difficulty,n_ast=5,n_pow=5;
+		bullet testbul[n_bul]; // make arrays of all objects
+		asteroid all_asteroids[n_ast];
+		enemy all_enemies[n_ene];
+		powerup all_powerups[n_pow];
+		spaceship playership;
+
+		initSpaceship(&playership,difficulty,style); //initialize and draw all objects
+		initBullet(&testbul, n_bul);
+		initPowerup(&all_powerups,n_pow);
+		initEnemy(&all_enemies,n_ene);
+		initAsteroid(&all_asteroids,n_ast);
+		*/
 
 
 
