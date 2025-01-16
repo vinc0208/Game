@@ -280,7 +280,7 @@ void init_radar(uint8_t *buffer) {
 void init_lcd(uint8_t* buffer) {
 	//Prepare byte array and strings to be updated (buffer)
 	memset(buffer,0x00,512);
-	char score[] = "Score: 0";
+	char score[] = "Score: ";
 	char life[] = "Lives: ";
 	char bullets[] = "Ammo : ";
 
@@ -295,20 +295,12 @@ void init_lcd(uint8_t* buffer) {
 	uint8_t n;
 	uint8_t i;
 	uint8_t j;
-	for (n=0; n<3; n++) {
-		for (i=0; i<2; i++) {
-			for (j=0; j<5; j++) {
-				buffer[(1)*128 + 36 + n*11 + i*5 + j] = game_char_data[2+i][j];	//Prints hearts
-			}
-		}
-	}
-
-	for (n=0; n<5; n++) {
+	for (uint8_t l=0; l<2; l++) {
+		n = 2 + l;
 		for (j=0; j<5; j++) {
-			buffer[(2)*128 + 37 + n*11 + j] = game_char_data[1][j];		//Prints bullets
+			buffer[(1)*128 + 36 + n*5 + j] = game_char_data[n][j];	//Prints hearts
 		}
 	}
-
 
 	for (j=0; j<2; j++) {
 		for (i=0; i<4; i++) {
@@ -502,38 +494,4 @@ void joystick_2_radar(uint8_t* buffer) {
 	}
 }
 
-
-void RGB_life_detector(spaceship ship){
-	if (ship.hp > 3 /* && game_in_progress == True/1*/){
-		GPIOA->ODR &= ~(0x0001 << 9);
-
-		GPIOC->ODR |= (0x0001 << 7);
-		GPIOB->ODR |= (0x0001 << 4);
-	}
-	else if (ship.hp == 3 /* && game_in_progress == True/1*/){
-		GPIOC->ODR &= ~(0x0001 << 7);
-
-		GPIOB->ODR |= (0x0001 << 4);
-		GPIOA->ODR |= (0x0001 << 9);
-	}
-
-	else if (ship.hp == 2 /* && game_in_progress == True/1*/){
-		GPIOC->ODR &= ~(0x0001 << 7);
-		GPIOB->ODR &= ~(0x0001 << 4);
-
-		GPIOA->ODR |= (0x0001 << 9);
-	}
-
-	else if (ship.hp <= 1 /* && game_in_progress == True/1*/){
-		GPIOB->ODR &= ~(0x0001 << 4);
-
-		GPIOC->ODR |= (0x0001 << 7);
-		GPIOA->ODR |= (0x0001 << 9);
-	}
-	else{
-		GPIOA->ODR |= (0x0001 << 9);
-		GPIOC->ODR |= (0x0001 << 7);
-		GPIOB->ODR |= (0x0001 << 4);
-	}
-}
 

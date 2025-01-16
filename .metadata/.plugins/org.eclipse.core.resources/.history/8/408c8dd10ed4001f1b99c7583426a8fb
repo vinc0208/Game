@@ -33,37 +33,34 @@ int main(void) {
 	GPIOA->MODER |= (0x00000001 << (9 * 2));
 
 
+	//The commented code below is simply for showing LCD things, not needed atm, but uncomment to see
+	/*
+	//Prepare byte array and strings to be updated
+	uint8_t byteArray[512];
+	char life[] = "Lives: ";
+	char score[] = "Score: ";
+	char bullets[] = "Ammo : ";
+
+	//initialize LCD
+	lcd_init();
+
+	//Update byte array with strings (These will frequently give warnings, however it should still work)
+	lcd_write_string(life, 1, 1, &byteArray);
+	lcd_write_string(score, 1, 2, &byteArray);
+	lcd_write_string(bullets, 1, 3, &byteArray);
+
 	//Transmit byte array
-		uint8_t buffer[512];
-		init_lcd(buffer);
+	lcd_push_buffer(byteArray);
+	*/
 
 
-		int level = 10;
-
-
-
-		/* //this block initializes the game
-			clrscr(); //clear screen and set starting parameters
-			uint8_t n_bul=5, difficulty=2,style=1,n_ene = 2+difficulty,n_ast=5,n_pow=5;
-			bullet testbul[n_bul]; // make arrays of all objects
-			asteroid all_asteroids[n_ast];
-			enemy all_enemies[n_ene];
-			powerup all_powerups[n_pow];
-			spaceship playership;
-
-			initSpaceship(&playership,difficulty,style); //initialize and draw all objects
-			initBullet(&testbul, n_bul);
-			initPowerup(&all_powerups,n_pow);
-			initEnemy(&all_enemies,n_ene);
-			initAsteroid(&all_asteroids,n_ast);
-			*/
-
-		//For testing radar
-		/*
-		initJoystick();
-		uint8_t prevangle = -1;
-		uint8_t angle = 0;
-		 */
+	/*lcd_init();
+	uint8_t buffer[512];
+	memset(buffer,0x00,512);
+	initJoystick();
+	init_lcd(buffer);
+	init_radar(buffer);*/
+	int level = 10;
 
 
 
@@ -86,7 +83,6 @@ int main(void) {
 
 
 	while(1){
-		//joystick_2_radar(uint8_t* buffer);
 		menuSelect(0, &level);
 	}
 }

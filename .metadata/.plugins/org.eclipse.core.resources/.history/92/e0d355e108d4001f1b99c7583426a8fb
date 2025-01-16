@@ -279,8 +279,9 @@ void init_radar(uint8_t *buffer) {
 
 void init_lcd(uint8_t* buffer) {
 	//Prepare byte array and strings to be updated (buffer)
+	uint8_t buffer[512];
 	memset(buffer,0x00,512);
-	char score[] = "Score: 0";
+	char score[] = "Score: ";
 	char life[] = "Lives: ";
 	char bullets[] = "Ammo : ";
 
@@ -295,20 +296,16 @@ void init_lcd(uint8_t* buffer) {
 	uint8_t n;
 	uint8_t i;
 	uint8_t j;
-	for (n=0; n<3; n++) {
-		for (i=0; i<2; i++) {
+	for (uint8_t l=0; l<2; l++) {
+		n = 2 + l;
+		for (i=0; i<5; i++) {
 			for (j=0; j<5; j++) {
-				buffer[(1)*128 + 36 + n*11 + i*5 + j] = game_char_data[2+i][j];	//Prints hearts
+				buffer[(1)*128 + i*5 + 5*6 + j] = game_char_data[n][j];	//Prints hearts
+				buffer[(1)*128 + i*5 + 5*6 + j + 10] = game_char_data[n][j];
+				buffer[(1)*128 + i*5 + 5*6 + j + 20] = game_char_data[n][j];
 			}
 		}
 	}
-
-	for (n=0; n<5; n++) {
-		for (j=0; j<5; j++) {
-			buffer[(2)*128 + 37 + n*11 + j] = game_char_data[1][j];		//Prints bullets
-		}
-	}
-
 
 	for (j=0; j<2; j++) {
 		for (i=0; i<4; i++) {
@@ -413,127 +410,79 @@ void radar(uint8_t* buffer, uint8_t angle, uint8_t* prevangle) {
 
 void joystick_2_radar(uint8_t* buffer) {
 
-	initJoystick();
-	uint8_t prevangle = -1;
-	uint8_t angle = 0;
-
-	while(1) {
-		uint8_t X = readJoystick();
-		while(((0x0001 << 3) & X) && !((0x0001 << 0) & X) && !((0x0001 << 1) & X)) { 	//Right
-			angle = 3;
-			radar(buffer, angle, &prevangle);
-			X = readJoystick();
-			if (!((0x0001 << 3) & X) || ((0x0001 << 0) & X) || ((0x0001 << 1) & X)) { 	//If not pointing right or pointing up or down: break
-				break;
-			}
+	uint8_t X = readJoystick();
+	while(((0x0001 << 3) & X) && !((0x0001 << 0) & X) && !((0x0001 << 1) & X)) { 	//Right
+		angle = 3;
+		radar(buffer, angle, &prevangle);
+		X = readJoystick();
+		if (!((0x0001 << 3) & X) || ((0x0001 << 0) & X) || ((0x0001 << 1) & X)) { 	//If not pointing right or pointing up or down: break
+			break;
 		}
-
-		while (((0x0001 << 0) & X) && !((0x0001 << 3) & X) && !((0x0001 << 2) & X)) {	//Up
-			angle = 1;
-			radar(buffer, angle, &prevangle);
-			X = readJoystick();
-			if (!((0x0001 << 0) & X) || ((0x0001 << 0) & X) || ((0x0001 << 1) & X)) { 	//If not pointing right or pointing up or down: break
-				break;
-			}
+	}
+	while (((0x0001 << 0) & X) && !((0x0001 << 3) & X) && !((0x0001 << 2) & X)) {	//Up
+		angle = 1;
+		radar(buffer, angle, &prevangle);
+		X = readJoystick();
+		if (!((0x0001 << 0) & X) || ((0x0001 << 0) & X) || ((0x0001 << 1) & X)) { 	//If not pointing right or pointing up or down: break
+			break;
 		}
-
-		while (((0x0001 << 2) & X) && !((0x0001 << 0) & X) && !((0x0001 << 1) & X)) {	//Left
-			angle = 7;
-			radar(buffer, angle, &prevangle);
-			X = readJoystick();
-			if (!((0x0001 << 2) & X) || ((0x0001 << 0) & X) || ((0x0001 << 1) & X)) {
-				break;
-			}
+ }
+	while (((0x0001 << 2) & X) && !((0x0001 << 0) & X) && !((0x0001 << 1) & X)) {	//Left
+		angle = 7;
+		radar(buffer, angle, &prevangle);
+		X = readJoystick();
+		if (!((0x0001 << 2) & X) || ((0x0001 << 0) & X) || ((0x0001 << 1) & X)) {
+			break;
 		}
-
-		while (((0x0001 << 1) & X) && !((0x0001 << 3) & X) && !((0x0001 << 2) & X)) {	//Down
-			angle = 5;
-			radar(buffer, angle, &prevangle);
-			X = readJoystick();
-			if (!((0x0001 << 1) & X) || ((0x0001 << 3) & X) || ((0x0001 << 2) & X)) {
-				break;
-			}
+	}
+	while (((0x0001 << 1) & X) && !((0x0001 << 3) & X) && !((0x0001 << 2) & X)) {	//Down
+		angle = 5;
+		radar(buffer, angle, &prevangle);
+		X = readJoystick();
+		if (!((0x0001 << 1) & X) || ((0x0001 << 3) & X) || ((0x0001 << 2) & X)) {
+			break;
 		}
-
-		while (((0x0001 << 0) & X) && ((0x0001 << 3) & X)) {		// Up-right
-			angle = 2;
-			radar(buffer, angle, &prevangle);
-			X = readJoystick();
-			if (!((0x0001 << 0) & X) || !((0x0001 << 3) & X)) {
-				break;
-			}
+	}
+	while (((0x0001 << 0) & X) && ((0x0001 << 3) & X)) {		// Up-right
+		angle = 2;
+		radar(buffer, angle, &prevangle);
+		X = readJoystick();
+		if (!((0x0001 << 0) & X) || !((0x0001 << 3) & X)) {
+			break;
 		}
-
-		while (((0x0001 << 0) & X) && ((0x0001 << 2) & X)) {		//Up-left
-			angle = 8;
-			radar(buffer, angle, &prevangle);
-			X = readJoystick();
-			if (!((0x0001 << 0) & X) || !((0x0001 << 2) & X)) {
-				break;
-			}
+	}
+	while (((0x0001 << 0) & X) && ((0x0001 << 2) & X)) {		//Up-left
+		angle = 8;
+		radar(buffer, angle, &prevangle);
+		X = readJoystick();
+		if (!((0x0001 << 0) & X) || !((0x0001 << 2) & X)) {
+			break;
 		}
-
-		while (((0x0001 << 1) & X) && ((0x0001 << 3) & X)) {		//Down-right
-			angle = 4;
-			radar(buffer, angle, &prevangle);
-			X = readJoystick();
-			if (!((0x0001 << 1) & X) || !((0x0001 << 3) & X)) {
-				break;
-			}
+	}
+	while (((0x0001 << 1) & X) && ((0x0001 << 3) & X)) {		//Down-right
+		angle = 4;
+		radar(buffer, angle, &prevangle);
+		X = readJoystick();
+		if (!((0x0001 << 1) & X) || !((0x0001 << 3) & X)) {
+			break;
 		}
-
-		while (((0x0001 << 1) & X) && ((0x0001 << 2) & X)) {		//Down-left
-			angle = 6;
-			radar(buffer, angle, &prevangle);
-			X = readJoystick();
-			if (!((0x0001 << 1) & X) || !((0x0001 << 2) & X)) {
-				break;
-			}
+	}
+	while (((0x0001 << 1) & X) && ((0x0001 << 2) & X)) {		//Down-left
+		angle = 6;
+		radar(buffer, angle, &prevangle);
+		X = readJoystick();
+		if (!((0x0001 << 1) & X) || !((0x0001 << 2) & X)) {
+			break;
 		}
-
-		while ((X == 0x0000)) {										//No input
-			angle = 0;
-			radar(buffer, angle, &prevangle);
-			X = readJoystick();
-			if (!(X == 0x0000)) {
-				break;
-			}
+	}
+	while ((X == 0x0000)) {										//No input
+		angle = 0;
+		radar(buffer, angle, &prevangle);
+		X = readJoystick();
+		if (!(X == 0x0000)) {
+			break;
 		}
 	}
 }
 
-
-void RGB_life_detector(spaceship ship){
-	if (ship.hp > 3 /* && game_in_progress == True/1*/){
-		GPIOA->ODR &= ~(0x0001 << 9);
-
-		GPIOC->ODR |= (0x0001 << 7);
-		GPIOB->ODR |= (0x0001 << 4);
-	}
-	else if (ship.hp == 3 /* && game_in_progress == True/1*/){
-		GPIOC->ODR &= ~(0x0001 << 7);
-
-		GPIOB->ODR |= (0x0001 << 4);
-		GPIOA->ODR |= (0x0001 << 9);
-	}
-
-	else if (ship.hp == 2 /* && game_in_progress == True/1*/){
-		GPIOC->ODR &= ~(0x0001 << 7);
-		GPIOB->ODR &= ~(0x0001 << 4);
-
-		GPIOA->ODR |= (0x0001 << 9);
-	}
-
-	else if (ship.hp <= 1 /* && game_in_progress == True/1*/){
-		GPIOB->ODR &= ~(0x0001 << 4);
-
-		GPIOC->ODR |= (0x0001 << 7);
-		GPIOA->ODR |= (0x0001 << 9);
-	}
-	else{
-		GPIOA->ODR |= (0x0001 << 9);
-		GPIOC->ODR |= (0x0001 << 7);
-		GPIOB->ODR |= (0x0001 << 4);
-	}
-}
 
