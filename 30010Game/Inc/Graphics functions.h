@@ -10,6 +10,8 @@
 #include <Movement and math functions.h>
 
 void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, char* txt, short style);
+void drawBullet(bullet*bul);
+void fireBullet(spaceship *ship,bullet*bul);
 void drawSpaceship(spaceship*shp);
 void drawEnemy(enemy*ene);
 void drawAsteroid(asteroid* ast,short style);
