@@ -27,6 +27,23 @@ void menuSelect(int menu, int* level){
 
 	if(first == 1){
 		currmenu = menu;
+		switch (menu) {
+		  case 0:
+		    mainMenu();
+		    break;
+		  case 1:
+		    //helpMenu();
+		    break;
+		  case 2:
+		    //diffMenu();
+		    break;
+		  case 3:
+		    //deathMenu();
+		    break;
+		  case 4:
+		    //pauseMenu();
+		    break;
+		}
 		first = 0;
 	}
 
@@ -173,10 +190,11 @@ int menuConfirm(int menu, uint8_t sel){
 }
 
 void mainMenu(){
+
 	clrscr();
 	fgcolor(15);
 	reverse(0);
-
+	srand(5);
 		//draw stars
 		for(uint8_t i = 0; i<75; i++){
 			uint8_t x = rand() % 189;
@@ -187,31 +205,40 @@ void mainMenu(){
 
 		//Start time for spaceship animation
 		StopTime();
+		ResetTime();
 		StartTime();
 
 		//Create spaceship animation
-		int x1 = 2;
-		int x2 = 185;
 		int y = 23;
+		spaceship shp1;
+		shp1.x = 2;
+		shp1.y = y;
+		shp1.dir = 3;
+
+		spaceship shp2;
+		shp2.x = 185;
+		shp2.y = y;
+		shp2.dir = 7;
+
 		while(1){
 			if(TimeMaster15.hsecond % 4 == 0){
-				gotoxy(x1-1,y-1);
+				gotoxy(shp1.x-1,y-1);
 				printf("      ");
-				gotoxy(x1-1,y);
+				gotoxy(shp1.x-1,y);
 				printf("      ");
-				gotoxy(x1-1,y+1);
+				gotoxy(shp1.x-1,y+1);
 				printf("      ");
-				x1++;
-				drawSpaceship(x1,y,1,4);
+				shp1.x += 1;
+				drawSpaceship(&shp1);
 
-				gotoxy(x2-1,y-1);
+				gotoxy(shp2.x-1,y-1);
 				printf("      ");
-				gotoxy(x2-1,y);
+				gotoxy(shp2.x-1,y);
 				printf("      ");
-				gotoxy(x2-1,y+1);
+				gotoxy(shp2.x-1,y+1);
 				printf("      ");
-				x2--;
-				drawSpaceship(x2,y,2,3);
+				shp2.x -= 1;
+				drawSpaceship(&shp2);
 
 			}
 
@@ -273,5 +300,44 @@ void mainMenu(){
 		printf("| |  | | %c_%c | %c_| |  __/",40,41,40);
 		gotoxy(140,32);
 		printf("|_|  |_|%c___/ %c__,_|%c___|",92,92,92);
+
+		//Controls at bottom of screen
+		gotoxy(140,50);
+		printf("A for left, D for right, ENTER for select");
+}
+
+void helpMenu(){
+	clrscr();
+
+	srand(5);
+	//draw stars
+	for(uint8_t i = 0; i<75; i++){
+		uint8_t x = rand() % 189;
+		uint8_t y = rand() % 50;
+		gotoxy(x,y);
+		printf("%c",250);
+	}
+
+	//Help print
+	gotoxy(80,5);
+	printf(" _   _      _ ");
+	gotoxy(80,6);
+	printf("| | | | ___| |_ __");
+	gotoxy(80,7);
+	printf("| |_| |/ _ %c | '_ %c ",92,92);
+	gotoxy(80,8);
+	printf("|  _  |  __/ | |_%c |",41);
+	gotoxy(80,9);
+	printf("|_| |_|%c___|_| .__/ ",92);
+	gotoxy(80,10);
+	printf("             |_|");
+
+	//Help text
+	gotoxy(40,10);
+	printf("Welcome to Space Game! This is a short guide as to how the game is played\n");
+
+	//Controls at bottom of screen
+	gotoxy(140,50);
+	printf("Press ENTER to return to Main Menu");
 
 }
