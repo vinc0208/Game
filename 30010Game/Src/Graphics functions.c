@@ -15,7 +15,7 @@
 #include <stdlib.h>
 
 //draws a window as decribed in the excersises
-void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, char* txt, short style){
+void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, short style){
 	int i; //uses for loops to build a frame based on style
 	if (style==1){
 		for(i=0;i<y2-y1;i++){
@@ -32,7 +32,6 @@ void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, char* txt, short styl
 		}
 		gotoxy(x1+5,y1); // here corners and the text is added
 		printf("%c[%dm", ESC,7);
-		printf("%s",txt);
 		printf("%c[%dm", ESC,27);
 		gotoxy(x1,y1);
 		printf("%c",201);
@@ -58,7 +57,6 @@ void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, char* txt, short styl
 		}
 		printf("%c[%dm", ESC,7);
 		gotoxy(x1+5,y1);
-		printf("%s",txt);
 		printf("%c[%dm", ESC,27);
 		gotoxy(x1,y1);
 		printf("%c",254);
