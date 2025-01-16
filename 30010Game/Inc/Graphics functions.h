@@ -20,4 +20,5 @@ void initAsteroid(asteroid* all_asteroids,int n_ast);
 void initEnemy(enemy* all_enemies,int n_ene);
 void initSpaceship(spaceship* ship,int difficulty, int style);
 void initBullet(bullet * bul,int maxn_bull);
+uint8_t CheckOnScr(uint8_t x, uint8_t y);
 #endif /* GRAPHICS_FUNCTIONS_H_ */
