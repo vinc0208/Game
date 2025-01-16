@@ -13,6 +13,7 @@
 void menuSelect(int menu, int* level);
 int menuConfirm(int menu, uint8_t sel);
 void mainMenu();
+void helpMenu();
 
 
 #endif /* MENU_FUNCTIONS_H_ */
