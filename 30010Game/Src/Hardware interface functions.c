@@ -460,3 +460,37 @@ void joystick_2_radar(uint8_t* buffer) {
 	}
 }
 
+void RGB_life_detector(spaceship ship){
+	if (ship.hp > 3 /* && game_in_progress == True/1*/){
+		GPIOA->ODR &= ~(0x0001 << 9);
+
+		GPIOC->ODR |= (0x0001 << 7);
+		GPIOB->ODR |= (0x0001 << 4);
+	}
+	else if (ship.hp == 3 /* && game_in_progress == True/1*/){
+		GPIOC->ODR &= ~(0x0001 << 7);
+
+		GPIOB->ODR |= (0x0001 << 4);
+		GPIOA->ODR |= (0x0001 << 9);
+	}
+
+	else if (ship.hp == 2 /* && game_in_progress == True/1*/){
+		GPIOC->ODR &= ~(0x0001 << 7);
+		GPIOB->ODR &= ~(0x0001 << 4);
+
+		GPIOA->ODR |= (0x0001 << 9);
+	}
+
+	else if (ship.hp <= 1 /* && game_in_progress == True/1*/){
+		GPIOB->ODR &= ~(0x0001 << 4);
+
+		GPIOC->ODR |= (0x0001 << 7);
+		GPIOA->ODR |= (0x0001 << 9);
+	}
+	else{
+		GPIOA->ODR |= (0x0001 << 9);
+		GPIOC->ODR |= (0x0001 << 7);
+		GPIOB->ODR |= (0x0001 << 4);
+	}
+}
+

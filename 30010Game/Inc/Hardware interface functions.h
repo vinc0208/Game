@@ -14,11 +14,6 @@ typedef struct {
 TimeFormat TimeMaster15; // The reason why we have a global variable here is because we need to be able to access the time anywhere
 TimeFormat SpeedIncrease;// Another global variable needed for increasing game speed over time
 
-typedef struct {
-	int life, score, ammo;
-} stats;
-stats player;
-
 #ifndef HARDWARE_INTERFACE_FUNCTIONS_H_
 #define HARDWARE_INTERFACE_FUNCTIONS_H_
 
@@ -41,6 +36,7 @@ void init_radar(uint8_t *buffer);
 void init_lcd(uint8_t* buffer);
 void radar(uint8_t* buffer, uint8_t angle, uint8_t* prevangle);
 void joystick_2_radar(uint8_t* buffer);
+void RGB_life_detector(spaceship ship);
 
 
 
