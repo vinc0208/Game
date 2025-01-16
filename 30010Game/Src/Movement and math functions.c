@@ -21,3 +21,14 @@
 
 
 //Movement
+
+//updates obejcts with movement independent of the player
+void UpdateObjPos(enemy* all_ene,bullet* all_bul,int n_ene, int n_bul){
+	int i,k;
+	//bullets first
+	for(i=0;i<n_bul;i++){
+		if(all_bul[i].status!=0){ //check status
+
+
+		}}
+}

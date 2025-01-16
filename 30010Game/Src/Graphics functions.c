@@ -84,42 +84,58 @@ void drawBullet(spaceship *ship,bullet*bul){
 				bul->dir=ship->dir;
 				bul->x=ship->x;
 				bul->y=ship->y-2;
+				bul->velx=0;
+				bul->vely=-1;
 				gotoxy(bul->x,bul->y);
 				printf("|");
 			}else if(ship->dir==5){
 				bul->x=ship->x,bul->dir=ship->dir;
 				bul->y=ship->y+1;
+				bul->velx=0;
+				bul->vely=1;
 				gotoxy(bul->x,bul->y);
 				printf("|");
 			}else if(ship->dir==2){
 				bul->x=ship->x+1,bul->dir=ship->dir;
 				bul->y=ship->y-1;
+				bul->velx=3;
+				bul->vely=-1;
 				gotoxy(bul->x,bul->y);
 				printf("/");
 			}else if(ship->dir==3){
 				bul->x=ship->x+2,bul->dir=ship->dir;
 				bul->y=ship->y;
 				gotoxy(bul->x,bul->y);
+				bul->velx=1;
+				bul->vely=0;
 				printf("-");
 			}else if(ship->dir==7){
 				bul->x=ship->x-2,bul->dir=ship->dir;
 				bul->y=ship->y;
 				gotoxy(bul->x,bul->y);
+				bul->velx=-1;
+				bul->vely=0;
 				printf("-");
 			}else if(ship->dir==4){
 				bul->x=ship->x+1,bul->dir=ship->dir;
 				bul->y=ship->y+1;
 				gotoxy(bul->x,bul->y);
+				bul->velx=3;
+				bul->vely=1;
 				printf("%c",92);
 			}else if(ship->dir==6){
 				bul->x=ship->x-2,bul->dir=ship->dir;
 				bul->y=ship->y+1;
 				gotoxy(bul->x,bul->y);
+				bul->velx=-3;
+				bul->vely=1;
 				printf("/");
 			}else if(ship->dir==8){
 				bul->x=ship->x-2,bul->dir=ship->dir;
 				bul->y=ship->y-1;
 				gotoxy(bul->x,bul->y);
+				bul->velx=0;
+				bul->vely=1;
 				printf("%c",92);
 			}}
 

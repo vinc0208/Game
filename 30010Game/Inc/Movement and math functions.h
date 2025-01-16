@@ -33,7 +33,7 @@ typedef struct {
 //define bullets as a position and a direction([1,8]).
 	//status is an on/off bol indicating wether the bullet is active
 	//status>0 corresponds to it's dmg.
-	int32_t x,y,status,dir;
+	int32_t x,y,velx,vely,status,dir;
 } bullet;
 
 typedef struct {
@@ -49,6 +49,10 @@ typedef struct {
 	int32_t x,y,status;
 } powerup;
 
+
+
+//functions
+void UpdateObjPos(enemy* all_ene,bullet* all_bul,int n_ene, int n_bul);
 
 
 
