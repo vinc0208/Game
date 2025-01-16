@@ -72,6 +72,16 @@ void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, char* txt, short styl
 
 
 
+// Checking position of object and returning 1 if object is within screen borders, else return 0
+uint8_t CheckOnScr(uint8_t x, uint8_t y) {
+	if ((x > 2) && (x < 190-5) && (y > 1) && (y < 50-3)) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
+
 
 
 //bullets require a direction from the player and a "powerup" state from bullet status.

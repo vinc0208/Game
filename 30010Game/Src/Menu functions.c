@@ -479,3 +479,61 @@ void printMode(int lvl){
 	}
 
 }
+
+void deathMenu() {
+
+	clrscr();
+	fgcolor(15);
+	reverse(0);
+	srand(5);
+	//draw stars
+	for(uint8_t i = 0; i<75; i++){
+		uint8_t x = rand() % 189;
+		uint8_t y = rand() % 50;
+		gotoxy(x,y);
+		printf("%c",250);
+	}
+
+	//Death print
+	gotoxy(50,10);
+	printf("  _______      ___       ___  ___   _______        ______   ____      ____  _______   ______   ");
+	gotoxy(50,11);
+	printf(" /  _____|    /   %c     |   %c/   | |   ____|      /  __  %c  %c   %c    /   / |   ____| |   _  %c  ",92,92,92,92,92,92);
+	gotoxy(50,12);
+	printf("|  |  __     /  ^  %c    |  %c  /  | |  |__        |  |  |  |  %c   %c  /   /  |  |__    |  |_)  | ",92,92,92,92);
+	gotoxy(50,13);
+	printf("|  | |_ |   /  /_%c  %c   |  |%c/|  | |   __|       |  |  |  |   %c   %c/   /   |   __|   |      /  ",92,92,92,92,92);
+	gotoxy(50,14);
+	printf("|  |__| |  /  _____  %c  |  |  |  | |  |____      |  `--'  |    %c      /    |  |___   |  |%c  %c_ ",92,92,92,92);
+	gotoxy(50,15);
+	printf(" %c______| /__/     %c__%c |__|  |__| |_______|      %c______/      %c____/     |_______| |__| %c___|",92,92,92,92,92,92);
+
+	//Main Menu print
+	gotoxy(39,28);
+	printf(" __  __       _         __  __");
+	gotoxy(39,29);
+	printf("|  %c/  | __ _(_)_ __   |  %c/  | ___ _ __  _   _ ",92,92);
+	gotoxy(39,30);
+	printf("| |%c/| |/ _` | | '_ %c  | |%c/| |/ _ %c '_ %c| | | |",92,92,92,92,92);
+	gotoxy(39,31);
+	printf("| |  | | (_| | | | | | | |  | |  __/ | | | |_| |");
+	gotoxy(39,32);
+	printf("|_|  |_|%c__,_|_|_| |_| |_|  |_|%c___|_| |_|%c__,_|",92,92,92);
+
+	//Restart print
+	gotoxy(114,28);
+	printf(" ____           _             _   ");
+	gotoxy(114,29);
+	printf("|  _ %c ___  ___| |_ __ _ _ __| |_ ",92);
+	gotoxy(114,30);
+	printf("| |_) / _ %c/ __| __/ _` | '__| __|",92);
+	gotoxy(114,31);
+	printf("|  _ <  __/%c__ %c || (_| | |  | |_ ",92,92);
+	gotoxy(114,32);
+	printf("|_| %c_%c___||___/%c__%c__,_|_|   %c__|",92,92,92,92,92);
+
+	//Controls at bottom of screen
+	gotoxy(140,50);
+	printf("A for left, D for right, ENTER for select");
+
+}

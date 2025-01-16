@@ -388,7 +388,7 @@ void joystick_2_radar(uint8_t* buffer) {
 		uint8_t X = readJoystick();
 		while(((0x0001 << 3) & X) && !((0x0001 << 0) & X) && !((0x0001 << 1) & X)) { 	//Right
 			angle = 3;
-			radar(buffer, angle, prevangle);
+			radar(buffer, angle, &prevangle);
 			X = readJoystick();
 			if (!((0x0001 << 3) & X) || ((0x0001 << 0) & X) || ((0x0001 << 1) & X)) { 	//If not pointing right or pointing up or down: break
 				break;
@@ -397,7 +397,7 @@ void joystick_2_radar(uint8_t* buffer) {
 
 		while (((0x0001 << 0) & X) && !((0x0001 << 3) & X) && !((0x0001 << 2) & X)) {	//Up
 			angle = 1;
-			radar(buffer, angle, prevangle);
+			radar(buffer, angle, &prevangle);
 			X = readJoystick();
 			if (!((0x0001 << 0) & X) || ((0x0001 << 0) & X) || ((0x0001 << 1) & X)) { 	//If not pointing right or pointing up or down: break
 				break;
@@ -406,7 +406,7 @@ void joystick_2_radar(uint8_t* buffer) {
 
 		while (((0x0001 << 2) & X) && !((0x0001 << 0) & X) && !((0x0001 << 1) & X)) {	//Left
 			angle = 7;
-			radar(buffer, angle, prevangle);
+			radar(buffer, angle, &prevangle);
 			X = readJoystick();
 			if (!((0x0001 << 2) & X) || ((0x0001 << 0) & X) || ((0x0001 << 1) & X)) {
 				break;
@@ -415,7 +415,7 @@ void joystick_2_radar(uint8_t* buffer) {
 
 		while (((0x0001 << 1) & X) && !((0x0001 << 3) & X) && !((0x0001 << 2) & X)) {	//Down
 			angle = 5;
-			radar(buffer, angle, prevangle);
+			radar(buffer, angle, &prevangle);
 			X = readJoystick();
 			if (!((0x0001 << 1) & X) || ((0x0001 << 3) & X) || ((0x0001 << 2) & X)) {
 				break;
@@ -424,7 +424,8 @@ void joystick_2_radar(uint8_t* buffer) {
 
 		while (((0x0001 << 0) & X) && ((0x0001 << 3) & X)) {		// Up-right
 			angle = 2;
-			radar(buffer, angle, prevangle);
+			radar(buffer, angle, &prevangle);
+			X = readJoystick();
 			if (!((0x0001 << 0) & X) || !((0x0001 << 3) & X)) {
 				break;
 			}
@@ -432,7 +433,8 @@ void joystick_2_radar(uint8_t* buffer) {
 
 		while (((0x0001 << 0) & X) && ((0x0001 << 2) & X)) {		//Up-left
 			angle = 8;
-			radar(buffer, angle, prevangle);
+			radar(buffer, angle, &prevangle);
+			X = readJoystick();
 			if (!((0x0001 << 0) & X) || !((0x0001 << 2) & X)) {
 				break;
 			}
@@ -440,7 +442,8 @@ void joystick_2_radar(uint8_t* buffer) {
 
 		while (((0x0001 << 1) & X) && ((0x0001 << 3) & X)) {		//Down-right
 			angle = 4;
-			radar(buffer, angle, prevangle);
+			radar(buffer, angle, &prevangle);
+			X = readJoystick();
 			if (!((0x0001 << 1) & X) || !((0x0001 << 3) & X)) {
 				break;
 			}
@@ -448,14 +451,12 @@ void joystick_2_radar(uint8_t* buffer) {
 
 		while (((0x0001 << 1) & X) && ((0x0001 << 2) & X)) {		//Down-left
 			angle = 6;
-			radar(buffer, angle, prevangle);
+			radar(buffer, angle, &prevangle);
+			X = readJoystick();
 			if (!((0x0001 << 1) & X) || !((0x0001 << 2) & X)) {
 				break;
 			}
 		}
-
-		if ((0x0001 << 5) & X) {
-			break;
-		}
 	}
 }
+
