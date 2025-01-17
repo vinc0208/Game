@@ -17,6 +17,7 @@
 #include "sinusoid.h"
 #include "Graphics functions.h"
 #include "Score.h"
+#include "Hardware interface functions.h"
 
 //Typedefs
 //these functions are from the excersices and are currently unused
@@ -244,9 +245,8 @@ void add_power(powerup pow, int pp) {	//Takes powerup status and adds correspond
 }
 //rotates the player
 int8_t playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int8_t k){
-	int16_t static key;
-	key = uartKeyRead();
 	int8_t updateAsteroids = 0;
+	int8_t key = uartKeyRead();
 	switch (key) {
 	  case 100: //D
 	    if(player->dir < 8){
@@ -263,13 +263,10 @@ int8_t playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* pow
 			player->dir = 8;
 		}
 	    break;
-	}
-
-	switch (key) {
 	  case 119: //W
 		  playerMovePosAdd(bullarr, astarr, enearr, powarr, player, k);
 		  updateAsteroids = 1;
-	    break;
+		break;
 	  case 115: //S
 		  playerMovePosAdd(bullarr, astarr, enearr, powarr, player, k);
 		  updateAsteroids = 1;
@@ -284,41 +281,41 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 	switch (player->dir) {
 	    case 1:
 	      for(int8_t i = 0; i < sizeof(bullarr); i++){
-	    	  bullarr[i].y -= k;
+	    	  bullarr[i].y += k;
 	      }
 
 	      for(int8_t i = 0; i < sizeof(astarr); i++){
-	    	  astarr[i].y -= k;
+	    	  astarr[i].y += k;
 	      }
 
 	      for(int8_t i = 0; i < sizeof(enearr); i++){
-	    	  enearr[i].y -= k;
+	    	  enearr[i].y += k;
 	      }
 
 	      for(int8_t i = 0; i < sizeof(powarr); i++){
-	    	  powarr[i].y -= k;
+	    	  powarr[i].y += k;
 	      }
 
 	      break;
 	    case 2:
 		  for(int8_t i = 0; i < sizeof(bullarr); i++){
 			  bullarr[i].x -= 3*k;
-			  bullarr[i].y -= k;
+			  bullarr[i].y += k;
 		  }
 
 		  for(int8_t i = 0; i < sizeof(astarr); i++){
 			  astarr[i].x -= 3*k;
-			  astarr[i].y -= k;
+			  astarr[i].y += k;
 		  }
 
 		  for(int8_t i = 0; i < sizeof(enearr); i++){
 			  enearr[i].x -= 3*k;
-			  enearr[i].y -= k;
+			  enearr[i].y += k;
 		  }
 
 		  for(int8_t i = 0; i < sizeof(powarr); i++){
 			  powarr[i].x -= 3*k;
-			  powarr[i].y -= k;
+			  powarr[i].y += k;
 		  }
 
 	      break;
@@ -342,62 +339,62 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 	    case 4:
 		  for(int8_t i = 0; i < sizeof(bullarr); i++){
 			  bullarr[i].x -= 3*k;
-			  bullarr[i].y += k;
+			  bullarr[i].y -= k;
 		  }
 
 		  for(int8_t i = 0; i < sizeof(astarr); i++){
 			  astarr[i].x -= 3*k;
-			  astarr[i].y += k;
+			  astarr[i].y -= k;
 
 		  }
 
 		  for(int8_t i = 0; i < sizeof(enearr); i++){
 			  enearr[i].x -= 3*k;
-			  enearr[i].y += k;
+			  enearr[i].y -= k;
 		  }
 
 		  for(int8_t i = 0; i < sizeof(powarr); i++){
 			  powarr[i].x -= 3*k;
-			  powarr[i].y += k;
+			  powarr[i].y -= k;
 		  }
 	      break;
 	    case 5:
 		  for(int8_t i = 0; i < sizeof(bullarr); i++){
-			  bullarr[i].y += k;
+			  bullarr[i].y -= k;
 		  }
 
 		  for(int8_t i = 0; i < sizeof(astarr); i++){
-			  astarr[i].y += k;
+			  astarr[i].y -= k;
 		  }
 
 		  for(int8_t i = 0; i < sizeof(enearr); i++){
-			  enearr[i].y += k;
+			  enearr[i].y -= k;
 		  }
 
 		  for(int8_t i = 0; i < sizeof(powarr); i++){
-			  powarr[i].y += k;
+			  powarr[i].y -= k;
 		  }
 	      break;
 	    case 6:
 		  for(int8_t i = 0; i < sizeof(bullarr); i++){
 			  bullarr[i].x += 3*k;
-			  bullarr[i].y += k;
+			  bullarr[i].y -= k;
 		  }
 
 		  for(int8_t i = 0; i < sizeof(astarr); i++){
 			  astarr[i].x += 3*k;
-			  astarr[i].y += k;
+			  astarr[i].y -= k;
 
 		  }
 
 		  for(int8_t i = 0; i < sizeof(enearr); i++){
 			  enearr[i].x += 3*k;
-			  enearr[i].y += k;
+			  enearr[i].y -= k;
 		  }
 
 		  for(int8_t i = 0; i < sizeof(powarr); i++){
 			  powarr[i].x += 3*k;
-			  powarr[i].y += k;
+			  powarr[i].y -= k;
 		  }
 	      break;
 	    case 7:
@@ -420,23 +417,23 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 	    case 8:
 	      for(int8_t i = 0; i < sizeof(bullarr); i++){
 			  bullarr[i].x += 3*k;
-			  bullarr[i].y -= k;
+			  bullarr[i].y += k;
 		  }
 
 		  for(int8_t i = 0; i < sizeof(astarr); i++){
 			  astarr[i].x += 3*k;
-			  astarr[i].y -= k;
+			  astarr[i].y += k;
 
 		  }
 
 		  for(int8_t i = 0; i < sizeof(enearr); i++){
 			  enearr[i].x += 3*k;
-			  enearr[i].y -= k;
+			  enearr[i].y += k;
 		  }
 
 		  for(int8_t i = 0; i < sizeof(powarr); i++){
 			  powarr[i].x += 3*k;
-			  powarr[i].y -= k;
+			  powarr[i].y += k;
 		  }
 	      break;
 	  }
