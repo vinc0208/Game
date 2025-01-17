@@ -19,6 +19,7 @@
 #include "Score.h"
 
 //Typedefs
+//these functions are from the excersices and are currently unused
 void printFix(int32_t i) {
 	// Prints a signed 16.16 fixed point number
 	if ((i & 0x80000000) != 0) { // Handle negative numbers
@@ -34,7 +35,7 @@ return i << 2;
 
 //Math
 
-
+//sine and cosine from the excercises
 int16_t vecsinus(int angle) {						//Without expand and printFix
 	int step = round(angle * 512.0 / 360.0);
 	if (step < 0) {
@@ -47,7 +48,6 @@ int16_t vecsinus(int angle) {						//Without expand and printFix
 	int y = SIN[step];
 	return y;
 }
-
 int32_t vecosinus(int angle){
 	return vecsinus(angle+180);
 }
@@ -100,7 +100,7 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 					gotoxy(bul[i].x,bul[i].y);
 					printf(" ");
 				}}}}}
-
+//checks for spaceship collision with enemies, asteroids or powerups
 void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_pow, int pp) {
 	int8_t i,k,m,r;
 
@@ -242,7 +242,7 @@ void add_power(powerup pow, int pp) {	//Takes powerup status and adds correspond
 		pp |= 0x10000000;
 	}
 }
-
+//rotates the player
 int8_t playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int8_t k){
 	int16_t static key;
 	key = uartKeyRead();
@@ -278,7 +278,7 @@ int8_t playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* pow
 
 	return updateAsteroids;
 }
-
+//moves the player by updating positions of all objects
 void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int8_t k){
 
 	switch (player->dir) {

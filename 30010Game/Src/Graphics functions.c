@@ -509,8 +509,9 @@ void drawBullet(bullet*bul){
 void SpawnEnemy(enemy* all_enemies,int n_ene){
 	int i,k;
 		for(i=0;i<n_ene;i++){
-			if((all_enemies[i].status==0) && ((rand() % (3 + 1)) >=2 ) ){
+			if((all_enemies[i].status==0) && ((rand() % (3 + 1)) >=2 ) ){ //checks empty enemy slots and
 				k=rand() % (3 + 1); // assigns each a random part of the screen in which to appear
+				all_enemies[i].status=1; // indicates that they are active when true
 				if(k==0){
 					all_enemies[i].x=rand() % (185 - 5 + 1)+ 5; // assigns initial coords to each enemy
 					all_enemies[i].y=rand() % (10 - 3 + 1)+ 3;
