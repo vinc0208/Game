@@ -99,7 +99,7 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 					printf(" ");
 				}}}}}
 
-void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_pow) {
+void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_pow, uint8_t * pp) {
 	int8_t i,k,m,r;
 
 	for(k=0;k<n_ast;k++){ // check for asteroid collision
@@ -116,7 +116,26 @@ void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,poweru
 				gotoxy(ast[k].x-2,ast[k].y+2);
 				printf("     ");
 					}}}
-
+	for(k=0;k<n_ene;k++){ // check for enemy collision
+			if(ene[k].status !=0){
+				if((shp->x >= ene[k].x-2) && (shp->x <= ene[k].x+2) && (shp->y >= ene[k].y-1) && (shp->y <= ene[k].y+1)) {
+					ene[k].status=0; // enemies are removed on collision and their sprite deleted
+					shp->hp-=1;
+					gotoxy(ene[k].x-1,ene[k].y-1);
+					printf("     ");
+					gotoxy(ene[k].x-3,ene[k].y);
+					printf("      ");
+					gotoxy(ene[k].x-2,ene[k].y+1);
+					printf("      ");
+						}}}
+	for(k=0;k<n_pow;k++){ // check for powerup collision
+				if(pow[k].status !=0){
+					if((shp->x >= pow[k].x-2) && (shp->x <= pow[k].x+2) && (shp->y >= pow[k].y-1) && (shp->y <= pow[k].y+1)) {
+						//add_power(pow[k].status, &pp); // add to player powerups
+						pow[k].status=0; // powerups are removed on collision and their sprite deleted
+						gotoxy(pow[k].x-1,pow[k].y-1);
+						printf("  ");
+							}}}
 }
 
 
