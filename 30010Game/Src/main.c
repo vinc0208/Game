@@ -28,7 +28,7 @@ int main(void) {
 	uint8_t angle = 0;
 	uint8_t prevangle = -1;
 
-	int level = 10;
+	int level = 1;
 
 
 
@@ -61,6 +61,12 @@ int main(void) {
 	while(1){
 		//joystick_2_radar(buffer, X, angle, prevangle);
 		//menuSelect(0, &level);
+		while(1){
+			menuSelect(0, &level);
+			/*if(gamestart == 1){
+				break;
+			}*/
+		}
 
 		if(TimeMaster15.hsecond %  50 == 0){
 			updateAst = playerMove(&all_bullets,&all_asteroids, &all_enemies, &all_powerups, &playership, 1);
