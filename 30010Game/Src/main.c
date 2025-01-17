@@ -10,8 +10,11 @@
 int main(void) {
 
 	uart_init(9600);
+
 	//Initialize time
 	Timer15Config();
+	ResetTime(); //We dont want time to start counting up when we havent started the game yet
+
 	//set the seed
 	srand(5);
 

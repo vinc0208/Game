@@ -13,6 +13,6 @@ void ScoreTracker(int32_t points){
 		score += points;
 }
 
-/*void HighscoreTracker(uint16_t* HighscoreArray){
+void HighscoreTracker(uint16_t* HighscoreArray){
 
-}*/
+}
