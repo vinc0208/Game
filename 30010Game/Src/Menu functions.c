@@ -224,20 +224,20 @@ void mainMenu(){
 		while(1){
 			if(TimeMaster15.hsecond % 4 == 0){
 				gotoxy(shp1.x-1,y-1);
-				printf("      ");
+				printf("   ");
 				gotoxy(shp1.x-1,y);
-				printf("      ");
+				printf("   ");
 				gotoxy(shp1.x-1,y+1);
-				printf("      ");
+				printf("   ");
 				shp1.x += 1;
 				drawSpaceship(&shp1);
 
 				gotoxy(shp2.x-1,y-1);
-				printf("      ");
+				printf("  ");
 				gotoxy(shp2.x-1,y);
-				printf("      ");
+				printf("  ");
 				gotoxy(shp2.x-1,y+1);
-				printf("      ");
+				printf("  ");
 				shp2.x -= 1;
 				drawSpaceship(&shp2);
 
