@@ -15,34 +15,11 @@ int main(void) {
 	//set the seed
 	srand(5);
 
-	//The commented code below is simply for showing LCD things, not needed atm, but uncomment to see
-	/*
-	//Prepare byte array and strings to be updated
-	uint8_t byteArray[512];
-	char life[] = "Lives: ";
-	char score[] = "Score: ";
-	char bullets[] = "Ammo : ";
-
-	//initialize LCD
-	lcd_init();
-
-	//Update byte array with strings (These will frequently give warnings, however it should still work)
-	lcd_write_string(life, 1, 1, &byteArray);
-	lcd_write_string(score, 1, 2, &byteArray);
-	lcd_write_string(bullets, 1, 3, &byteArray);
-
-	//Transmit byte array
-	lcd_push_buffer(byteArray);
-	*/
 
 
-	/*lcd_init();
+	//Initialyze LCD
 	uint8_t buffer[512];
-	memset(buffer,0x00,512);
-	initJoystick();
 	init_lcd(buffer);
-	init_radar(buffer);*/
-	int level = 10;
 
 
 
@@ -53,6 +30,7 @@ int main(void) {
 		asteroid all_asteroids[n_ast];
 		enemy all_enemies[n_ene];
 		powerup all_powerups[n_pow];
+		uint8_t player_powers = 0x00000000;
 		spaceship playership;
 
 		initSpaceship(&playership,difficulty,style); //initialize and draw all objects
@@ -62,10 +40,11 @@ int main(void) {
 		initAsteroid(&all_asteroids,n_ast);*/
 
 
-
+	int level = 10;
 
 
 	while(1){
+		joystick_2_radar(buffer);
 		menuSelect(0, &level);
 
 

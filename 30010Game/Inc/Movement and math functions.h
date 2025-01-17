@@ -44,7 +44,7 @@ typedef struct {
 
 typedef struct {
 //define powerups as a position and a status.
-	//status is an on/off bol indicating wether it is active.
+	//status 0: inactive, 1: Speed boost, 2: Dmg boost, 3: Score multiplier, 4: Bullet type 1, 5: Bullet type 2, 6: Bullet type 3.
 	// status>1 determines type of the powerup
 	int8_t x,y,status;
 } powerup;
@@ -54,7 +54,7 @@ typedef struct {
 //functions
 void UpdateObjPos(spaceship* ship,enemy* all_ene,bullet* all_bul,int n_ene, int n_bul);
 
-
+void add_power(powerup pow, uint8_t pp);
 
 
 

@@ -269,18 +269,18 @@ void init_radar(uint8_t *buffer) {
 	uint8_t line;
 	for (line=0; line<2; line++) {
 		for (i=0; i<15; i++) {
-			buffer[line*128 + slice + i] = game_char_data[0][1];
+			buffer[line*128 + slice + i] = game_char_data[0][0];		//Clears radar
 		}
 	}
 	line = 2, slice = 113;
-	buffer[(line-1)*128 + slice] = 0x01;
+	buffer[(line-1)*128 + slice] = 0x01;								//Adds radar center
 	lcd_push_buffer(buffer);
 }
 
 void init_lcd(uint8_t* buffer) {
 	//Prepare byte array and strings to be updated (buffer)
 	memset(buffer,0x00,512);
-	char score[] = "Score: 0";
+	char score[] = "Score:0";
 	char life[] = "Lives: ";
 	char bullets[] = "Ammo : ";
 
@@ -298,14 +298,14 @@ void init_lcd(uint8_t* buffer) {
 	for (n=0; n<3; n++) {
 		for (i=0; i<2; i++) {
 			for (j=0; j<5; j++) {
-				buffer[(1)*128 + 36 + n*11 + i*5 + j] = game_char_data[2+i][j];	//Prints hearts
+				buffer[(1)*128 + 37 + n*11 + i*5 + j] = game_char_data[2+i][j];	//Prints hearts
 			}
 		}
 	}
 
 	for (n=0; n<5; n++) {
 		for (j=0; j<5; j++) {
-			buffer[(2)*128 + 37 + n*11 + j] = game_char_data[1][j];		//Prints bullets
+			buffer[(2)*128 + 38 + n*11 + j] = game_char_data[1][j];			//Prints bullets
 		}
 	}
 
@@ -327,15 +327,14 @@ void init_lcd(uint8_t* buffer) {
 
 }
 
+
 void radar(uint8_t* buffer, uint8_t angle, uint8_t* prevangle) {
 	uint8_t slice, line;
 
-	if (*prevangle == angle) {
+	if ((angle == 0) || (*prevangle == angle)) {	//No input
 		init_radar(buffer);
 	}
-	if (angle == 0) {
-		init_radar(buffer);
-	} else if (angle == 3) {						//Right
+	if (angle == 3) {						//Right
 		slice = 116;
 		line = 1;
 		for (uint8_t j=0; j<5; j++) {
