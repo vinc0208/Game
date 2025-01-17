@@ -9,11 +9,11 @@
 #include "sinusoid.h"
 int main(void) {
 
-	uart_init(115200);
+	uart_init(9600);
 	//Initialize time
 	Timer15Config();
 	//set the seed
-	srand(2);
+	srand(5);
 
 
 	//initialize LCD
