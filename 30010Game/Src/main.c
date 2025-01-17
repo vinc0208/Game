@@ -9,49 +9,62 @@
 #include "sinusoid.h"
 int main(void) {
 
-	uart_init(115200);
+	uart_init(9600);
 	//Initialize time
 	Timer15Config();
 	//set the seed
 	srand(5);
 
 
-
-	//Initialyze LCD
+	//initialize LCD
 	uint8_t buffer[512];
 	init_lcd(buffer);
 
+	initJoystick();
+	uint8_t X = readJoystick();
+	uint8_t angle = 0;
+	uint8_t prevangle = -1;
+
+	int level = 10;
 
 
-	/* //this block initializes the game
+
+	 //this block initializes the game
 		clrscr(); //clear screen and set starting parameters
-		uint8_t n_bul=5, difficulty=2,style=1,n_ene = 20+difficulty,n_ast=5,n_pow=5,i;
+		uint8_t n_bul=5, difficulty=2,style=1,n_ene = 2+difficulty,n_ast=5,n_pow=5,i;
+		int8_t pp=0x00100000;
 		bullet all_bullets[n_bul]; // make arrays of all objects
 		asteroid all_asteroids[n_ast];
 		enemy all_enemies[n_ene];
 		powerup all_powerups[n_pow];
-		uint8_t player_powers = 0x00000000;
 		spaceship playership;
 
 		initSpaceship(&playership,difficulty,style); //initialize and draw all objects
 		initBullet(&all_bullets, n_bul);
 		initPowerup(&all_powerups,n_pow);
 		initEnemy(&all_enemies,n_ene);
-		initAsteroid(&all_asteroids,n_ast);*/
+		initAsteroid(&all_asteroids,n_ast);
 
 
-	int level = 10;
-
+		all_enemies[1].x=95;
+		all_enemies[1].y=10;
+		drawEnemy(&all_enemies[1]);
+		all_bullets[1].status=1;
+		fireBullet(&playership,&all_bullets[1]);
 
 	while(1){
-		joystick_2_radar(buffer);
-		menuSelect(0, &level);
+		//joystick_2_radar(buffer, X, angle, prevangle);
+		//menuSelect(0, &level);
 
 
-		/*UpdateObjPos(&playership,&all_enemies,&all_bullets,n_ene, n_bul);
+		UpdateObjPos(&playership,&all_enemies,&all_bullets,n_ene, n_bul);
+		CheckBulletCollisions(&playership,&all_enemies,&all_bullets,&all_asteroids,&all_powerups, n_ene, n_ast, n_bul,n_pow);
+		CheckSpaceshipCollisions(&playership, &all_enemies,&all_asteroids,&all_powerups,n_ene, n_ast, n_pow,&pp);
 		for(i=0;i<n_ene;i++){
-			drawEnemy(&all_enemies[i]);
-		}*/
+			if(all_enemies[i].status!=0){
+				drawEnemy(&all_enemies[i]);
+		drawSpaceship(&playership);
+		}}
 
 	}
 }

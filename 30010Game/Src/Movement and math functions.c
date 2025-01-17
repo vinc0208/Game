@@ -11,10 +11,12 @@
 #include <ansi.h>
 #include <lut.h>
 #include <math.h>
+#include <stdlib.h>
 #include "stm32f30x_conf.h"
 #include "30010_io.h" 		// Input/output library for this course
 #include "sinusoid.h"
 #include "Graphics functions.h"
+#include "Score.h"
 
 //Typedefs
 void printFix(int32_t i) {
@@ -62,6 +64,83 @@ int32_t cosinus(int angle){
 }
 
 //Movement
+
+//looks for bullet collisions with all relevant objects
+void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_bul, int n_pow) {
+	int8_t i,k,m,r;
+	for(i=0;i<n_bul;i++){
+		if(bul[i].status !=0){
+
+
+			for(k=0;k<n_ast;k++){ // check for asteroid collision
+				if((bul[i].x >= ast[k].x-3) && (bul[i].x <= ast[k].x+2) && (bul[i].y >= ast[k].y-1) && (bul[i].y <= ast[k].y+2)) {
+					bul[i].status=0; // bullets are removed on collision
+					gotoxy(bul[i].x,bul[i].y);
+					printf(" ");
+				}}
+
+			for(k=0;k<n_ene;k++){ // check for enemy collision
+				if((bul[i].x >= ene[k].x-2) && (bul[i].x <= ene[k].x+2) && (bul[i].y >= ene[k].y-2) && (bul[i].y <= ene[k].y+2)) {
+					ene[k].hp-=bul[i].status;
+					if (ene[k].hp <= 0){ //check for enemy death
+						ene[k].status=0;
+						ScoreTracker(100);
+						r=rand() % (4 + 1);
+						if(r==4){ //randomly spawn a powerup
+							for(m=0;m<n_pow;m++){
+								if(pow[m].status==0){
+									r=(rand() % (5 + 1))+1;
+									pow[m].status=r;
+									pow[m].x=ene[k].x;
+									pow[m].y=ene[k].y;
+									drawPowerup(&pow[m]);
+									break;
+							}}}}
+					bul[i].status=0; //bullets are removed on collision
+					gotoxy(bul[i].x,bul[i].y);
+					printf(" ");
+				}}}}}
+
+void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_pow, int pp) {
+	int8_t i,k,m,r;
+
+	for(k=0;k<n_ast;k++){ // check for asteroid collision
+		if(ast[k].status !=0){
+			if((shp->x >= ast[k].x-3) && (shp->x <= ast[k].x+2) && (shp->y >= ast[k].y-1) && (shp->y <= ast[k].y+2)) {
+				ast[k].status=0; // asteroids are removed on collision
+				shp->hp-=1;
+				gotoxy(ast[k].x-2,ast[k].y-1);
+				printf("     ");
+				gotoxy(ast[k].x-3,ast[k].y);
+				printf("       ");
+				gotoxy(ast[k].x-3,ast[k].y+1);
+				printf("       ");
+				gotoxy(ast[k].x-2,ast[k].y+2);
+				printf("     ");
+					}}}
+	for(k=0;k<n_ene;k++){ // check for enemy collision
+			if(ene[k].status !=0){
+				if((shp->x >= ene[k].x-2) && (shp->x <= ene[k].x+2) && (shp->y >= ene[k].y-1) && (shp->y <= ene[k].y+1)) {
+					ene[k].status=0; // enemies are removed on collision and their sprite deleted
+					shp->hp-=1;
+					gotoxy(ene[k].x-1,ene[k].y-1);
+					printf("     ");
+					gotoxy(ene[k].x-3,ene[k].y);
+					printf("      ");
+					gotoxy(ene[k].x-2,ene[k].y+1);
+					printf("      ");
+						}}}
+	for(k=0;k<n_pow;k++){ // check for powerup collision
+				if(pow[k].status !=0){
+					if((shp->x >= pow[k].x-2) && (shp->x <= pow[k].x+2) && (shp->y >= pow[k].y-1) && (shp->y <= pow[k].y+1)) {
+						add_power(pow[k], pp); // add to player powerups
+						pow[k].status=0; // powerups are removed on collision and their sprite deleted
+						gotoxy(pow[k].x-1,pow[k].y-1);
+						printf("  ");
+							}}}
+}
+
+
 
 //updates obejcts with movement independent of the player
 void UpdateObjPos(spaceship* ship,enemy* all_ene,bullet* all_bul,int n_ene, int n_bul){
@@ -133,7 +212,7 @@ void UpdateObjPos(spaceship* ship,enemy* all_ene,bullet* all_bul,int n_ene, int 
 				}}}}
 
 
-void add_power(powerup pow, uint8_t pp) {	//Takes powerup status and adds corresponding power (pow) and ads to player powers (pp)
+void add_power(powerup pow, int pp) {	//Takes powerup status and adds corresponding power (pow) and ads to player powers (pp)
 	if (pow.status == 1){
 		if (!(pp & 0x00000001) && !(pp & 0x00000010)){
 			pp |= 0x00000001;
