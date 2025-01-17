@@ -34,8 +34,8 @@ uint8_t readJoystick();
 
 void init_radar(uint8_t *buffer);
 void init_lcd(uint8_t* buffer);
-void radar(uint8_t* buffer, uint8_t angle, uint8_t* prevangle);
-void joystick_2_radar(uint8_t* buffer);
+void radar(uint8_t* buffer, uint8_t angle, uint8_t prevangle);
+void joystick_2_radar(uint8_t* buffer, uint8_t X, uint8_t prevangle, uint8_t angle);
 void RGB_life_detector(spaceship ship);
 
 

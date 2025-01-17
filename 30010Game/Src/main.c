@@ -21,6 +21,11 @@ int main(void) {
 	uint8_t buffer[512];
 	init_lcd(buffer);
 
+	//Initialyze joystick to test radar
+	uint8_t X = readJoystick();
+	uint8_t prevangle = -1;
+	uint8_t angle = 0;
+
 
 
 	/* //this block initializes the game
@@ -44,7 +49,7 @@ int main(void) {
 
 
 	while(1){
-		joystick_2_radar(buffer);
+		joystick_2_radar(buffer, X, prevangle, angle);
 		menuSelect(0, &level);
 
 
