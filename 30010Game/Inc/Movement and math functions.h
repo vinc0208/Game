@@ -11,16 +11,16 @@
 #define MOVEMENT_AND_MATH_FUNCTIONS_H_
 
 typedef struct {
-	int8_t x,y, velx, vely;
+	int16_t x,y, velx, vely;
 } posdata;
 
 typedef struct {
-	int8_t x,y, velx, vely;
+	int16_t x,y, velx, vely;
 } point;
 
 
 typedef struct { //define asteroids as a position and on/off bol
-	int8_t x,y,status;
+	int16_t x,y,status;
 } asteroid;
 
 typedef struct {
@@ -46,14 +46,20 @@ typedef struct {
 //define powerups as a position and a status.
 	//status is an on/off bol indicating wether it is active.
 	// status>1 determines type of the powerup
-	int8_t x,y,status;
+	int16_t x,y,status;
 } powerup;
 
 
 
 //functions
+void printFix(int32_t i);
+int32_t expand(int32_t i);
+int16_t vecsinus(int angle);
+int32_t vecosinus(int angle);
+int32_t sinus(int angle);
+int32_t cosinus(int angle);
 void UpdateObjPos(spaceship* ship,enemy* all_ene,bullet* all_bul,int n_ene, int n_bul);
-
+void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast, int n_ene, int n_ast, int n_bul);
 
 
 

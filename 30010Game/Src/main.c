@@ -13,7 +13,7 @@ int main(void) {
 	//Initialize time
 	Timer15Config();
 	//set the seed
-	srand(5);
+	srand(2);
 
 	//The commented code below is simply for showing LCD things, not needed atm, but uncomment to see
 	/*
@@ -46,9 +46,9 @@ int main(void) {
 
 
 
-	/* //this block initializes the game
+	 //this block initializes the game
 		clrscr(); //clear screen and set starting parameters
-		uint8_t n_bul=5, difficulty=2,style=1,n_ene = 20+difficulty,n_ast=5,n_pow=5,i;
+		uint8_t n_bul=5, difficulty=2,style=1,n_ene = -2+difficulty,n_ast=18,n_pow=5,i;
 		bullet all_bullets[n_bul]; // make arrays of all objects
 		asteroid all_asteroids[n_ast];
 		enemy all_enemies[n_ene];
@@ -59,20 +59,24 @@ int main(void) {
 		initBullet(&all_bullets, n_bul);
 		initPowerup(&all_powerups,n_pow);
 		initEnemy(&all_enemies,n_ene);
-		initAsteroid(&all_asteroids,n_ast);*/
+		initAsteroid(&all_asteroids,n_ast);
 
 
-
-
+		all_asteroids[1].x=95;
+		all_asteroids[1].y=10;
+		drawAsteroid(&all_asteroids[1],n_ene);
+		all_bullets[1].status=1;
+		fireBullet(&playership,&all_bullets[1]);
 
 	while(1){
-		menuSelect(0, &level);
+		//menuSelect(0, &level);
 
 
-		/*UpdateObjPos(&playership,&all_enemies,&all_bullets,n_ene, n_bul);
+		UpdateObjPos(&playership,&all_enemies,&all_bullets,n_ene, n_bul);
+		CheckBulletCollisions(&playership,&all_enemies,&all_bullets,&all_asteroids, n_ene, n_ast, n_bul);
 		for(i=0;i<n_ene;i++){
 			drawEnemy(&all_enemies[i]);
-		}*/
+		}
 
 	}
 }

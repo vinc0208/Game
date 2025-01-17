@@ -63,6 +63,33 @@ int32_t cosinus(int angle){
 
 //Movement
 
+//looks for bullet collisions with all relevant objects
+void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast, int n_ene, int n_ast, int n_bul) {
+	int i,k;
+	for(i=0;i<n_bul;i++){
+		if(bul[i].status !=0){
+
+
+			for(k=0;k<n_ast;k++){ // check for asteroid collision
+				if((bul[i].x >= ast[k].x-3) && (bul[i].x <= ast[k].x+2) && (bul[i].y >= ast[k].y-1) && (bul[i].y <= ast[k].y+2)) {
+					bul[i].status=0;
+					gotoxy(bul[i].x,bul[i].y);
+					printf(" ");
+				}
+
+			}
+			/*for(k=0;k<n_ast;k++){ // check for enemy collision
+				if((bul[i].x >= ast[k].x-3) && (bul[i].x <= ast[k].x+2) && (bul[i].y >= ast[k].y-1) && (bul[i].y <= ast[k].y+2)) {
+					bul[i].status=0;
+					gotoxy(bul[i].x,bul[i].y);
+					printf(" ");
+				}
+
+			}*/
+
+	}}}
+
+
 //updates obejcts with movement independent of the player
 void UpdateObjPos(spaceship* ship,enemy* all_ene,bullet* all_bul,int n_ene, int n_bul){
 	int i,k;
