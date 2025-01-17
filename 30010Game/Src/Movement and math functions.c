@@ -73,12 +73,11 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 
 			for(k=0;k<n_ast;k++){ // check for asteroid collision
 				if((bul[i].x >= ast[k].x-3) && (bul[i].x <= ast[k].x+2) && (bul[i].y >= ast[k].y-1) && (bul[i].y <= ast[k].y+2)) {
-					bul[i].status=0;
+					bul[i].status=0; // bullets are removed on collision
 					gotoxy(bul[i].x,bul[i].y);
 					printf(" ");
-				}
+				}}
 
-			}
 			for(k=0;k<n_ene;k++){ // check for enemy collision
 				if((bul[i].x >= ene[k].x-2) && (bul[i].x <= ene[k].x+2) && (bul[i].y >= ene[k].y-2) && (bul[i].y <= ene[k].y+2)) {
 					ene[k].hp-=bul[i].status;
@@ -94,18 +93,32 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 									pow[m].y=ene[k].y;
 									drawPowerup(&pow[m]);
 									break;
-							}}
-
-						}
-					}
-					bul[i].status=0;
+							}}}}
+					bul[i].status=0; //bullets are removed on collision
 					gotoxy(bul[i].x,bul[i].y);
 					printf(" ");
-				}
+				}}}}}
 
-			}
+void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_pow) {
+	int8_t i,k,m,r;
 
-	}}}
+	for(k=0;k<n_ast;k++){ // check for asteroid collision
+		if(ast[k].status !=0){
+			if((shp->x >= ast[k].x-3) && (shp->x <= ast[k].x+2) && (shp->y >= ast[k].y-1) && (shp->y <= ast[k].y+2)) {
+				ast[k].status=0; // asteroids are removed on collision
+				shp->hp-=1;
+				gotoxy(ast[k].x-2,ast[k].y-1);
+				printf("     ");
+				gotoxy(ast[k].x-3,ast[k].y);
+				printf("       ");
+				gotoxy(ast[k].x-3,ast[k].y+1);
+				printf("       ");
+				gotoxy(ast[k].x-2,ast[k].y+2);
+				printf("     ");
+					}}}
+
+}
+
 
 
 //updates obejcts with movement independent of the player
