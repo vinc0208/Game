@@ -364,23 +364,28 @@ void drawAsteroid(asteroid*ast,short style){
 }
 //draws a random powerup at an intended position
 void drawPowerup(powerup *pow){
-	//1=dmg up (red),2 Score mult (purple), 3 ammo up (brown),4 speed up(blue)
+	//1 speed boost (yellow), 2 Dmg boost (red), 3 Score mult. (purple), 4 Bullet type 1 (light blue), 5 Bullet type 2 (blue), 6 Bullet type 3 (Dark blue)
 
 	gotoxy(pow->x-1,pow->y);
 	if(pow->status==0){
 		//dont draw if it's not real
 	}else if(pow->status==1){
-		fgcolor(1);
-	} else if(pow->status==2) {
-		fgcolor(5);
-	}else if(pow->status==3) {
 		fgcolor(3);
+	} else if(pow->status==2) {
+		fgcolor(1);
+	}else if(pow->status==3) {
+		fgcolor(5);
 	}else if(pow->status==4) {
-		fgcolor(4);
+		fgcolor(51);
+	}else if(pow->status==5) {
+		fgcolor(21);
+	}else if(pow->status==6) {
+		fgcolor(19);
 	} else{
 		fgcolor(15); //white is an error color
 	} printf("%c%c",219,219);
 }
+
 //turns all bullets off and puts them at (0,0)
 void initBullet(bullet* bul,int n_bull){
 	//x,y and dir for all bullets get a junk value

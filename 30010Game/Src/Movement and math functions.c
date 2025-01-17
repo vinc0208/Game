@@ -158,3 +158,34 @@ void UpdateObjPos(spaceship* ship,enemy* all_ene,bullet* all_bul,int n_ene, int 
 					}
 					//drawEnemy(&all_ene[i]); //one could draw each enemy after updating their position
 				}}}}
+
+
+void add_power(powerup pow, uint8_t pp) {	//Takes powerup status and adds corresponding power (pow) and ads to player powers (pp)
+	if (pow.status == 1){
+		if (!(pp & 0x00000001) && !(pp & 0x00000010)){
+			pp |= 0x00000001;
+		} else if (pp & 0x00000001){
+			pp |= 0x00000010;
+		} else {}
+	} else if (pow.status == 2){
+		if (!(pp & 0x00000100) && !(pp & 0x00001000)){
+			pp |= 0x00000100;
+		} else if (pp & 0x00000100){
+			pp |= 0x00001000;
+		} else {}
+	} else if (pow.status == 3){
+		if (!(pp & 0x00010000)) {
+			pp |= 0x00010000;
+		} else {}
+	} else if (pow.status == 4){
+		pp &= ~(0x11100000);
+		pp |= 0x00100000;
+	} else if (pow.status == 5){
+		pp &= ~(0x11100000);
+		pp |= 0x01000000;
+	} else if (pow.status == 6){
+		pp &= ~(0x11100000);
+		pp |= 0x10000000;
+	}
+}
+
