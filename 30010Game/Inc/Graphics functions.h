@@ -21,4 +21,6 @@ void initEnemy(enemy* all_enemies,int n_ene);
 void initSpaceship(spaceship* ship,int difficulty, int style);
 void initBullet(bullet * bul,int maxn_bull);
 uint8_t CheckOnScr(uint8_t x, uint8_t y);
+void SpawnEnemy(enemy* all_enemies,int n_ene);
+void SpawnAsteroid(asteroid* ast,int n_ast);
 #endif /* GRAPHICS_FUNCTIONS_H_ */

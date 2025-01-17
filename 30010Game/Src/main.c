@@ -59,8 +59,8 @@ int main(void) {
 		//joystick_2_radar(buffer, X, angle, prevangle);
 		//menuSelect(0, &level);
 
-
-		UpdateObjPos(&playership,&all_enemies,&all_bullets,n_ene, n_bul);
+		UpdateEnemyPos(&playership,all_enemies, n_ene);
+		UpdateBulletPos(&playership,&all_bullets, n_bul);
 		CheckBulletCollisions(&playership,&all_enemies,&all_bullets,&all_asteroids,&all_powerups, n_ene, n_ast, n_bul,n_pow);
 		CheckSpaceshipCollisions(&playership, &all_enemies,&all_asteroids,&all_powerups,n_ene, n_ast, n_pow,&pp);
 		for(i=0;i<n_ene;i++){

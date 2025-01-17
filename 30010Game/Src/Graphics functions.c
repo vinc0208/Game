@@ -505,6 +505,47 @@ void drawBullet(bullet*bul){
 				printf("%c",92);
 			}}}
 
+//spawns an enemy near the edge of the screen
+void SpawnEnemy(enemy* all_enemies,int n_ene){
+	int i,k;
+		for(i=0;i<n_ene;i++){
+			if((all_enemies[i].status==0) && ((rand() % (3 + 1)) >=2 ) ){
+				k=rand() % (3 + 1); // assigns each a random part of the screen in which to appear
+				if(k==0){
+					all_enemies[i].x=rand() % (185 - 5 + 1)+ 5; // assigns initial coords to each enemy
+					all_enemies[i].y=rand() % (10 - 3 + 1)+ 3;
+					all_enemies[i].dir=5; // a direction somewhat facing the player
+				} else if(k==1){
+					all_enemies[i].x=rand() % (185 - 5 + 1)+ 5;
+					all_enemies[i].y=rand() % (45 - 37 + 1)+ 37;
+					all_enemies[i].dir=1;
+				}else if(k==2){
+					all_enemies[i].x=rand() % (50 - 5 + 1)+ 5;
+					all_enemies[i].y=rand() % (45 - 3 + 1)+ 3;
+					all_enemies[i].dir=3;
+				}else if(k==3){
+					all_enemies[i].x=rand() % (185 - 145 + 1)+ 105;
+					all_enemies[i].y=rand() % (45 - 3 + 1)+ 3;
+					all_enemies[i].dir=7;
+		}}}}
+void SpawnAsteroid(asteroid* ast,int n_ast){
+	int i,k;
+		for(i=0;i<n_ast;i++){
+			if((ast[i].status==0) && ((rand() % (3 + 1)) >=2 ) ){
+				k=rand() % (3 + 1); // assigns each a random part of the screen in which to appear
+				if(k==0){
+					ast[i].x=rand() % (185 - 5 + 1)+ 5; // assigns initial coords to each enemy
+					ast[i].y=rand() % (10 - 3 + 1)+ 3;
+				} else if(k==1){
+					ast[i].x=rand() % (185 - 5 + 1)+ 5;
+					ast[i].y=rand() % (45 - 37 + 1)+ 37;
+				}else if(k==2){
+					ast[i].x=rand() % (85 - 5 + 1)+ 5;
+					ast[i].y=rand() % (45 - 3 + 1)+ 3;
+				}else if(k==3){
+					ast[i].x=rand() % (185 - 105 + 1)+ 105;
+					ast[i].y=rand() % (45 - 3 + 1)+ 3;
+		}}}}
 
 
 /*  Value      foreground     Value     foreground
