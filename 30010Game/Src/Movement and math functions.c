@@ -101,7 +101,7 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 					printf(" ");
 				}}}}}
 
-void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_pow, uint8_t * pp) {
+void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_pow, int pp) {
 	int8_t i,k,m,r;
 
 	for(k=0;k<n_ast;k++){ // check for asteroid collision
@@ -133,7 +133,7 @@ void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,poweru
 	for(k=0;k<n_pow;k++){ // check for powerup collision
 				if(pow[k].status !=0){
 					if((shp->x >= pow[k].x-2) && (shp->x <= pow[k].x+2) && (shp->y >= pow[k].y-1) && (shp->y <= pow[k].y+1)) {
-						//add_power(pow[k].status, &pp); // add to player powerups
+						add_power(pow[k], pp); // add to player powerups
 						pow[k].status=0; // powerups are removed on collision and their sprite deleted
 						gotoxy(pow[k].x-1,pow[k].y-1);
 						printf("  ");
@@ -212,7 +212,7 @@ void UpdateObjPos(spaceship* ship,enemy* all_ene,bullet* all_bul,int n_ene, int 
 				}}}}
 
 
-void add_power(powerup pow, uint8_t pp) {	//Takes powerup status and adds corresponding power (pow) and ads to player powers (pp)
+void add_power(powerup pow, int pp) {	//Takes powerup status and adds corresponding power (pow) and ads to player powers (pp)
 	if (pow.status == 1){
 		if (!(pp & 0x00000001) && !(pp & 0x00000010)){
 			pp |= 0x00000001;
