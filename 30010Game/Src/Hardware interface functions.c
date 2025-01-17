@@ -16,6 +16,7 @@
 #include "charset.h"
 #include <string.h>
 #include "Gamechar.h"
+#include "Score.h"
 
 
 void uartStringModifier(char arr[]){
@@ -121,6 +122,8 @@ void ResetTime(){ //Resets the time
 	TimeMaster15.second = 0;
 	TimeMaster15.hsecond = 0;
 	TimeMaster15.msecond = 0;
+
+	SpeedIncrease = TimeMaster15;
 }
 
 void GameSpeed(int* level){
@@ -131,6 +134,7 @@ void GameSpeed(int* level){
 	if (SpeedIncrease.second >= 60){
 		SpeedIncrease.second %= 60;
 		SpeedIncrease.minute += 1;
+		ScoreTracker(600);
 	}
 	if (SpeedIncrease.minute >= 60){
 		SpeedIncrease.minute %= 60;

@@ -9,9 +9,12 @@
 #include "sinusoid.h"
 int main(void) {
 
-	uart_init(11520);
+	uart_init(9600);
+
 	//Initialize time
 	Timer15Config();
+	ResetTime(); //We dont want time to start counting up when we havent started the game yet
+
 	//set the seed
 	srand(5);
 
@@ -32,7 +35,7 @@ int main(void) {
 	 //this block initializes the game
 		clrscr(); //clear screen and set starting parameters
 		uint8_t n_bul=5, difficulty=2,style=1,n_ene = 2+difficulty,n_ast=5,n_pow=5,i;
-		int pp=0x00100000;
+		int8_t pp=0x00100000;
 		bullet all_bullets[n_bul]; // make arrays of all objects
 		asteroid all_asteroids[n_ast];
 		enemy all_enemies[n_ene];
@@ -57,8 +60,7 @@ int main(void) {
 		//menuSelect(0, &level);
 
 
-		UpdateBulletPos(&playership,&all_bullets, n_bul);
-		UpdateEnemyPos(&playership,&all_enemies,n_ene);
+		UpdateObjPos(&playership,&all_enemies,&all_bullets,n_ene, n_bul);
 		CheckBulletCollisions(&playership,&all_enemies,&all_bullets,&all_asteroids,&all_powerups, n_ene, n_ast, n_bul,n_pow);
 		CheckSpaceshipCollisions(&playership, &all_enemies,&all_asteroids,&all_powerups,n_ene, n_ast, n_pow,&pp);
 		for(i=0;i<n_ene;i++){
