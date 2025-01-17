@@ -532,9 +532,10 @@ void SpawnAsteroid(asteroid* ast,int n_ast){
 	int i,k;
 		for(i=0;i<n_ast;i++){
 			if((ast[i].status==0) && ((rand() % (3 + 1)) >=2 ) ){
+
 				k=rand() % (3 + 1); // assigns each a random part of the screen in which to appear
 				if(k==0){
-					ast[i].x=rand() % (185 - 5 + 1)+ 5; // assigns initial coords to each enemy
+					ast[i].x=rand() % (185 - 5 + 1)+ 5; // assigns initial coords to each asteroid
 					ast[i].y=rand() % (10 - 3 + 1)+ 3;
 				} else if(k==1){
 					ast[i].x=rand() % (185 - 5 + 1)+ 5;
@@ -545,9 +546,22 @@ void SpawnAsteroid(asteroid* ast,int n_ast){
 				}else if(k==3){
 					ast[i].x=rand() % (185 - 105 + 1)+ 105;
 					ast[i].y=rand() % (45 - 3 + 1)+ 3;
+
 		}}}}
-
-
+void updateAsteroid(asteroid* ast, int n_ast){
+	short i;
+	for(i=0;i<n_ast;i++){
+		if(ast[i].status !=0){
+			gotoxy(ast[i].x-2,ast[i].y-1);
+			printf("     ");
+			gotoxy(ast[i].x-3,ast[i].y);
+			printf("       ");
+			gotoxy(ast[i].x-3,ast[i].y+1);
+			printf("       ");
+			gotoxy(ast[i].x-2,ast[i].y+2);
+			printf("     ");
+		drawAsteroid(&ast[i],2);
+	}}}
 /*  Value      foreground     Value     foreground
     ------------------------------------------------
       0        Black            8       Dark Gray
