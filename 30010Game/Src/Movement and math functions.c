@@ -243,14 +243,15 @@ void add_power(powerup pow, int pp) {	//Takes powerup status and adds correspond
 	}
 }
 
-void playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int8_t k){
+int8_t playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int8_t k){
 	int16_t static key;
 	key = uartKeyRead();
-
+	int8_t updateAsteroids = 0;
 	switch (key) {
 	  case 100: //D
 	    if(player->dir < 8){
 	    	player->dir++;
+
 	    }else{
 	    	player->dir = 1;
 	    }
@@ -267,11 +268,15 @@ void playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powar
 	switch (key) {
 	  case 119: //W
 		  playerMovePosAdd(bullarr, astarr, enearr, powarr, player, k);
+		  updateAsteroids = 1;
 	    break;
 	  case 115: //S
 		  playerMovePosAdd(bullarr, astarr, enearr, powarr, player, k);
+		  updateAsteroids = 1;
 	    break;
 	}
+
+	return updateAsteroids;
 }
 
 void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int8_t k){
