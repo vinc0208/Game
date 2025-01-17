@@ -44,7 +44,7 @@ typedef struct {
 
 typedef struct {
 //define powerups as a position and a status.
-	//status is an on/off bol indicating wether it is active.
+	//status 0: inactive, 1: Speed boost, 2: Dmg boost, 3: Score multiplier, 4: Bullet type 1, 5: Bullet type 2, 6: Bullet type 3.
 	// status>1 determines type of the powerup
 	int16_t x,y,status;
 } powerup;
@@ -52,6 +52,7 @@ typedef struct {
 
 
 //functions
+void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast, int n_ene, int n_ast, int n_bul);
 void printFix(int32_t i);
 int32_t expand(int32_t i);
 int16_t vecsinus(int angle);
@@ -59,7 +60,7 @@ int32_t vecosinus(int angle);
 int32_t sinus(int angle);
 int32_t cosinus(int angle);
 void UpdateObjPos(spaceship* ship,enemy* all_ene,bullet* all_bul,int n_ene, int n_bul);
-void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast, int n_ene, int n_ast, int n_bul);
+void add_power(powerup pow, uint8_t pp);
 
 
 
