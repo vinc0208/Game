@@ -72,6 +72,23 @@ void lorentzForce(bullet* bullarr[], asteroid* astarr[]){
 	}
 }
 
+/*len vec(Bpos->astoroid) < value{
+	case over centery astoroid
+		find vector between top of astoroid and Bpos
+		find angle between above vector and bullet velocityvector
+		calculate magnitude of Lorentz force as a vector perpendicular to velocity
+		(add Lorentz force to the position of bullet) - maybe not necessary
+		accelerate velocity composants of the bullet velocity based on the Lorentz force
+
+	case under centery astoroid
+		find vector between bottom of astoroid and Bpos
+		find angle between above vector and bullet velocityvector
+		calculate magnitude of Lorentz force as a vector perpendicular to velocity
+		(add Lorentz force to the position of bullet) - maybe not necessary
+		accelerate velocity composants of the bullet velocity based on the Lorentz force
+
+}
+ */
 
 
 
