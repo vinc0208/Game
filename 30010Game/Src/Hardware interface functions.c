@@ -331,7 +331,7 @@ void init_lcd(uint8_t* buffer) {
 void radar(uint8_t* buffer, uint8_t angle, uint8_t prevangle) {
 	uint8_t slice, line;
 
-	if ((angle == 0) || (prevangle == angle)) {	//No input
+	if ((angle == 0) || (prevangle == angle)) {		//No input
 		init_radar(buffer);
 	}
 	if (angle == 3) {						//Right
@@ -410,7 +410,7 @@ void radar(uint8_t* buffer, uint8_t angle, uint8_t prevangle) {
 }
 
 
-void joystick_2_radar(uint8_t* buffer, uint8_t X, uint8_t prevangle, uint8_t angle) {
+void joystick_2_radar(uint8_t* buffer, uint8_t X, uint8_t angle, uint8_t prevangle) {
 
 	X = readJoystick();
 	if(((0x0001 << 3) & X) && !((0x0001 << 0) & X) && !((0x0001 << 1) & X)) { 	//Right

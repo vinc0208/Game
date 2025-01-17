@@ -15,33 +15,16 @@ int main(void) {
 	//set the seed
 	srand(2);
 
-	//The commented code below is simply for showing LCD things, not needed atm, but uncomment to see
-	/*
-	//Prepare byte array and strings to be updated
-	uint8_t byteArray[512];
-	char life[] = "Lives: ";
-	char score[] = "Score: ";
-	char bullets[] = "Ammo : ";
 
 	//initialize LCD
-	lcd_init();
-
-	//Update byte array with strings (These will frequently give warnings, however it should still work)
-	lcd_write_string(life, 1, 1, &byteArray);
-	lcd_write_string(score, 1, 2, &byteArray);
-	lcd_write_string(bullets, 1, 3, &byteArray);
-
-	//Transmit byte array
-	lcd_push_buffer(byteArray);
-	*/
-
-
-	/*lcd_init();
 	uint8_t buffer[512];
-	memset(buffer,0x00,512);
-	initJoystick();
 	init_lcd(buffer);
-	init_radar(buffer);*/
+
+	initJoystick();
+	uint8_t X = readJoystick();
+	uint8_t angle = 0;
+	uint8_t prevangle = -1;
+
 	int level = 10;
 
 
@@ -69,6 +52,7 @@ int main(void) {
 		fireBullet(&playership,&all_bullets[1]);
 
 	while(1){
+		//joystick_2_radar(buffer, X, angle, prevangle);
 		//menuSelect(0, &level);
 
 
