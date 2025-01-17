@@ -567,6 +567,32 @@ void updateAsteroid(asteroid* ast, int n_ast){
 			printf("     ");
 		drawAsteroid(&ast[i],2);
 	}}}
+
+//clrscr() followed by drawing every object
+void updateAll(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_bul, int n_pow){
+	short i;
+	clrscr();
+		drawSpaceship(shp);
+		for(i=0;i<n_ast;i++){
+			if(ast[i].status !=0){
+				drawAsteroid(&ast[i],2);
+		}}
+		for(i=0;i<n_ene;i++){
+					if(ene[i].status !=0){
+						drawEnemy(&ene[i]);
+		}}
+		for(i=0;i<n_pow;i++){
+					if(pow[i].status !=0){
+						drawPowerup(&pow[i]);
+		}}
+		for(i=0;i<n_bul;i++){
+					if(bul[i].status !=0){
+						drawBullet(&bul[i]);
+		}}
+}
+
+
+
 /*  Value      foreground     Value     foreground
     ------------------------------------------------
       0        Black            8       Dark Gray
