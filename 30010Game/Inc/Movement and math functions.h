@@ -60,8 +60,9 @@ int16_t vecsinus(int angle);
 int32_t vecosinus(int angle);
 int32_t sinus(int angle);
 int32_t cosinus(int angle);
-void UpdateObjPos(spaceship* ship,enemy* all_ene,bullet* all_bul,int n_ene, int n_bul);
+void UpdateBulletPos(spaceship* ship,bullet* all_bul, int n_bul);
 void add_power(powerup pow, int  pp);
+void UpdateEnemyPos(spaceship* ship,enemy* all_ene,int n_ene);
 
 
 

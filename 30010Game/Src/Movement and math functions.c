@@ -133,17 +133,16 @@ void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,poweru
 	for(k=0;k<n_pow;k++){ // check for powerup collision
 				if(pow[k].status !=0){
 					if((shp->x >= pow[k].x-2) && (shp->x <= pow[k].x+2) && (shp->y >= pow[k].y-1) && (shp->y <= pow[k].y+1)) {
-						add_power(pow[k], pp); // add to player powerups
+						add_power(pow[k], &pp); // add to player powerups
 						pow[k].status=0; // powerups are removed on collision and their sprite deleted
 						gotoxy(pow[k].x-1,pow[k].y-1);
 						printf("  ");
-							}}}
-}
+							}}}}
 
 
 
-//updates obejcts with movement independent of the player
-void UpdateObjPos(spaceship* ship,enemy* all_ene,bullet* all_bul,int n_ene, int n_bul){
+//updates obejcts with movement independent of the player (bullets)
+void UpdateBulletPos(spaceship* ship,bullet* all_bul, int n_bul){
 	int i,k;
 	//bullets first
 	for(i=0;i<n_bul;i++){
@@ -158,8 +157,11 @@ void UpdateObjPos(spaceship* ship,enemy* all_ene,bullet* all_bul,int n_ene, int 
 				all_bul[i].x+= all_bul[i].velx;
 				all_bul[i].y+= all_bul[i].vely;
 				drawBullet(&all_bul[i]);
-			}}}
+			}}}}
+
 	// then enemies
+void UpdateEnemyPos(spaceship* ship,enemy* all_ene,int n_ene){
+	int i,k;
 	for(i=0;i<n_ene;i++){
 			if(all_ene[i].status!=0){ //check status
 				if(CheckOnScr(all_ene[i].x,all_ene[i].y)==0){
