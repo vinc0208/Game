@@ -62,7 +62,7 @@ int main(void) {
 		//joystick_2_radar(buffer, X, angle, prevangle);
 		//menuSelect(0, &level);
 		while(1){
-			menuSelect(0, &level);
+			menuSelect(4, &level);
 			/*if(gamestart == 1){
 				break;
 			}*/
