@@ -11,6 +11,7 @@
 #include <ansi.h>
 #include <lut.h>
 #include <math.h>
+#include <stdlib.h>
 #include "stm32f30x_conf.h"
 #include "30010_io.h" 		// Input/output library for this course
 #include "sinusoid.h"
@@ -64,8 +65,8 @@ int32_t cosinus(int angle){
 //Movement
 
 //looks for bullet collisions with all relevant objects
-void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast, int n_ene, int n_ast, int n_bul) {
-	int i,k;
+void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_bul, int n_pow) {
+	int8_t i,k,m,r;
 	for(i=0;i<n_bul;i++){
 		if(bul[i].status !=0){
 
@@ -78,14 +79,31 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 				}
 
 			}
-			/*for(k=0;k<n_ast;k++){ // check for enemy collision
-				if((bul[i].x >= ast[k].x-3) && (bul[i].x <= ast[k].x+2) && (bul[i].y >= ast[k].y-1) && (bul[i].y <= ast[k].y+2)) {
+			for(k=0;k<n_ene;k++){ // check for enemy collision
+				if((bul[i].x >= ene[k].x-2) && (bul[i].x <= ene[k].x+2) && (bul[i].y >= ene[k].y-2) && (bul[i].y <= ene[k].y+2)) {
+					ene[k].hp-=bul[i].status;
+					if (ene[k].hp <= 0){ //check for enemy death
+						ene[k].status=0;
+						r=rand() % (4 + 1);
+						if(r==4){ //randomly spawn a powerup
+							for(m=0;m<n_pow;m++){
+								if(pow[m].status==0){
+									r=(rand() % (5 + 1))+1;
+									pow[m].status=r;
+									pow[m].x=ene[k].x;
+									pow[m].y=ene[k].y;
+									drawPowerup(&pow[m]);
+									break;
+							}}
+
+						}
+					}
 					bul[i].status=0;
 					gotoxy(bul[i].x,bul[i].y);
 					printf(" ");
 				}
 
-			}*/
+			}
 
 	}}}
 
