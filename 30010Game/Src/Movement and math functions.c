@@ -16,6 +16,7 @@
 #include "30010_io.h" 		// Input/output library for this course
 #include "sinusoid.h"
 #include "Graphics functions.h"
+#include "Score.h"
 
 //Typedefs
 void printFix(int32_t i) {
@@ -83,6 +84,7 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 					ene[k].hp-=bul[i].status;
 					if (ene[k].hp <= 0){ //check for enemy death
 						ene[k].status=0;
+						ScoreTracker(100);
 						r=rand() % (4 + 1);
 						if(r==4){ //randomly spawn a powerup
 							for(m=0;m<n_pow;m++){
