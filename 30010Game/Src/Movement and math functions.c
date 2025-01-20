@@ -125,6 +125,7 @@ void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,poweru
 			if(ene[k].status !=0){
 				if((shp->x >= ene[k].x-2) && (shp->x <= ene[k].x+2) && (shp->y >= ene[k].y-1) && (shp->y <= ene[k].y+1)) {
 					ene[k].status=0; // enemies are removed on collision and their sprite deleted
+					ene[k].hp=0;
 					shp->hp-=1;
 					gotoxy(ene[k].x-1,ene[k].y-1);
 					printf("     ");

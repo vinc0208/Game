@@ -76,7 +76,7 @@ int main(void) {
 						if(all_enemies[i].status!=0){
 							drawEnemy(&all_enemies[i]);
 							}}
-					SpawnEnemy(&all_enemies,n_ene);
+					SpawnEnemy(&all_enemies,n_ene,difficulty);
 					SpawnAsteroid(&all_asteroids,n_ast);
 	}
 }}
