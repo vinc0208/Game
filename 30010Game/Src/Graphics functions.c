@@ -89,7 +89,7 @@ uint8_t CheckOnScr(uint8_t x, uint8_t y) {
 //to make it actually fire the bullet rather than initializing its trajectory
 void fireBullet(spaceship *ship, bullet*bul, int pp, uint8_t* reload_timer){
 	char shoot = uartKeyRead();
-	if ((shoot & (1 << 5)) && (ship->bullets > 0)){
+	if ((shoot == (1 << 5)) && (ship->bullets > 0)){
 		bul[ship->bullets].status = (pp & 0x11101100);
 
 		fgcolor(11);
