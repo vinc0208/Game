@@ -699,7 +699,7 @@ void updateAsteroid(asteroid* ast, int n_ast){
 	short i;
 	for(i=0;i<n_ast;i++){
 		if(ast[i].status!=0){ //check each active asteroid
-			if(CheckOnScr(ast[i].x,ast[i].y)==0){ //check if they are near an edge
+			if(CheckOnScr(ast[i].x-1,ast[i].y)==0){ //check if they are near an edge
 				ast[i].status=0;
 				gotoxy(ast[i].x-3,ast[i].y-1);
 				printf("     ");

@@ -69,7 +69,7 @@ int main(void) {
 					playerMove(&all_bullets,&all_asteroids, &all_enemies, &all_powerups, &playership, 1,n_ene, n_ast,  n_bul, n_pow);
 					eraseSpaceship(&playership);
 					drawSpaceship(&playership);
-					if(1 == 1){
+					if(1 == 1){ //ændr dette
 						updateAsteroid(&all_asteroids, n_ast);
 						updatePowerup(&all_powerups, n_pow);
 					}
