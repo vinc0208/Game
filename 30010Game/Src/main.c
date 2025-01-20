@@ -7,6 +7,7 @@
 #include <string.h>
 #include "ansi.h"
 #include "sinusoid.h"
+#include "Score.h"
 int main(void) {
 
 	uart_init(115200);
@@ -48,12 +49,15 @@ int main(void) {
 		initEnemy(&all_enemies,n_ene);
 		initAsteroid(&all_asteroids,n_ast);
 
+		int8_t updateAst;
 
 		all_enemies[1].x=95;
 		all_enemies[1].y=10;
 		drawEnemy(&all_enemies[1]);
 		all_bullets[1].status=1;
 		fireBullet(&playership,&all_bullets[1]);
+		StopTime();
+		StartTime();
 
 	while(1){
 		//joystick_2_radar(buffer, X, angle, prevangle);
@@ -65,16 +69,24 @@ int main(void) {
 			}
 		}*/
 
-		UpdateEnemyPos(&playership,all_enemies, n_ene); //update structures with independent movement
-		UpdateBulletPos(&playership,&all_bullets, n_bul); // bullets and enemies
-		CheckBulletCollisions(&playership,&all_enemies,&all_bullets,&all_asteroids,&all_powerups, n_ene, n_ast, n_bul,n_pow); //check if this caused collisions
-		CheckSpaceshipCollisions(&playership, &all_enemies,&all_asteroids,&all_powerups,n_ene, n_ast, n_pow,&pp);
-		for(i=0;i<n_ene;i++){ // for every enemy still alive we then draw them anew
-			if(all_enemies[i].status!=0){
-				drawEnemy(&all_enemies[i]);
+		if(TimeMaster15.hsecond %  50 == 0){
+			updateAst = playerMove(&all_bullets,&all_asteroids, &all_enemies, &all_powerups, &playership, 1);
+			if(updateAst == 1){
+				updateAll();
+			}
+
+			UpdateEnemyPos(&playership,all_enemies, n_ene);
+			UpdateBulletPos(&playership,&all_bullets, n_bul);
+			CheckBulletCollisions(&playership,&all_enemies,&all_bullets,&all_asteroids,&all_powerups, n_ene, n_ast, n_bul,n_pow);
+			CheckSpaceshipCollisions(&playership, &all_enemies,&all_asteroids,&all_powerups,n_ene, n_ast, n_pow,&pp);
+			for(i=0;i<n_ene;i++){
+				if(all_enemies[i].status!=0){
+					drawEnemy(&all_enemies[i]);
+					drawSpaceship(&playership);
+
 			}}
-		drawSpaceship(&playership);
-		SpawnEnemy(all_enemies, n_ene);
-		SpawnAsteroid(all_asteroids,n_ast);
+		}
+
+
 	}
 }
