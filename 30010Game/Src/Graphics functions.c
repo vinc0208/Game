@@ -730,7 +730,7 @@ void updateEnemy(enemy* ene, int n_ene){
 	for(i=0;i<n_ene;i++){
 		if(ene[i].status!=0){ //check each active enemy
 			 //simply draw them
-			drawPowerup(&ene[i]);
+			drawEnemy(&ene[i]);
 		}}}
 
 //deletes the spaceship. should be followed by drawing it again
