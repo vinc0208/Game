@@ -10,7 +10,7 @@
 #include "Score.h"
 int main(void) {
 
-	uart_init(9600);
+	uart_init(115200);
 
 	//Initialize time
 	Timer15Config();
