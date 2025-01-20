@@ -28,7 +28,7 @@ int main(void) {
 	uint8_t angle = 0;
 	uint8_t prevangle = -1;
 
-	int level = 10;
+	int level = 1;
 
 
 
@@ -58,6 +58,12 @@ int main(void) {
 	while(1){
 		//joystick_2_radar(buffer, X, angle, prevangle);
 		//menuSelect(0, &level);
+		while(1){
+			menuSelect(4, &level);
+			/*if(gamestart == 1){
+				break;
+			}*/
+		}
 
 		UpdateEnemyPos(&playership,all_enemies, n_ene);
 		UpdateBulletPos(&playership,&all_bullets, n_bul);
