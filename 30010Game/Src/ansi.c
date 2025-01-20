@@ -26,6 +26,17 @@ void reverse(uint8_t on) {
 
 }
 
+void bold(uint8_t on) {
+
+	if(on == 1) {
+		printf("%c[%dm", ESC, 01);
+	}
+	else {
+		printf("%c[%dm", ESC, 22);
+	}
+
+}
+
 void clrreol() {
 	printf("%c[K", ESC);
 }

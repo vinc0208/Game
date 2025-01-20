@@ -39,7 +39,7 @@ typedef struct {
 typedef struct {
 //define the player spaceship as a position, direction([1,8]),hp and style.
 	//status is an on/off bol indicating wether it is alive
-	int16_t x,y,hp,status,dir,style;
+	int16_t x,y,hp,status,dir,style,bullets,maxbullets;
 } spaceship;
 
 typedef struct {
@@ -53,7 +53,7 @@ typedef struct {
 
 //functions
 void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_bul, int n_pow);
-void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_pow, int  pp);
+void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_pow, int * pp);
 void printFix(int32_t i);
 int32_t expand(int32_t i);
 int16_t vecsinus(int angle);
@@ -61,7 +61,7 @@ int32_t vecosinus(int angle);
 int32_t sinus(int angle);
 int32_t cosinus(int angle);
 void UpdateBulletPos(spaceship* ship,bullet* all_bul, int n_bul);
-void add_power(powerup pow, int  pp);
+void add_power(powerup pow, int* pp);
 void UpdateEnemyPos(spaceship* ship,enemy* all_ene,int n_ene);
 
 void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int8_t k);
