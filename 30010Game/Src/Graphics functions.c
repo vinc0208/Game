@@ -87,7 +87,6 @@ uint8_t CheckOnScr(uint8_t x, uint8_t y) {
 //this function is for FIRING BULLETS ONLY as it places them at the spaceship if they are active.
 //consider changing function to take player input and setting bullet status from Powerup array (by searching for an active dmg power with status=1)
 //to make it actually fire the bullet rather than initializing its trajectory
-<<<<<<< Updated upstream
 void fireBullet(spaceship *ship, bullet*bul, int pp, uint8_t* reload_timer){
 	char shoot = uartKeyRead();
 	if ((shoot & (1 << 5)) && (ship->bullets > 0)){
@@ -96,16 +95,6 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, uint8_t* reload_timer){
 		fgcolor(11);
 		char *ud, *ur, *lr;
 		if((bul[ship->bullets].status & 0x00100000) || (bul[ship->bullets].status & 0x01000000)){
-=======
-void fireBullet(spaceship *ship, bullet*bul, int pp){
-	char shoot = uartKeyRead();
-	if (shoot & (1 << 5)){
-		bul->status = (pp & 0x11101100);
-
-		fgcolor(11);
-		char *ud, *ur, *lr;
-		if((pp & 0x00100000) || (pp & 0x01000000)){
->>>>>>> Stashed changes
 			ud = "|";
 			ur = "/";
 			lr = "-";
@@ -115,11 +104,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp){
 			lr = "o";
 		}
 		if(bul->status==0){
-<<<<<<< Updated upstream
 		//if it is not active dont draw it
-=======
-			//if it is not active dont draw it
->>>>>>> Stashed changes
 		} else if(bul->status > 0){; //corresponds to 1 dmg
 			if(ship->dir==1){				//Up
 				bul->dir=ship->dir;
@@ -226,7 +211,6 @@ void fireBullet(spaceship *ship, bullet*bul, int pp){
 					printf("%c", 92);
 					bold(0);
 				}
-<<<<<<< Updated upstream
 			}
 		}
 		ship->bullets -= 1;
@@ -238,13 +222,6 @@ void fireBullet(spaceship *ship, bullet*bul, int pp){
 		ship->bullets = ship->maxbullets;
 		*reload_timer = -10;
 	}
-=======
-			}}
-	}
-
-
-
->>>>>>> Stashed changes
 }
 
 //draws the spaceship at a designated location facing a designated angle
