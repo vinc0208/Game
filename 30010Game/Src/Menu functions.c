@@ -599,3 +599,18 @@ void pauseMenu() {
 	printf("A for left, D for right, ENTER for select");
 
 }
+
+void pause_unpause(int *gamestart){
+	int8_t key = uartKeyRead();
+
+	if ((key == 27) && (*gamestart == 1)){
+		StopTime();
+		pauseMenu();
+		*gamestart = 0;
+	}
+	else if ((key == 27) && (*gamestart == 0)){
+		//Here is supposed to be a function that redraws the game
+		StartTime();
+		*gamestart = 1;
+	}
+}
