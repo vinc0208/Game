@@ -82,9 +82,8 @@ int main(void) {
 			for(i=0;i<n_ene;i++){
 				if(all_enemies[i].status!=0){
 					drawEnemy(&all_enemies[i]);
-					drawSpaceship(&playership);
-
-			}}
+					}}
+			drawSpaceship(&playership);
 		}
 
 
