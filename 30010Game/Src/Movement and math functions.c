@@ -82,7 +82,8 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 
 			for(k=0;k<n_ene;k++){ // check for enemy collision
 				if((bul[i].x >= ene[k].x-2) && (bul[i].x <= ene[k].x+2) && (bul[i].y >= ene[k].y-2) && (bul[i].y <= ene[k].y+2)) {
-					ene[k].hp-=bul[i].status;
+					uint8_t dmg = (bul->status & 0x20 ? 1 : 0) + (bul->status & 0x40 ? 2 : 0) + (bul->status & 0x80 ? 3 : 0) + (bul->status & 0x04 ? 1 : 0) + (bul->status & 0x08 ? 1 : 0);
+					ene[k].hp-=dmg;
 					if (ene[k].hp <= 0){ //check for enemy death
 						ene[k].status=0;
 						ScoreTracker(100);
@@ -101,8 +102,9 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 					gotoxy(bul[i].x,bul[i].y);
 					printf(" ");
 				}}}}}
+
 //checks for spaceship collision with enemies, asteroids or powerups
-void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_pow, int pp) {
+void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_pow, int * pp) {
 	int8_t k;
 
 	for(k=0;k<n_ast;k++){ // check for asteroid collision
@@ -134,7 +136,7 @@ void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,poweru
 	for(k=0;k<n_pow;k++){ // check for powerup collision
 				if(pow[k].status !=0){
 					if((shp->x >= pow[k].x-2) && (shp->x <= pow[k].x+2) && (shp->y >= pow[k].y-1) && (shp->y <= pow[k].y+1)) {
-						add_power(pow[k], &pp); // add to player powerups
+						add_power(pow[k], pp); // add to player powerups
 						pow[k].status=0; // powerups are removed on collision and their sprite deleted
 						gotoxy(pow[k].x-1,pow[k].y-1);
 						printf("  ");
@@ -215,32 +217,32 @@ void UpdateEnemyPos(spaceship* ship,enemy* all_ene,int n_ene){
 				}}}}
 
 
-void add_power(powerup pow, int pp) {	//Takes powerup status and adds corresponding power (pow) and ads to player powers (pp)
+void add_power(powerup pow, int* pp) {	//Takes powerup status and adds corresponding power (pow) and ads to player powers (pp)
 	if (pow.status == 1){
-		if (!(pp & 0x00000001) && !(pp & 0x00000010)){
-			pp |= 0x00000001;
-		} else if (pp & 0x00000001){
-			pp |= 0x00000010;
+		if (!(*pp & 0x00000001) && !(*pp & 0x00000010)){
+			*pp |= 0x00000001;
+		} else if (*pp & 0x00000001){
+			*pp |= 0x00000010;
 		} else {}
 	} else if (pow.status == 2){
-		if (!(pp & 0x00000100) && !(pp & 0x00001000)){
-			pp |= 0x00000100;
-		} else if (pp & 0x00000100){
-			pp |= 0x00001000;
+		if (!(*pp & 0x00000100) && !(*pp & 0x00001000)){
+			*pp |= 0x00000100;
+		} else if (*pp & 0x00000100){
+			*pp |= 0x00001000;
 		} else {}
 	} else if (pow.status == 3){
-		if (!(pp & 0x00010000)) {
-			pp |= 0x00010000;
+		if (!(*pp & 0x00010000)) {
+			*pp |= 0x00010000;
 		} else {}
 	} else if (pow.status == 4){
-		pp &= ~(0x11100000);
-		pp |= 0x00100000;
+		*pp &= ~(0x11100000);
+		*pp |= 0x00100000;
 	} else if (pow.status == 5){
-		pp &= ~(0x11100000);
-		pp |= 0x01000000;
+		*pp &= ~(0x11100000);
+		*pp |= 0x01000000;
 	} else if (pow.status == 6){
-		pp &= ~(0x11100000);
-		pp |= 0x10000000;
+		*pp &= ~(0x11100000);
+		*pp |= 0x10000000;
 	}
 }
 //rotates the player

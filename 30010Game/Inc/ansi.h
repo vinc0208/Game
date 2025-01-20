@@ -13,6 +13,7 @@
 
 void reverse(uint8_t on);
 void underline(uint8_t on);
+void bold(uint8_t on);
 void clrreol();
 void clrscr();
 void gotoxy(int x, int y);

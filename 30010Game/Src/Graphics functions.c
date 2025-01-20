@@ -13,6 +13,7 @@
 #include <stdint.h> // whatever
 #include <stdio.h>
 #include <stdlib.h>
+#include <Hardware interface functions.h>
 
 //draws a window as decribed in the excersises
 void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, short style){
@@ -86,74 +87,143 @@ uint8_t CheckOnScr(uint8_t x, uint8_t y) {
 //this function is for FIRING BULLETS ONLY as it places them at the spaceship if they are active.
 //consider changing function to take player input and setting bullet status from Powerup array (by searching for an active dmg power with status=1)
 //to make it actually fire the bullet rather than initializing its trajectory
-void fireBullet(spaceship *ship,bullet*bul){
-	fgcolor(11);
+void fireBullet(spaceship *ship, bullet*bul, int pp, uint8_t* reload_timer){
+	char shoot = uartKeyRead();
+	if ((shoot & (1 << 5)) && (ship->bullets > 0)){
+		bul[ship->bullets].status = (pp & 0x11101100);
+
+		fgcolor(11);
+		char *ud, *ur, *lr;
+		if((bul[ship->bullets].status & 0x00100000) || (bul[ship->bullets].status & 0x01000000)){
+			ud = "|";
+			ur = "/";
+			lr = "-";
+		} else{
+			ud = "o";
+			ur = "o";
+			lr = "o";
+		}
 		if(bul->status==0){
-			//if it is not active dont draw it
-		} else if(bul->status==1){; //corresponds to 1 dmg
-			if(ship->dir==1){
+		//if it is not active dont draw it
+		} else if(bul->status > 0){; //corresponds to 1 dmg
+			if(ship->dir==1){				//Up
 				bul->dir=ship->dir;
 				bul->x=ship->x;
 				bul->y=ship->y-2;
 				bul->velx=0;
 				bul->vely=-1;
 				gotoxy(bul->x,bul->y);
-				printf("|");
-			}else if(ship->dir==5){
+				if (!(pp & 0x01000000)){
+					printf("%c", *ud);
+				} else if (pp & 0x01000000){
+					bold(1);
+					printf("%c", *ud);
+					bold(0);
+				}
+			}else if(ship->dir==5){			// Down
 				bul->x=ship->x,bul->dir=ship->dir;
 				bul->y=ship->y+1;
 				bul->velx=0;
 				bul->vely=1;
 				gotoxy(bul->x,bul->y);
-				printf("|");
-			}else if(ship->dir==2){
+				if (!(pp & 0x01000000)){
+					printf("%c", *ud);
+				} else if (pp & 0x01000000){
+					bold(1);
+					printf("%c", *ud);
+					bold(0);
+				}
+			}else if(ship->dir==2){			// Up-right
 				bul->x=ship->x+1,bul->dir=ship->dir;
 				bul->y=ship->y-1;
 				bul->velx=3;
 				bul->vely=-1;
 				gotoxy(bul->x,bul->y);
-				printf("/");
-			}else if(ship->dir==3){
+				if (!(pp & 0x01000000)){
+					printf("%c", *ur);
+				} else if (pp & 0x01000000){
+					bold(1);
+					printf("%c", *ur);
+					bold(0);
+				}
+			}else if(ship->dir==3){			// Right
 				bul->x=ship->x+2,bul->dir=ship->dir;
 				bul->y=ship->y;
 				gotoxy(bul->x,bul->y);
 				bul->velx=1;
 				bul->vely=0;
-				printf("-");
-			}else if(ship->dir==7){
+				if (!(pp & 0x01000000)){
+					printf("%c", *lr);
+				} else if (pp & 0x01000000){
+					bold(1);
+					printf("%c", *lr);
+					bold(0);
+				}
+			}else if(ship->dir==7){			// Left
 				bul->x=ship->x-2,bul->dir=ship->dir;
 				bul->y=ship->y;
 				gotoxy(bul->x,bul->y);
 				bul->velx=-1;
 				bul->vely=0;
-				printf("-");
-			}else if(ship->dir==4){
+				if (!(pp & 0x01000000)){
+					printf("%c", *lr);
+				} else if (pp & 0x01000000){
+					bold(1);
+					printf("%c", *lr);
+					bold(0);
+				}
+			}else if(ship->dir==4){			// Down-right
 				bul->x=ship->x+1,bul->dir=ship->dir;
 				bul->y=ship->y+1;
 				gotoxy(bul->x,bul->y);
 				bul->velx=3;
 				bul->vely=1;
-				printf("%c",92);
-			}else if(ship->dir==6){
+				if (!(pp & 0x01000000)){
+					printf("%c", 92);
+				} else if (pp & 0x01000000){
+					bold(1);
+					printf("%c", 92);
+					bold(0);
+				}
+			}else if(ship->dir==6){			// Down-left
 				bul->x=ship->x-2,bul->dir=ship->dir;
 				bul->y=ship->y+1;
 				gotoxy(bul->x,bul->y);
 				bul->velx=-3;
 				bul->vely=1;
-				printf("/");
-			}else if(ship->dir==8){
+				if (!(pp & 0x01000000)){
+					printf("%c", *ur);
+				} else if (pp & 0x01000000){
+					bold(1);
+					printf("%c", *ur);
+					bold(0);
+				}
+			}else if(ship->dir==8){			// Up-left
 				bul->x=ship->x-2,bul->dir=ship->dir;
 				bul->y=ship->y-1;
 				gotoxy(bul->x,bul->y);
 				bul->velx=0;
 				bul->vely=1;
-				printf("%c",92);
-			}}
-
-
-
-
+				if (!(pp & 0x01000000)){
+					printf("%c", 92);
+				} else if (pp & 0x01000000){
+					bold(1);
+					printf("%c", 92);
+					bold(0);
+				}
+			}
+		}
+		ship->bullets -= 1;
+	}
+	if ((ship->bullets <= 0) && (*reload_timer < 0)) {
+		*reload_timer = TimeMaster15.second + 60*TimeMaster15.minute;
+	}
+	if ((TimeMaster15.second + 60*TimeMaster15.minute) == *reload_timer + 3){
+		ship->bullets = ship->maxbullets;
+		*reload_timer = -10;
+	}
 }
+
 //draws the spaceship at a designated location facing a designated angle
 void drawSpaceship(spaceship*shp){
 	int8_t i=0,size=3; //setup size
@@ -248,6 +318,7 @@ void drawSpaceship(spaceship*shp){
 			gotoxy(shp->x,shp->y);
 			printf("%c",219);
 }}}
+
 //draws an enemy
 void drawEnemy(enemy*ene){
 	int8_t i=0,size=3; //setup size
@@ -346,6 +417,7 @@ void drawEnemy(enemy*ene){
 					fgcolor(5);
 					printf("%c[%dB%c%c[%dD%c[%dA%c",ESC,1,200,ESC,3,ESC,1,200);
 		}}}
+
 //draws an asteroid
 void drawAsteroid(asteroid*ast,short style){
 	gotoxy(ast->x-1,ast->y-1);
@@ -360,8 +432,8 @@ void drawAsteroid(asteroid*ast,short style){
 	printf("%c%c%c%c[%dB%c[%dD%c%c%c%c%c%c%c%c[%dB%c[%dD%c%c%c%c%c",219,178,177,ESC,1,ESC,7,176,177,178,219,219,178,177,ESC,1,ESC,6,176,177,178,178,177);
 
 	}
-
 }
+
 //draws a random powerup at an intended position
 void drawPowerup(powerup *pow){
 	//1 speed boost (yellow), 2 Dmg boost (red), 3 Score mult. (purple), 4 Bullet type 1 (light blue), 5 Bullet type 2 (blue), 6 Bullet type 3 (Dark blue)
@@ -397,6 +469,7 @@ void initBullet(bullet* bul,int n_bull){
 		bul[i].y=0;
 		bul[i].dir=1;
 	}}
+
 //turns all powerups off and puts them at (0,0)
 void initPowerup(powerup *pow,int n_pow){
 	//x and y for all powerups get a junk value
@@ -407,8 +480,9 @@ void initPowerup(powerup *pow,int n_pow){
 		pow[i].x=0;
 		pow[i].y=0;
 	}}
+
 //initializes spaceship and draws it in the center
-void initSpaceship(spaceship* ship,int difficulty, int style){
+void initSpaceship(spaceship* ship, uint8_t difficulty, int style){
 	//x,y,hp,status,dir,are set to default values
 	ship->x=95;
 	ship->y=25;
@@ -416,10 +490,13 @@ void initSpaceship(spaceship* ship,int difficulty, int style){
 	ship->dir=1;
 	ship->style=style;
 	ship->status=1; // indicates that they are active when true
+	ship->maxbullets=5-2*(difficulty-1);	// Sets maximum number of bullets
+	ship->bullets=5-2*(difficulty-1);	// Sets number of bullets
 	drawSpaceship(ship);
 }
+
 //generates almost randomly placed enemies and draws them
-void initEnemy(enemy* all_enemies,int n_ene){
+void initEnemy(enemy* all_enemies,int n_ene, uint8_t difficulty){
 	int i,k;
 	for(i=0;i<n_ene;i++){
 		k=rand() % (3 + 1); // assigns each a random part of the screen in which to appear
@@ -441,12 +518,13 @@ void initEnemy(enemy* all_enemies,int n_ene){
 			all_enemies[i].dir=7;
 		}
 
-		all_enemies[i].hp=1; //setting default values which can be changed later
+		all_enemies[i].hp=2+difficulty; //setting default values which can be changed later
 		all_enemies[i].vely=1;
 		all_enemies[i].velx=1;
 		all_enemies[i].status=1; // indicates that they are active when true
 		drawEnemy(&all_enemies[i]); //finishes by drawing them
 		}}
+
 //generates almost randomly placed asteroids and draws them
 void initAsteroid(asteroid* all_asteroids,int n_ast){
 	int i,k;
@@ -474,36 +552,96 @@ void initAsteroid(asteroid* all_asteroids,int n_ast){
 
 
 // draw a bullet that has already been fired
-void drawBullet(bullet*bul){
+void drawBullet(bullet* bul){
 	fgcolor(11);
-		if(bul->status==0){
-			//if it is not active dont draw it
-		} else if(bul->status==1){; //corresponds to 1 dmg
-			if(bul->dir==1){
-				gotoxy(bul->x,bul->y);
-				printf("|");
-			}else if(bul->dir==5){
-				gotoxy(bul->x,bul->y);
-				printf("|");
-			}else if(bul->dir==2){
-				gotoxy(bul->x,bul->y);
-				printf("/");
-			}else if(bul->dir==3){
-				gotoxy(bul->x,bul->y);
-				printf("-");
-			}else if(bul->dir==7){
-				gotoxy(bul->x,bul->y);
-				printf("-");
-			}else if(bul->dir==4){
-				gotoxy(bul->x,bul->y);
-				printf("%c",92);
-			}else if(bul->dir==6){
-				gotoxy(bul->x,bul->y);
-				printf("/");
-			}else if(bul->dir==8){
-				gotoxy(bul->x,bul->y);
-				printf("%c",92);
-			}}}
+	char *ud, *ur, *lr;
+	if((bul->status & 0x00100000) || (bul->status & 0x01000000)){
+		ud = "|";
+		ur = "/";
+		lr = "-";
+	} else{
+		ud = "o";
+		ur = "o";
+		lr = "o";
+	}
+	if(bul->status==0){
+		//if it is not active dont draw it
+	} else if(bul->status > 0){; //corresponds to 1 dmg
+		if(bul->dir==1){				//Up
+			gotoxy(bul->x,bul->y);
+			if (!(bul->status & 0x01000000)){
+				printf("%c", *ud);
+			} else if (bul->status & 0x01000000){
+				bold(1);
+				printf("%c", *ud);
+				bold(0);
+			}
+		} else if(bul->dir==5){			// Down
+			gotoxy(bul->x,bul->y);
+			if (!(bul->status & 0x01000000)){
+				printf("%c", *ud);
+			} else if (bul->status & 0x01000000){
+				bold(1);
+				printf("%c", *ud);
+				bold(0);
+			}
+		}else if(bul->dir==2){			// Up-right
+			gotoxy(bul->x,bul->y);
+			if (!(bul->status & 0x01000000)){
+				printf("%c", *ur);
+			} else if (bul->status & 0x01000000){
+				bold(1);
+				printf("%c", *ur);
+				bold(0);
+			}
+		}else if(bul->dir==3){			// Right
+			if (!(bul->status & 0x01000000)){
+				printf("%c", *lr);
+			} else if (bul->status & 0x01000000){
+				bold(1);
+				printf("%c", *lr);
+				bold(0);
+			}
+		}else if(bul->dir==7){			// Left
+			gotoxy(bul->x,bul->y);
+			if (!(bul->status & 0x01000000)){
+				printf("%c", *lr);
+			} else if (bul->status & 0x01000000){
+				bold(1);
+				printf("%c", *lr);
+				bold(0);
+			}
+		}else if(bul->dir==4){			// Down-right
+			gotoxy(bul->x,bul->y);
+			if (!(bul->status & 0x01000000)){
+				printf("%c", 92);
+			} else if (bul->status & 0x01000000){
+				bold(1);
+				printf("%c", 92);
+				bold(0);
+			}
+		}else if(bul->dir==6){			// Down-left
+			gotoxy(bul->x,bul->y);
+			if (!(bul->status & 0x01000000)){
+				printf("%c", *ur);
+			} else if (bul->status & 0x01000000){
+				bold(1);
+				printf("%c", *ur);
+				bold(0);
+			}
+		}else if(bul->dir==8){			// Up-left
+			gotoxy(bul->x,bul->y);
+			if (!(bul->status & 0x01000000)){
+				printf("%c", 92);
+			} else if (bul->status & 0x01000000){
+				bold(1);
+				printf("%c", 92);
+				bold(0);
+			}
+		}
+	}
+}
+
 
 //spawns an enemy near the edge of the screen
 void SpawnEnemy(enemy* all_enemies,int n_ene){
@@ -529,6 +667,7 @@ void SpawnEnemy(enemy* all_enemies,int n_ene){
 					all_enemies[i].y=rand() % (45 - 3 + 1)+ 3;
 					all_enemies[i].dir=7;
 		}}}}
+
 void SpawnAsteroid(asteroid* ast,int n_ast){
 	int i,k;
 		for(i=0;i<n_ast;i++){
@@ -553,6 +692,7 @@ void SpawnAsteroid(asteroid* ast,int n_ast){
 					drawAsteroid(&ast[i],2); //finishes by drawing them
 
 		}}}}
+
 //draws each active asteroid at their position & delete those near the edge
 void updateAsteroid(asteroid* ast, int n_ast){
 	short i;
@@ -571,6 +711,7 @@ void updateAsteroid(asteroid* ast, int n_ast){
 			} else {
 			drawAsteroid(&ast[i],2);
 		}}}}
+
 //draws each active powerup at their position & delete those near the edge
 void updatePowerup(powerup* pow, int n_pow){
 	short i;
@@ -592,32 +733,34 @@ void eraseSpaceship(spaceship* shp){
 	printf("     ");
 	gotoxy(shp->x-3,shp->y+1);
 	printf("     ");
-
-
 }
+
 //clrscr() followed by drawing every object
-void updateAll(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_bul, int n_pow){
-	short i;
+void updateAll(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast, powerup* pow, int n_ene, int n_ast, int n_bul, int n_pow, int *pp){
+	uint8_t i;
 	clrscr();
-		drawSpaceship(shp);
-		for(i=0;i<n_ast;i++){
-			if(ast[i].status !=0){
-				drawAsteroid(&ast[i],2);
-		}}
-		for(i=0;i<n_ene;i++){
-					if(ene[i].status !=0){
-						drawEnemy(&ene[i]);
-		}}
-		for(i=0;i<n_pow;i++){
-					if(pow[i].status !=0){
-						drawPowerup(&pow[i]);
-		}}
-		for(i=0;i<n_bul;i++){
-					if(bul[i].status !=0){
-						drawBullet(&bul[i]);
-		}}
+	drawSpaceship(shp);
+	for(i=0;i<n_ast;i++){
+		if(ast[i].status !=0){
+			drawAsteroid(&ast[i],2);
+		}
+	}
+	for(i=0;i<n_ene;i++){
+		if(ene[i].status !=0){
+			drawEnemy(&ene[i]);
+		}
+	}
+	for(i=0;i<n_pow;i++){
+		if(pow[i].status !=0){
+			drawPowerup(&pow[i]);
+		}
+	}
+	for(i=0;i<n_bul;i++){
+		if(bul[n_bul-i].status !=0){
+			drawBullet(&bul[n_bul]);
+		}
+	}
 }
-
 
 
 /*  Value      foreground     Value     foreground

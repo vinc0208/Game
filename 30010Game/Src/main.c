@@ -20,44 +20,41 @@ int main(void) {
 	srand(5);
 
 
+	//this block initializes the game
+	clrscr(); //clear screen and set starting parameters
+	uint8_t difficulty=1,n_bul=5-(difficulty-1),style=1,n_ene = 0,n_ast=5,n_pow=5,i,angle=0,prevangle = -1,reload_timer=-10;
+	int player_powers = 0x00100000;
+	bullet all_bullets[n_bul]; // make arrays of all objects
+	asteroid all_asteroids[n_ast];
+	enemy all_enemies[n_ene];
+	powerup all_powerups[n_pow];
+	spaceship playership;
+
+
+	initSpaceship(&playership,difficulty,style); //initialize and draw all objects
+	initBullet(all_bullets, n_bul);
+	initPowerup(all_powerups, n_pow);
+	initEnemy(all_enemies,n_ene,difficulty);
+	initAsteroid(all_asteroids,n_ast);
+
+	all_enemies[1].x=95;
+	all_enemies[1].y=10;
+	drawEnemy(&all_enemies[1]);
+	all_bullets[1].status=1;
+
+
 	//initialize LCD
 	uint8_t buffer[512];
-	init_lcd(buffer);
+	init_lcd(buffer, playership);
 
-	initJoystick();
-	uint8_t X = readJoystick();
-	uint8_t angle = 0;
-	uint8_t prevangle = -1;
 
 	int level = 1;
 
 
-
-	 //this block initializes the game
-		clrscr(); //clear screen and set starting parameters
-		uint8_t n_bul=5, difficulty=2,style=1,n_ene = 2+difficulty,n_ast=5,n_pow=5,i;
-		int8_t pp=0x00100000;
-		bullet all_bullets[n_bul]; // make arrays of all objects
-		asteroid all_asteroids[n_ast];
-		enemy all_enemies[n_ene];
-		powerup all_powerups[n_pow];
-		spaceship playership;
-
-		initSpaceship(&playership,difficulty,style); //initialize and draw all objects
-		initBullet(&all_bullets, n_bul);
-		initPowerup(&all_powerups,n_pow);
-		initEnemy(&all_enemies,n_ene);
-		initAsteroid(&all_asteroids,n_ast);
-
-		int8_t updateAst;
-
-		all_bullets[1].status=1;
-		fireBullet(&playership,&all_bullets[1]);
-		StopTime();
-		StartTime();
+	StopTime();
+	StartTime();
 
 	while(1){
-		//joystick_2_radar(buffer, X, angle, prevangle);
 		//menuSelect(0, &level);
 		/*while(1){
 			menuSelect(4, &level);
@@ -67,26 +64,26 @@ int main(void) {
 		}*/
 
 		if(TimeMaster15.hsecond %  50 == 0){
-			updateAst = playerMove(&all_bullets,&all_asteroids, &all_enemies, &all_powerups, &playership, 1);
+			uint8_t updateAst = playerMove(all_bullets,all_asteroids, all_enemies, all_powerups, &playership, 1);
 			eraseSpaceship(&playership);
 			drawSpaceship(&playership);
+			fireBullet(&playership, all_bullets, player_powers, &reload_timer);
 			if(updateAst == 1){
-				updateAsteroid(&all_asteroids, n_ast);
-				updatePowerup(&all_powerups, n_pow);
+				updateAsteroid(all_asteroids, n_ast);
+				updatePowerup(all_powerups, n_pow);
 			}
 
 			UpdateEnemyPos(&playership,all_enemies, n_ene);
-			UpdateBulletPos(&playership,&all_bullets, n_bul);
-			CheckBulletCollisions(&playership,&all_enemies,&all_bullets,&all_asteroids,&all_powerups, n_ene, n_ast, n_bul,n_pow);
-			CheckSpaceshipCollisions(&playership, &all_enemies,&all_asteroids,&all_powerups,n_ene, n_ast, n_pow,&pp);
+			UpdateBulletPos(&playership,all_bullets, n_bul);
+			CheckBulletCollisions(&playership,all_enemies,all_bullets,all_asteroids,all_powerups, n_ene, n_ast, n_bul,n_pow);
+			CheckSpaceshipCollisions(&playership, all_enemies,all_asteroids,all_powerups,n_ene, n_ast, n_pow, &player_powers);
 			for(i=0;i<n_ene;i++){
 				if(all_enemies[i].status!=0){
 					drawEnemy(&all_enemies[i]);
 					}}
-			SpawnEnemy(&all_enemies,n_ene);
-			SpawnAsteroid(&all_asteroids,n_ast);
+			SpawnEnemy(all_enemies,n_ene);
+			SpawnAsteroid(all_asteroids,n_ast);
 		}
-
-
+		update_stats(playership, buffer);
 	}
 }

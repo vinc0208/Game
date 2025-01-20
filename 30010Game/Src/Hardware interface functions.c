@@ -267,7 +267,7 @@ uint8_t readJoystick() {
 
 
 /*****************************/
-/** Radar Control Functions **/
+/******* LCD Functions *******/
 /*****************************/
 void init_radar(uint8_t *buffer) {
 	uint8_t i;
@@ -283,7 +283,8 @@ void init_radar(uint8_t *buffer) {
 	lcd_push_buffer(buffer);
 }
 
-void init_lcd(uint8_t* buffer) {
+
+void init_lcd(uint8_t* buffer, spaceship ship) {
 	//Prepare byte array and strings to be updated (buffer)
 	memset(buffer,0x00,512);
 	char score[] = "Score:0";
@@ -301,7 +302,7 @@ void init_lcd(uint8_t* buffer) {
 	uint8_t n;
 	uint8_t i;
 	uint8_t j;
-	for (n=0; n<3; n++) {
+	for (n=0; n<ship.hp; n++) {
 		for (i=0; i<2; i++) {
 			for (j=0; j<5; j++) {
 				buffer[(1)*128 + 37 + n*11 + i*5 + j] = game_char_data[2+i][j];	//Prints hearts
@@ -309,9 +310,9 @@ void init_lcd(uint8_t* buffer) {
 		}
 	}
 
-	for (n=0; n<5; n++) {
+	for (n=0; n<ship.bullets; n++) {
 		for (j=0; j<5; j++) {
-			buffer[(2)*128 + 38 + n*11 + j] = game_char_data[1][j];			//Prints bullets
+			buffer[(2)*128 + 38 + n*11 + j] = game_char_data[1][j];				//Prints bullets
 		}
 	}
 
@@ -459,7 +460,6 @@ void joystick_2_radar(uint8_t* buffer, uint8_t X, uint8_t angle, uint8_t prevang
 }
 
 
-
 void RGB_life_detector(spaceship ship){
 	if (ship.hp > 3 /* && game_in_progress == True/1*/){
 		GPIOA->ODR &= ~(0x0001 << 9);
@@ -494,3 +494,35 @@ void RGB_life_detector(spaceship ship){
 	}
 }
 
+
+void update_stats(spaceship ship, uint8_t* buffer){
+	uint8_t n;
+	uint8_t i;
+	uint8_t j;
+	for (n=0; n<ship.hp; n++) {
+		for (i=0; i<2; i++) {
+			for (j=0; j<5; j++) {
+				buffer[(1)*128 + 37 + n*11 + i*5 + j] = game_char_data[2+i][j];	//Prints hearts
+			}
+		}
+	}
+	for (n=0; n<(5-ship.hp); n++) {
+		for (i=0; i<2; i++) {
+			for (j=0; j<5; j++) {
+				buffer[(1)*128 + 81 - n*11 + i*5 + j] = game_char_data[0][0];	//Clears hearts
+			}
+		}
+	}
+
+	for (n=0; n<ship.bullets; n++) {
+		for (j=0; j<5; j++) {
+			buffer[(2)*128 + 38 + n*11 + j] = game_char_data[1][j];			//Prints bullets
+		}
+	}
+	for (n=0; n<(5-ship.bullets); n++) {
+		for (j=0; j<5; j++) {
+			buffer[(2)*128 + 81 - n*11 + j] = game_char_data[0][0];			//Clears bullets
+		}
+	}
+	lcd_push_buffer(buffer);
+}
