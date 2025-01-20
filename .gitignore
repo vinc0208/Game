@@ -1050,6 +1050,7 @@
 >>>>>>> Stashed changes
 30010Game/Debug/Src/sinusoid.d
 30010Game/Debug/Src/sinusoid.o
+<<<<<<< Updated upstream
 .metadata/.plugins/org.eclipse.core.resources/.history/1a/c01cc0e928d7001f1e62b7b8bcf03a50
 .metadata/.plugins/org.eclipse.core.resources/.history/2d/60177b3e29d7001f1e62b7b8bcf03a50
 .metadata/.plugins/org.eclipse.core.resources/.history/30/105dffb528d7001f1e62b7b8bcf03a50
@@ -1068,3 +1069,7 @@
 30010Game/Debug/Src/sinusoid.o
 30010Game/Debug/Src/sinusoid.d
 30010Game/Debug/Src/sinusoid.o
+=======
+30010Game/Debug/Src/sinusoid.o
+30010Game/Debug/Src/sinusoid.d
+>>>>>>> Stashed changes
