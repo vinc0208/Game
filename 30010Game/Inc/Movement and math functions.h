@@ -64,8 +64,8 @@ void UpdateBulletPos(spaceship* ship,bullet* all_bul, int n_bul);
 void add_power(powerup pow, int* pp);
 void UpdateEnemyPos(spaceship* ship,enemy* all_ene,int n_ene);
 
-void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int8_t k);
-void playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int8_t k);
+void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int8_t k, int n_ene, int n_ast, int n_bul, int n_pow);
+void playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int8_t k, int n_ene, int n_ast, int n_bul, int n_pow);
 
 
 

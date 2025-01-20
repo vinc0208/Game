@@ -24,6 +24,8 @@ int main(void) {
 	clrscr(); //clear screen and set starting parameters
 	uint8_t difficulty=1,n_bul=5-(difficulty-1),style=1,n_ene = 2,n_ast=5,n_pow=5,i,angle=0,prevangle = -1,reload_timer=-10;
 	int player_powers = 0x00100000;
+	int8_t updateAst;
+	int pp=0x00100000;
 	bullet all_bullets[n_bul]; // make arrays of all objects
 	asteroid all_asteroids[n_ast];
 	enemy all_enemies[n_ene];
@@ -51,7 +53,36 @@ int main(void) {
 	StopTime();
 	StartTime();
 
-	while(1){
 
+
+	while(1){
+		//joystick_2_radar(buffer, X, angle, prevangle);
+				//menuSelect(0, &level);
+				/*while(1){
+					menuSelect(4, &level);
+					if(gamestart == 1){
+						break;
+					}
+				}*/
+
+		if(TimeMaster15.hsecond %  50 == 0){
+					playerMove(&all_bullets,&all_asteroids, &all_enemies, &all_powerups, &playership, 1,n_ene, n_ast,  n_bul, n_pow);
+					eraseSpaceship(&playership);
+					drawSpaceship(&playership);
+					if(1 == 1){
+						updateAsteroid(&all_asteroids, n_ast);
+						updatePowerup(&all_powerups, n_pow);
+					}
+
+					UpdateEnemyPos(&playership,all_enemies, n_ene);
+					UpdateBulletPos(&playership,&all_bullets, n_bul);
+					CheckBulletCollisions(&playership,&all_enemies,&all_bullets,&all_asteroids,&all_powerups, n_ene, n_ast, n_bul,n_pow);
+					CheckSpaceshipCollisions(&playership, &all_enemies,&all_asteroids,&all_powerups,n_ene, n_ast, n_pow,&pp);
+					for(i=0;i<n_ene;i++){
+						if(all_enemies[i].status!=0){
+							drawEnemy(&all_enemies[i]);
+							}}
+					SpawnEnemy(&all_enemies,n_ene);
+					SpawnAsteroid(&all_asteroids,n_ast);
 	}
-}
+}}
