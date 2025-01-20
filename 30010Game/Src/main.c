@@ -48,6 +48,7 @@ int main(void) {
 
 
 	int level = 1;
+	int gamestart = 0;
 
 
 	StopTime();
@@ -56,14 +57,7 @@ int main(void) {
 
 
 	while(1){
-		//joystick_2_radar(buffer, X, angle, prevangle);
-				//menuSelect(0, &level);
-				/*while(1){
-					menuSelect(4, &level);
-					if(gamestart == 1){
-						break;
-					}
-				}*/
+
 
 		if(TimeMaster15.hsecond %  50 == 0){
 					playerMove(&all_bullets,&all_asteroids, &all_enemies, &all_powerups, &playership, 1,n_ene, n_ast,  n_bul, n_pow);
