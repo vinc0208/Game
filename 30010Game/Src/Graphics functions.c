@@ -553,13 +553,24 @@ void SpawnAsteroid(asteroid* ast,int n_ast){
 					drawAsteroid(&ast[i],2); //finishes by drawing them
 
 		}}}}
-//draws each active asteroid at their position
+//draws each active asteroid at their position & delete those near the edge
 void updateAsteroid(asteroid* ast, int n_ast){
 	short i;
 	for(i=0;i<n_ast;i++){
-		if(ast->status==1){
+		if(ast[i].status==1){ //check each active asteroid
+			if(CheckOnScr(ast[i].x,ast[i].y)==0){ //check if they are near an edge
+				ast[i].status=0;
+				gotoxy(ast[i].x-3,ast[i].y-1);
+				printf("     ");
+				gotoxy(ast[i].x-4,ast[i].y);
+				printf("       ");
+				gotoxy(ast[i].x-4,ast[i].y+1);
+				printf("       ");
+				gotoxy(ast[i].x-3,ast[i].y+2);
+				printf("      ");
+			} else {
 			drawAsteroid(&ast[i],2);
-	}}}
+		}}}}
 
 //deletes the old spaceship
 void eraseSpaceship(spaceship* shp){
