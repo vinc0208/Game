@@ -47,24 +47,6 @@ char uartKeyRead(){
 	return key;
 }
 
-/*uint8_t menuSelect(char menuName[]){
-	uint8_t static sel = 1;
-	uint8_t static options = 2;
-	point static sellocations[3];
-
-
-	if(menuName == "Main Menu"){
-		options = 3;
-
-	}else if(menuName == "Help"){
-		options = 1;
-	}else if(menuName == "Difficulty"){
-		options = 1;
-	}
-
-
-
-}*/
 
 void TIM1_BRK_TIM15_IRQHandler(void) { //Needed to count the time
 	TimeMaster15.msecond += 1;
@@ -85,6 +67,7 @@ void TIM1_BRK_TIM15_IRQHandler(void) { //Needed to count the time
 		TimeMaster15.minute %= 60;
 		TimeMaster15.hour += 1;
 	}
+
 	TIM15->SR &= ~0x0001; // Clear interrupt bit
  }
 

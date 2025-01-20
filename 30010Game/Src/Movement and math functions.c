@@ -120,7 +120,8 @@ void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,poweru
 				printf("       ");
 				gotoxy(ast[k].x-3,ast[k].y+2);
 				printf("     ");
-					}}}
+				drawSpaceship(shp);
+			}}}
 	for(k=0;k<n_ene;k++){ // check for enemy collision
 			if(ene[k].status !=0){
 				if((shp->x >= ene[k].x-2) && (shp->x <= ene[k].x+2) && (shp->y >= ene[k].y-1) && (shp->y <= ene[k].y+1)) {
@@ -132,7 +133,8 @@ void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,poweru
 					printf("      ");
 					gotoxy(ene[k].x-2,ene[k].y+1);
 					printf("      ");
-						}}}
+					drawSpaceship(shp);
+				}}}
 	for(k=0;k<n_pow;k++){ // check for powerup collision
 				if(pow[k].status !=0){
 					if((shp->x >= pow[k].x-2) && (shp->x <= pow[k].x+2) && (shp->y >= pow[k].y-1) && (shp->y <= pow[k].y+1)) {
@@ -140,7 +142,8 @@ void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,poweru
 						pow[k].status=0; // powerups are removed on collision and their sprite deleted
 						gotoxy(pow[k].x-1,pow[k].y-1);
 						printf("  ");
-							}}}}
+						drawSpaceship(shp);
+					}}}}
 
 
 
@@ -249,19 +252,22 @@ void add_power(powerup pow, int* pp) {	//Takes powerup status and adds correspon
 void playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int8_t k, int n_ene, int n_ast, int n_bul, int n_pow){
 	switch (uartKeyRead()) {
 	  case 100: //D
+		eraseSpaceship(player);
 	    if(player->dir < 8){
 	    	player->dir++;
-
 	    }else{
 	    	player->dir = 1;
 	    }
+	    drawSpaceship(player);
 	    break;
 	  case 97: //A
+		eraseSpaceship(player);
 		if(player->dir > 1){
 			player->dir--;
 		}else{
 			player->dir = 8;
 		}
+		drawSpaceship(player);
 	    break;
 	  case 119: //W
 		  playerMovePosAdd(bullarr, astarr, enearr, powarr, player, k, n_ene, n_ast, n_bul, n_pow);
