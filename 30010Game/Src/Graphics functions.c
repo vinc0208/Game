@@ -553,33 +553,23 @@ void SpawnAsteroid(asteroid* ast,int n_ast){
 					drawAsteroid(&ast[i],2); //finishes by drawing them
 
 		}}}}
+//draws each active asteroid at their position
 void updateAsteroid(asteroid* ast, int n_ast){
 	short i;
 	for(i=0;i<n_ast;i++){
-		if(ast[i].status !=0){
-			gotoxy(ast[i].x-4,ast[i].y-2);
-			printf("       ");
-			gotoxy(ast[i].x-4,ast[i].y-1);
-			printf("       ");
-			gotoxy(ast[i].x-4,ast[i].y);
-			printf("         ");
-			gotoxy(ast[i].x-4,ast[i].y+1);
-			printf("         ");
-			gotoxy(ast[i].x-4,ast[i].y+2);
-			printf("       ");
-			gotoxy(ast[i].x-4,ast[i].y+3);
-			printf("       ");
-		drawAsteroid(&ast[i],2);
+		if(ast->status==1){
+			drawAsteroid(&ast[i],2);
 	}}}
 
 //deletes the old spaceship
 void eraseSpaceship(spaceship* shp){
-	gotoxy(shp->x-1,shp->y-1); //because the ship stands still we can use it's coordinates
-	printf("    "); // to go there and just print spaces to delete it
-	gotoxy(shp->x-1,shp->y);
-	printf("    ");
-	gotoxy(shp->x-11,shp->y+1);
-	printf("    ");
+	gotoxy(shp->x-2,shp->y-1); //because the ship stands still we can use it's coordinates
+	printf("     "); // to go there and just print spaces to delete it
+	gotoxy(shp->x-2,shp->y);
+	printf("     ");
+	gotoxy(shp->x-3,shp->y+1);
+	printf("     ");
+
 
 }
 //clrscr() followed by drawing every object

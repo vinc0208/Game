@@ -68,6 +68,8 @@ int main(void) {
 
 		if(TimeMaster15.hsecond %  50 == 0){
 			updateAst = playerMove(&all_bullets,&all_asteroids, &all_enemies, &all_powerups, &playership, 1);
+			eraseSpaceship(&playership);
+			drawSpaceship(&playership);
 			if(updateAst == 1){
 				updateAsteroid(&all_asteroids, n_ast);
 			}
@@ -80,7 +82,6 @@ int main(void) {
 				if(all_enemies[i].status!=0){
 					drawEnemy(&all_enemies[i]);
 					}}
-			drawSpaceship(&playership);
 			SpawnEnemy(&all_enemies,n_ene);
 			SpawnAsteroid(&all_asteroids,n_ast);
 		}
