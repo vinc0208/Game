@@ -557,7 +557,7 @@ void SpawnAsteroid(asteroid* ast,int n_ast){
 void updateAsteroid(asteroid* ast, int n_ast){
 	short i;
 	for(i=0;i<n_ast;i++){
-		if(ast[i].status==1){ //check each active asteroid
+		if(ast[i].status!=0){ //check each active asteroid
 			if(CheckOnScr(ast[i].x,ast[i].y)==0){ //check if they are near an edge
 				ast[i].status=0;
 				gotoxy(ast[i].x-3,ast[i].y-1);
@@ -571,8 +571,20 @@ void updateAsteroid(asteroid* ast, int n_ast){
 			} else {
 			drawAsteroid(&ast[i],2);
 		}}}}
+//draws each active powerup at their position & delete those near the edge
+void updatePowerup(powerup* pow, int n_pow){
+	short i;
+	for(i=0;i<n_pow;i++){
+		if(pow[i].status!=0){ //check each active asteroid
+			if(CheckOnScr(pow[i].x,pow[i].y)==0){ //check if they are near an edge
+				pow[i].status=0;
+				gotoxy(pow[i].x-1,pow[i].y-1);
+				printf("  ");
+			} else { //if not simply draw them
+			drawPowerup(&pow[i]);
+		}}}}
 
-//deletes the old spaceship
+//deletes the spaceship. should be followed by drawing it again
 void eraseSpaceship(spaceship* shp){
 	gotoxy(shp->x-2,shp->y-1); //because the ship stands still we can use it's coordinates
 	printf("     "); // to go there and just print spaces to delete it

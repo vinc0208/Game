@@ -72,6 +72,7 @@ int main(void) {
 			drawSpaceship(&playership);
 			if(updateAst == 1){
 				updateAsteroid(&all_asteroids, n_ast);
+				updatePowerup(&all_powerups, n_pow);
 			}
 
 			UpdateEnemyPos(&playership,all_enemies, n_ene);

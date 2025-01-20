@@ -160,7 +160,7 @@ void UpdateBulletPos(spaceship* ship,bullet* all_bul, int n_bul){
 				drawBullet(&all_bul[i]);
 			}}}}
 
-	// then enemies
+//updates obejcts with movement independent of the player (enemies)
 void UpdateEnemyPos(spaceship* ship,enemy* all_ene,int n_ene){
 	int i;
 	for(i=0;i<n_ene;i++){
@@ -301,12 +301,22 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 	      }
 
 	      for(int8_t i = 0; i < sizeof(enearr); i++){
+	    	  if(enearr[i].status!=0){ //check status
+				gotoxy(enearr[i].x-1,enearr[i].y-1);
+				printf("     ");
+				gotoxy(enearr[i].x-3,enearr[i].y);
+				printf("      ");
+				gotoxy(enearr[i].x-2,enearr[i].y+1);
+				printf("      ");
 	    	  enearr[i].y += k;
-	      }
+	      }}
 
 	      for(int8_t i = 0; i < sizeof(powarr); i++){
-	    	  powarr[i].y += k;
-	      }
+	    	  if(powarr[i].status !=0){
+	    	  	  gotoxy(powarr[i].x-1,astarr[i].y);
+	    	  	  printf("  ");
+	    	  	  powarr[i].y += k;
+	      }}
 
 	      break;
 	    case 2:
@@ -333,14 +343,24 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 		  }}
 
 		  for(int8_t i = 0; i < sizeof(enearr); i++){
-			  enearr[i].x -= 3*k;
+			  if(enearr[i].status!=0){ //check status
+					gotoxy(enearr[i].x-1,enearr[i].y-1);
+					printf("     ");
+					gotoxy(enearr[i].x-3,enearr[i].y);
+					printf("      ");
+					gotoxy(enearr[i].x-2,enearr[i].y+1);
+					printf("      ");
+					enearr[i].x -= 3*k;
 			  enearr[i].y += k;
-		  }
+		  }}
 
 		  for(int8_t i = 0; i < sizeof(powarr); i++){
+			  if(powarr[i].status !=0){
+				gotoxy(powarr[i].x-1,astarr[i].y);
+				printf("  ");
 			  powarr[i].x -= 3*k;
 			  powarr[i].y += k;
-		  }
+		  }}
 
 	      break;
 	    case 3:
@@ -365,12 +385,22 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 		  }}
 
 		  for(int8_t i = 0; i < sizeof(enearr); i++){
+			  if(enearr[i].status!=0){ //check status
+					gotoxy(enearr[i].x-1,enearr[i].y-1);
+					printf("     ");
+					gotoxy(enearr[i].x-3,enearr[i].y);
+					printf("      ");
+					gotoxy(enearr[i].x-2,enearr[i].y+1);
+					printf("      ");
 			  enearr[i].x -= 3*k;
-		  }
+		  }}
 
 		  for(int8_t i = 0; i < sizeof(powarr); i++){
-			  powarr[i].x -= 3*k;
-		  }
+			  if(powarr[i].status !=0){
+			  	  gotoxy(powarr[i].x-1,astarr[i].y);
+			  	  printf("  ");
+			  	  powarr[i].x -= 3*k;
+		  }}
 	      break;
 	    case 4:
 		  for(int8_t i = 0; i < sizeof(bullarr); i++){
@@ -397,14 +427,24 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 		  }}
 
 		  for(int8_t i = 0; i < sizeof(enearr); i++){
-			  enearr[i].x -= 3*k;
-			  enearr[i].y -= k;
-		  }
+			  if(enearr[i].status!=0){ //check status
+				  gotoxy(enearr[i].x-1,enearr[i].y-1);
+				  printf("     ");
+				  gotoxy(enearr[i].x-3,enearr[i].y);
+				  printf("      ");
+				  gotoxy(enearr[i].x-2,enearr[i].y+1);
+				  printf("      ");
+				  enearr[i].x -= 3*k;
+				  enearr[i].y -= k;
+		  }}
 
 		  for(int8_t i = 0; i < sizeof(powarr); i++){
+			  if(powarr[i].status !=0){
+			  	  gotoxy(powarr[i].x-1,astarr[i].y);
+			  	  printf("  ");
 			  powarr[i].x -= 3*k;
 			  powarr[i].y -= k;
-		  }
+		  }}
 	      break;
 	    case 5:
 		  for(int8_t i = 0; i < sizeof(bullarr); i++){
@@ -428,12 +468,22 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 		  }}
 
 		  for(int8_t i = 0; i < sizeof(enearr); i++){
-			  enearr[i].y -= k;
-		  }
+			  if(enearr[i].status!=0){ //check status
+				  gotoxy(enearr[i].x-1,enearr[i].y-1);
+				  printf("     ");
+				  gotoxy(enearr[i].x-3,enearr[i].y);
+				  printf("      ");
+				  gotoxy(enearr[i].x-2,enearr[i].y+1);
+				  printf("      ");
+				  enearr[i].y -= k;
+		  }}
 
 		  for(int8_t i = 0; i < sizeof(powarr); i++){
+			  if(powarr[i].status !=0){
+			  	  gotoxy(powarr[i].x-1,astarr[i].y);
+			  	  printf("  ");
 			  powarr[i].y -= k;
-		  }
+		  }}
 	      break;
 	    case 6:
 		  for(int8_t i = 0; i < sizeof(bullarr); i++){
@@ -460,14 +510,24 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 		  }}
 
 		  for(int8_t i = 0; i < sizeof(enearr); i++){
-			  enearr[i].x += 3*k;
-			  enearr[i].y -= k;
-		  }
+			  if(enearr[i].status!=0){ //check status
+				  gotoxy(enearr[i].x-1,enearr[i].y-1);
+				  printf("     ");
+				  gotoxy(enearr[i].x-3,enearr[i].y);
+				  printf("      ");
+				  gotoxy(enearr[i].x-2,enearr[i].y+1);
+				  printf("      ");
+				  enearr[i].x += 3*k;
+				  enearr[i].y -= k;
+		  }}
 
 		  for(int8_t i = 0; i < sizeof(powarr); i++){
+			  if(powarr[i].status !=0){
+			  	  gotoxy(powarr[i].x-1,astarr[i].y);
+			  	  printf("  ");
 			  powarr[i].x += 3*k;
 			  powarr[i].y -= k;
-		  }
+		  }}
 	      break;
 	    case 7:
 	      for(int8_t i = 0; i < sizeof(bullarr); i++){
@@ -491,12 +551,23 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 		  }}
 
 		  for(int8_t i = 0; i < sizeof(enearr); i++){
+			  if(enearr[i].status!=0){ //check status
+			  gotoxy(enearr[i].x-1,enearr[i].y-1);
+			  printf("     ");
+			  gotoxy(enearr[i].x-3,enearr[i].y);
+			  printf("      ");
+			  gotoxy(enearr[i].x-2,enearr[i].y+1);
+			  printf("      ");
 			  enearr[i].x += 3*k;
-		  }
+
+		  }}
 
 		  for(int8_t i = 0; i < sizeof(powarr); i++){
+			  if(powarr[i].status !=0){
+			  	  gotoxy(powarr[i].x-1,astarr[i].y);
+			  	  printf("  ");
 			  powarr[i].x += 3*k;
-		  }
+			  }}
 	      break;
 	    case 8:
 	      for(int8_t i = 0; i < sizeof(bullarr); i++){
@@ -523,14 +594,25 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 		  }}
 
 		  for(int8_t i = 0; i < sizeof(enearr); i++){
+			  if(enearr[i].status!=0){ //check status
+			  gotoxy(enearr[i].x-1,enearr[i].y-1);
+			  printf("     ");
+			  gotoxy(enearr[i].x-3,enearr[i].y);
+			  printf("      ");
+			  gotoxy(enearr[i].x-2,enearr[i].y+1);
+			  printf("      ");
 			  enearr[i].x += 3*k;
 			  enearr[i].y += k;
-		  }
+
+		  }}
 
 		  for(int8_t i = 0; i < sizeof(powarr); i++){
+			  if(powarr[i].status !=0){
+			  	  gotoxy(powarr[i].x-1,astarr[i].y);
+			  	  printf("  ");
 			  powarr[i].x += 3*k;
 			  powarr[i].y += k;
-		  }
+		  }}
 	      break;
 	  }
 }

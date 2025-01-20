@@ -23,4 +23,7 @@ void initBullet(bullet * bul,int maxn_bull);
 uint8_t CheckOnScr(uint8_t x, uint8_t y);
 void SpawnEnemy(enemy* all_enemies,int n_ene);
 void SpawnAsteroid(asteroid* ast,int n_ast);
+void updateAsteroid(asteroid* ast, int n_ast);
+void updatePowerup(powerup* pow, int n_pow);
+void eraseSpaceship(spaceship* shp);
 #endif /* GRAPHICS_FUNCTIONS_H_ */
