@@ -23,7 +23,7 @@ void initEnemy(enemy* all_enemies,int n_ene, uint8_t difficulty);
 void initSpaceship(spaceship* ship, uint8_t difficulty, int style);
 void initBullet(bullet* bul,int n_bull);
 void initPowerup(powerup *pow,int n_pow);
-
+void updateEnemy(enemy* ene, int n_ene);
 uint8_t CheckOnScr(uint8_t x, uint8_t y);
 void SpawnEnemy(enemy* all_enemies,int n_ene);
 void SpawnAsteroid(asteroid* ast,int n_ast);

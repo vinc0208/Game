@@ -716,7 +716,7 @@ void updateAsteroid(asteroid* ast, int n_ast){
 void updatePowerup(powerup* pow, int n_pow){
 	short i;
 	for(i=0;i<n_pow;i++){
-		if(pow[i].status!=0){ //check each active asteroid
+		if(pow[i].status!=0){ //check each active powerup
 			if(CheckOnScr(pow[i].x,pow[i].y)==0){ //check if they are near an edge
 				pow[i].status=0;
 				gotoxy(pow[i].x-1,pow[i].y-1);
@@ -724,6 +724,14 @@ void updatePowerup(powerup* pow, int n_pow){
 			} else { //if not simply draw them
 			drawPowerup(&pow[i]);
 		}}}}
+//simply check all active enemies and draws them at their current internal position
+void updateEnemy(enemy* ene, int n_ene){
+	short i;
+	for(i=0;i<n_ene;i++){
+		if(ene[i].status!=0){ //check each active enemy
+			 //simply draw them
+			drawPowerup(&ene[i]);
+		}}}
 
 //deletes the spaceship. should be followed by drawing it again
 void eraseSpaceship(spaceship* shp){

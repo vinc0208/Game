@@ -22,7 +22,7 @@ int main(void) {
 
 	//this block initializes the game
 	clrscr(); //clear screen and set starting parameters
-	uint8_t difficulty=1,n_bul=5-(difficulty-1),style=1,n_ene = 0,n_ast=5,n_pow=5,i,angle=0,prevangle = -1,reload_timer=-10;
+	uint8_t difficulty=1,n_bul=5-(difficulty-1),style=1,n_ene = 2,n_ast=5,n_pow=5,i,angle=0,prevangle = -1,reload_timer=-10;
 	int player_powers = 0x00100000;
 	bullet all_bullets[n_bul]; // make arrays of all objects
 	asteroid all_asteroids[n_ast];
@@ -36,11 +36,6 @@ int main(void) {
 	initPowerup(all_powerups, n_pow);
 	initEnemy(all_enemies,n_ene,difficulty);
 	initAsteroid(all_asteroids,n_ast);
-
-	all_enemies[1].x=95;
-	all_enemies[1].y=10;
-	drawEnemy(&all_enemies[1]);
-	all_bullets[1].status=1;
 
 
 	//initialize LCD
