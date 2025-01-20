@@ -35,11 +35,7 @@ int main(void) {
 	spaceship playership;
 
 
-	initSpaceship(&playership,difficulty,style); //initialize and draw all objects
-	initBullet(all_bullets, n_bul);
-	initPowerup(all_powerups, n_pow);
-	initEnemy(all_enemies,n_ene,difficulty);
-	initAsteroid(all_asteroids,n_ast);
+
 
 
 
@@ -52,6 +48,7 @@ int main(void) {
 	int level = 1;
 	int gamestart = 0;
 	int speed = 1;
+	int menu = 0;
 
 
 	StopTime();
@@ -60,36 +57,55 @@ int main(void) {
 
 
 	while(1){
-		int8_t static t = 0;
-		if(TimeMaster15.hsecond != t){
-			bulletTime++;
-			enemyTime++;
-			playerTime++;
-			t = TimeMaster15.hsecond;
+
+		while(gamestart == 0){
+			menuSelect(menu, &level, &gamestart);
 		}
 
-		if(bulletTime >= 33 ){
-			UpdateBulletPos(&playership,&all_bullets, n_bul);
-			CheckBulletCollisions(&playership, &all_enemies, &all_bullets, &all_asteroids,&all_powerups, n_ene, n_ast, n_bul, n_pow);
-			bulletTime = 0;
-		}
+		clrscr();
+		initSpaceship(&playership,difficulty,style); //initialize and draw all objects
+		initBullet(all_bullets, n_bul);
+		initPowerup(all_powerups, n_pow);
+		initEnemy(all_enemies,n_ene,difficulty);
+		initAsteroid(all_asteroids,n_ast);
+		StartTime();
 
-		if(enemyTime >= 200){
-			UpdateEnemyPos(&playership,&all_enemies,n_ene);
-			SpawnEnemy(&all_enemies,n_ene);
-			updateEnemy(&all_enemies, n_ene);
-			enemyTime = 0;
-		}
+		while(playership.hp > 0){
+			int8_t static t = 0;
+			if(TimeMaster15.hsecond != t){
+				bulletTime++;
+				enemyTime++;
+				playerTime++;
+				t = TimeMaster15.hsecond;
+			}
 
-		if(playerTime >= 50){
-			playerMove(&all_bullets, &all_asteroids, &all_enemies, &all_powerups, &playership, speed, n_ene, n_ast, n_bul, n_pow);
-			updateAsteroid(&all_asteroids, n_ast);
-			updatePowerup(&all_powerups, n_pow);
-			CheckSpaceshipCollisions(&playership, &all_enemies, &all_asteroids,&all_powerups, n_ene, n_ast, n_pow, &pp);
-			SpawnAsteroid(&all_asteroids,n_ast);
-			updateEnemy(&all_enemies, n_ene);
-			playerTime = 0;
+			if(bulletTime >= 33 ){
+				UpdateBulletPos(&playership,&all_bullets, n_bul);
+				CheckBulletCollisions(&playership, &all_enemies, &all_bullets, &all_asteroids,&all_powerups, n_ene, n_ast, n_bul, n_pow);
+				bulletTime = 0;
+			}
+
+			if(enemyTime >= 200){
+				UpdateEnemyPos(&playership,&all_enemies,n_ene);
+				SpawnEnemy(&all_enemies,n_ene);
+				updateEnemy(&all_enemies, n_ene);
+				enemyTime = 0;
+			}
+
+			if(playerTime >= 50){
+				playerMove(&all_bullets, &all_asteroids, &all_enemies, &all_powerups, &playership, speed, n_ene, n_ast, n_bul, n_pow);
+				updateAsteroid(&all_asteroids, n_ast);
+				updatePowerup(&all_powerups, n_pow);
+				CheckSpaceshipCollisions(&playership, &all_enemies, &all_asteroids,&all_powerups, n_ene, n_ast, n_pow, &pp);
+				SpawnAsteroid(&all_asteroids,n_ast);
+				updateEnemy(&all_enemies, n_ene);
+				playerTime = 0;
+			}
 		}
+		gamestart = 0;
+		menu = 3;
+
+
 
 	}
 }

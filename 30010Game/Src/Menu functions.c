@@ -16,7 +16,7 @@
 #include "Graphics functions.h"
 
 
-void menuSelect(int menu, int* level){
+void menuSelect(int menu, int* level, int* gamestart){
 	//For menu input: 0 = main menu, 1 = help, 2 = difficulty, 3 = death, 4 = pause
 	uint8_t static sel = 0;
 	uint8_t static options;
@@ -121,7 +121,7 @@ void menuSelect(int menu, int* level){
 	    }
 	    break;
 	  case 13:
-		currmenu = menuConfirm(currmenu, sel);
+		currmenu = menuConfirm(currmenu, sel, gamestart);
     	gotoxy(selXY[sel].x, selXY[sel].y);
     	sel = 0;
 		break;
@@ -130,14 +130,12 @@ void menuSelect(int menu, int* level){
 
 }
 
-int menuConfirm(int menu, uint8_t sel){
+int menuConfirm(int menu, uint8_t sel, int* gamestart){
 
 	if(menu == 0){
 		switch (sel) {
 		  case 0:
-		    //initGame()
-			  printf("\n");
-			  printf("INITGAME");
+		    *gamestart = 1;
 			  return 0;
 		    break;
 		  case 1:
@@ -156,9 +154,7 @@ int menuConfirm(int menu, uint8_t sel){
 	}else if(menu == 3){
 		switch (sel) {
 		  case 1:
-		    //initGame()
-			  printf("\n");
-			  printf("initgame");
+			  *gamestart = 1;
 			  return 0;
 		    break;
 		  case 0:
@@ -170,9 +166,7 @@ int menuConfirm(int menu, uint8_t sel){
 	}else if(menu == 4){
 		switch (sel) {
 		  case 1:
-		    //resume()
-			  printf("\n");
-			  printf("resume");
+			  *gamestart = 1;
 			  return 0;
 		    break;
 		  case 0:

@@ -10,8 +10,8 @@
 #ifndef MENU_FUNCTIONS_H_
 #define MENU_FUNCTIONS_H_
 
-void menuSelect(int menu, int* level);
-int menuConfirm(int menu, uint8_t sel);
+void menuSelect(int menu, int* level, int* gamestart);
+int menuConfirm(int menu, uint8_t sel, int* gamestart);
 void mainMenu();
 void helpMenu();
 void diffMenu();
