@@ -58,23 +58,23 @@ int main(void) {
 	while(1){
 		//joystick_2_radar(buffer, X, angle, prevangle);
 		//menuSelect(0, &level);
-		while(1){
+		/*while(1){
 			menuSelect(4, &level);
-			/*if(gamestart == 1){
+			if(gamestart == 1){
 				break;
-			}*/
-		}
+			}
+		}*/
 
-		UpdateEnemyPos(&playership,all_enemies, n_ene);
-		UpdateBulletPos(&playership,&all_bullets, n_bul);
-		CheckBulletCollisions(&playership,&all_enemies,&all_bullets,&all_asteroids,&all_powerups, n_ene, n_ast, n_bul,n_pow);
+		UpdateEnemyPos(&playership,all_enemies, n_ene); //update structures with independent movement
+		UpdateBulletPos(&playership,&all_bullets, n_bul); // bullets and enemies
+		CheckBulletCollisions(&playership,&all_enemies,&all_bullets,&all_asteroids,&all_powerups, n_ene, n_ast, n_bul,n_pow); //check if this caused collisions
 		CheckSpaceshipCollisions(&playership, &all_enemies,&all_asteroids,&all_powerups,n_ene, n_ast, n_pow,&pp);
-		for(i=0;i<n_ene;i++){
+		for(i=0;i<n_ene;i++){ // for every enemy still alive we then draw them anew
 			if(all_enemies[i].status!=0){
 				drawEnemy(&all_enemies[i]);
-				drawSpaceship(&playership);
-
-		}}
-
+			}}
+		drawSpaceship(&playership);
+		SpawnEnemy(all_enemies, n_ene);
+		SpawnAsteroid(all_asteroids,n_ast);
 	}
 }

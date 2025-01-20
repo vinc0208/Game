@@ -557,14 +557,18 @@ void updateAsteroid(asteroid* ast, int n_ast){
 	short i;
 	for(i=0;i<n_ast;i++){
 		if(ast[i].status !=0){
-			gotoxy(ast[i].x-2,ast[i].y-1);
-			printf("     ");
-			gotoxy(ast[i].x-3,ast[i].y);
+			gotoxy(ast[i].x-4,ast[i].y-2);
 			printf("       ");
-			gotoxy(ast[i].x-3,ast[i].y+1);
+			gotoxy(ast[i].x-4,ast[i].y-1);
 			printf("       ");
-			gotoxy(ast[i].x-2,ast[i].y+2);
-			printf("     ");
+			gotoxy(ast[i].x-4,ast[i].y);
+			printf("         ");
+			gotoxy(ast[i].x-4,ast[i].y+1);
+			printf("         ");
+			gotoxy(ast[i].x-4,ast[i].y+2);
+			printf("       ");
+			gotoxy(ast[i].x-4,ast[i].y+3);
+			printf("       ");
 		drawAsteroid(&ast[i],2);
 	}}}
 
