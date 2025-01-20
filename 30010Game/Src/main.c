@@ -7,6 +7,7 @@
 #include <string.h>
 #include "ansi.h"
 #include "sinusoid.h"
+#include "Score.h"
 int main(void) {
 
 	uart_init(115200);
