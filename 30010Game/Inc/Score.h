@@ -12,6 +12,6 @@
 #include "stdint.h"
 
 void ScoreTracker(int32_t points);
-
+void HighscoreTracker();
 
 #endif /* SCORE_H_ */
