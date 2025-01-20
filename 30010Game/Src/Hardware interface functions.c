@@ -42,7 +42,9 @@ void uartStringModifier(char arr[]){
 }
 
 char uartKeyRead(){
-	return uart_get_char();
+	char key=uart_get_char();
+	uart_clear();
+	return key;
 }
 
 /*uint8_t menuSelect(char menuName[]){

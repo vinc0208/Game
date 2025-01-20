@@ -246,8 +246,7 @@ void add_power(powerup pow, int pp) {	//Takes powerup status and adds correspond
 //rotates the player
 int8_t playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int8_t k){
 	int8_t updateAsteroids = 0;
-	int8_t key = uartKeyRead();
-	switch (key) {
+	switch (uartKeyRead()) {
 	  case 100: //D
 	    if(player->dir < 8){
 	    	player->dir++;

@@ -572,6 +572,16 @@ void updateAsteroid(asteroid* ast, int n_ast){
 		drawAsteroid(&ast[i],2);
 	}}}
 
+//deletes the old spaceship
+void eraseSpaceship(spaceship* shp){
+	gotoxy(shp->x-1,shp->y-1); //because the ship stands still we can use it's coordinates
+	printf("    "); // to go there and just print spaces to delete it
+	gotoxy(shp->x-1,shp->y);
+	printf("    ");
+	gotoxy(shp->x-11,shp->y+1);
+	printf("    ");
+
+}
 //clrscr() followed by drawing every object
 void updateAll(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_bul, int n_pow){
 	short i;
