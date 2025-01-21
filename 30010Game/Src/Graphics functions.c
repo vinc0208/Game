@@ -472,7 +472,7 @@ void initBullet(bullet* bul,int n_bull){
 
 //turns all powerups off and puts them at (0,0)
 void initPowerup(powerup *pow,int n_pow){
-	//x and y for all powerups get a junk value
+	//x and y for all powerups get a (0,0) value
 	//status is turned off as no powerups are present on game start
 	int i;
 	for(i=0;i<n_pow;i++){
