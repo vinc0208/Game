@@ -450,30 +450,35 @@ void joystick_2_radar(uint8_t* buffer, uint8_t X, uint8_t angle, uint8_t prevang
 }
 
 
-void RGB_life_detector(spaceship ship){
-	if (ship.hp > 3 /* && game_in_progress == True/1*/){
+void RGB_life_detector(spaceship ship, int gamestart){
+	if (ship.hp > 3 && gamestart == 1){ //Set blue
 		GPIOA->ODR &= ~(0x0001 << 9);
 
 		GPIOC->ODR |= (0x0001 << 7);
 		GPIOB->ODR |= (0x0001 << 4);
 	}
-	else if (ship.hp == 3 /* && game_in_progress == True/1*/){
+	else if (ship.hp == 3 && gamestart == 1){ //Set green
 		GPIOC->ODR &= ~(0x0001 << 7);
 
 		GPIOB->ODR |= (0x0001 << 4);
 		GPIOA->ODR |= (0x0001 << 9);
 	}
 
-	else if (ship.hp == 2 /* && game_in_progress == True/1*/){
+	else if (ship.hp == 2 && gamestart == 1){ //Set yellow
 		GPIOC->ODR &= ~(0x0001 << 7);
 		GPIOB->ODR &= ~(0x0001 << 4);
 
 		GPIOA->ODR |= (0x0001 << 9);
 	}
 
-	else if (ship.hp <= 1 /* && game_in_progress == True/1*/){
+	else if (ship.hp == 1 && gamestart == 1){ //Set red
 		GPIOB->ODR &= ~(0x0001 << 4);
 
+		GPIOC->ODR |= (0x0001 << 7);
+		GPIOA->ODR |= (0x0001 << 9);
+	}
+	else if (ship.hp <= 0 && gamestart == 1){ //Turn off LED
+		GPIOB->ODR |= (0x0001 << 4);
 		GPIOC->ODR |= (0x0001 << 7);
 		GPIOA->ODR |= (0x0001 << 9);
 	}
