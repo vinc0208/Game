@@ -16,17 +16,16 @@
 #include "Graphics functions.h"
 
 
-void menuSelect(int menu, int* level, int* gamestart){
+void menuSelect(int menu, int* level, int* gamestart, int* first){
 	//For menu input: 0 = main menu, 1 = help, 2 = difficulty, 3 = death, 4 = pause
 	uint8_t static sel = 0;
 	uint8_t static options;
 	point static selXY[5];
 	char static c = 0;
 	int static currmenu;
-	int static first = 1;
 	int static lvl = 1;
 
-	if(first == 1){
+	if(*first == 1){
 		currmenu = menu;
 		switch (menu) {
 		  case 0:
@@ -45,7 +44,7 @@ void menuSelect(int menu, int* level, int* gamestart){
 		    pauseMenu();
 		    break;
 		}
-		first = 0;
+		*first = 0;
 	}
 
 	c = uartKeyRead();

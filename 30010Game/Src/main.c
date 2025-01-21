@@ -44,6 +44,7 @@ int main(void) {
 
 	int level = 1;
 	int gamestart = 0;
+	int first = 1;
 	int speed = 1;
 	int menu = 0;
 
@@ -56,7 +57,7 @@ int main(void) {
 	while(1){
 
 		while(gamestart == 0){
-			menuSelect(menu, &level, &gamestart);
+			menuSelect(menu, &level, &gamestart, &first);
 		}
 
 		clrscr();
@@ -69,6 +70,7 @@ int main(void) {
 		uint8_t buffer[512];
 		init_lcd(buffer, playership);
 
+		ResetTime();
 		StartTime();
 
 		while(playership.hp > 0){
@@ -105,6 +107,10 @@ int main(void) {
 		}
 		gamestart = 0;
 		menu = 3;
+		first = 1;
+		speed = 1;
+		StopTime();
+
 
 
 
