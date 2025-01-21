@@ -70,58 +70,6 @@ void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, short style){
 	}}
 
 
-void boxwtxt(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, char* txt, int style, int color){
-	uint8_t i;
-
-	int ul = 0, ur = 0, ll = 0, lr = 0, ho = 0, ver = 0, txt_l = 0, txt_r = 0;
-
-	if (style == 1) {
-		ul = 218, ur = 191, ll = 192, lr = 217, ho = 196, ver = 179, txt_l = 180, txt_r = 195;
-	} else if (style == 2) {
-		ul = 201, ur = 187, ll = 200, lr = 188, ho = 205, ver = 186, txt_l = 185, txt_r = 204;
-	}
-
-	fgcolor(color);
-
-	int x_diff = x2 - x1;
-	int y_diff = y2 - y1;
-	int width = y_diff - 2;
-	int height = x_diff - 2;
-
-	gotoxy(x1, y1);
-
-	printf("%c", ul);
-
-	printf("%c", txt_l);
-	uint8_t reverse_on = 1;
-	reverse(reverse_on);
-	printf("  %s  ", txt);
-	reverse_on = 0;
-	reverse(reverse_on);
-	printf("%c", txt_r);
-
-	int back_line = y_diff - strlen(txt) - 8;
-	for (i = 0 ; i < back_line ; i++) {
-		printf("%c", ho);
-	}
-	printf("%c", ur);
-
-	for (i = 0 ; i < height + 1; i++) {
-		gotoxy(x1 + 1 + i, y1);
-		printf("%c", ver);
-		printf("%c[%dC", ESC, width);
-		printf("%c", ver);
-	}
-
-	gotoxy(x2, y1);
-	printf("%c", ll);
-	for (i = 0 ; i < width ; i++) {
-		printf("%c", ho);
-	}
-	printf("%c", lr);
-}
-
-
 
 // Checking position of object and returning 1 if object is within screen borders, else return 0
 uint8_t CheckOnScr(uint8_t x, uint8_t y) {

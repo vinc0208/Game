@@ -635,20 +635,3 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 	      break;
 	  }
 }
-
-
-uint8_t closestEnemy(uint8_t angle, spaceship ship, enemy ene, uint8_t n_ene){
-	uint8_t dist, closest, i, prev_dist = 0;
-	for(i=0;i<n_ene;i++){
-		if(ene[i].status != 0){
-			uint8_t x = abs(ship.x - ene[i].x);
-			uint8_t y = abs(ship.y - ene[i].y);
-			vector vec = initVector(x,y);
-			dist = vec.len;
-			if(dist > prev_dist){
-				closest = i;
-			}
-		}
-		prev_dist = dist;
-	}
-}
