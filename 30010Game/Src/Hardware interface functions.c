@@ -111,7 +111,7 @@ void ResetTime(){ //Resets the time
 	SpeedIncrease = TimeMaster15;
 }
 
-void GameSpeed(int* level){
+void GameSpeed(int* level, uint16_t* currentscore){
 	/*
 	int8_t difficulty;
 	if (*level == 1){ //If level is easy
@@ -126,7 +126,7 @@ void GameSpeed(int* level){
 	if (SpeedIncrease.second >= 60){
 		SpeedIncrease.second %= 60;
 		SpeedIncrease.minute += 1;
-		ScoreTracker(600);
+		ScoreTracker(600, currentscore);
 	}
 	if (SpeedIncrease.minute >= 60){
 		SpeedIncrease.minute %= 60;
@@ -365,7 +365,7 @@ void RGB_life_detector(spaceship ship, int gamestart){
 }
 
 
-void update_stats(spaceship ship, uint8_t* buffer){
+void update_stats(spaceship ship, uint8_t* buffer, uint16_t* currentscore){
 	uint8_t n;
 	uint8_t i;
 	uint8_t j;
@@ -395,7 +395,7 @@ void update_stats(spaceship ship, uint8_t* buffer){
 		}
 	}
 	char temp[6];
-	sprintf(temp,"%d",ScoreTracker(0));
+	sprintf(temp,"%d",ScoreTracker(0, &*currentscore));
 	lcd_update("Score: ", temp, 1, 1, buffer);
 
 	lcd_push_buffer(buffer);
