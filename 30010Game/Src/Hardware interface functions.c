@@ -112,6 +112,13 @@ void ResetTime(){ //Resets the time
 }
 
 void GameSpeed(int* level){
+	/*
+	int8_t difficulty;
+	if (*level == 1){ //If level is easy
+		difficulty =
+	}
+	*/
+
 	if (SpeedIncrease.hsecond >= *level){
 		SpeedIncrease.hsecond %= *level;
 		SpeedIncrease.second += 1;
@@ -270,7 +277,7 @@ void init_radar(uint8_t *buffer) {
 void init_lcd(uint8_t* buffer, spaceship ship) {
 	//Prepare byte array and strings to be updated (buffer)
 	memset(buffer,0x00,512);
-	char score[] = "Score:0";
+	char score[] = "Score: 0";
 	char life[] = "Lives: ";
 	char bullets[] = "Ammo : ";
 
@@ -507,5 +514,9 @@ void update_stats(spaceship ship, uint8_t* buffer){
 			buffer[(2)*128 + 81 - n*11 + j] = game_char_data[0][0];			//Clears bullets
 		}
 	}
+	char temp[6];
+	sprintf(temp,"%d",ScoreTracker(0));
+	lcd_update("Score: ", temp, 1, 1, buffer);
+
 	lcd_push_buffer(buffer);
 }

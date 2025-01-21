@@ -16,7 +16,7 @@ typedef struct {
     uint16_t score;  // Score
 } Highscore;
 
-void ScoreTracker(uint16_t points);
+uint16_t ScoreTracker(uint16_t points);
 uint16_t ReadFlashLastPage(uint16_t offset);
 void PrepareFlashIfNeeded();
 void ReadHighscores(Highscore* data);
