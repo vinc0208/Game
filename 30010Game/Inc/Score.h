@@ -11,7 +11,17 @@
 #include "stdio.h"
 #include "stdint.h"
 
-void ScoreTracker(int32_t points);
-void HighscoreTracker();
+typedef struct {
+    char name[4];   // Fixed-length name (3 characters + '\0')
+    uint16_t score;  // Score
+} Highscore;
+
+void ScoreTracker(uint16_t points);
+uint16_t ReadFlashLastPage(uint16_t offset);
+void PrepareFlashIfNeeded();
+void ReadHighscores(Highscore* data);
+void HighscoreUpdater(Highscore* array, Highscore player);
+void WriteToFlash(Highscore* data);
+void EraseMemoryLastPage();
 
 #endif /* SCORE_H_ */
