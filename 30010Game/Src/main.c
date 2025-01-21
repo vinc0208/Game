@@ -40,9 +40,6 @@ int main(void) {
 
 
 
-	//initialize LCD
-	uint8_t buffer[512];
-	init_lcd(buffer, playership);
 
 
 	int level = 1;
@@ -68,6 +65,10 @@ int main(void) {
 		initPowerup(all_powerups, n_pow);
 		initEnemy(all_enemies,n_ene,difficulty);
 		initAsteroid(all_asteroids,n_ast);
+		//initialize LCD
+		uint8_t buffer[512];
+		init_lcd(buffer, playership);
+
 		StartTime();
 
 		while(playership.hp > 0){
@@ -87,7 +88,7 @@ int main(void) {
 
 			if(enemyTime >= 200){
 				UpdateEnemyPos(&playership,&all_enemies,n_ene);
-				SpawnEnemy(&all_enemies,n_ene);
+				SpawnEnemy(&all_enemies,n_ene,difficulty);
 				updateEnemy(&all_enemies, n_ene);
 				enemyTime = 0;
 			}
