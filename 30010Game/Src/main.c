@@ -22,6 +22,11 @@ int main(void) {
 	//set the seed
 	srand(5);
 
+	//Prepare Highscores
+	Highscore HighscoreArray[10];
+	Highscore player;
+	PrepareFlashIfNeeded();
+	ReadHighscores(HighscoreArray);
 
 	//this block initializes the game
 	clrscr(); //clear screen and set starting parameters
@@ -48,8 +53,6 @@ int main(void) {
 
 	StopTime();
 	StartTime();
-
-
 
 	while(1){
 
