@@ -82,7 +82,7 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 
 			for(k=0;k<n_ene;k++){ // check for enemy collision
 				if((bul[i].x >= ene[k].x-2) && (bul[i].x <= ene[k].x+2) && (bul[i].y >= ene[k].y-2) && (bul[i].y <= ene[k].y+2)) {
-					uint8_t dmg = (bul[i].status & 0x20 ? 1 : 0) + (bul[i].status & 0x40 ? 2 : 0) + (bul[i].status & 0x80 ? 3 : 0) + (bul[i].status & 0x04 ? 1 : 0) + (bul[i].status & 0x08 ? 1 : 0);
+					uint8_t dmg = (bul[i].status & 0x00100000 ? 1 : 0) + (bul[i].status & 0x01000000 ? 2 : 0) + (bul[i].status & 0x10000000 ? 3 : 0) + (bul[i].status & 0x00000100 ? 1 : 0) + (bul[i].status & 0x00001000 ? 1 : 0);
 					ene[k].hp-=dmg;
 					if (ene[k].hp <= 0){ //check for enemy death
 						ene[k].status=0;

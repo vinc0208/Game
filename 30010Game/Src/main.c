@@ -47,11 +47,11 @@ int main(void) {
 		while(gamestart == 0){
 			menuSelect(menu, &difficulty, &gamestart, &first);
 		}
-		uint8_t n_bul=6-difficulty,style=1,n_ene = 4+difficulty,n_ast=5,n_pow=5,i,angle=0,prevangle = 10,reload_timer=0;
+		uint8_t n_bul=6-difficulty,style=1,n_ene = 4+difficulty,n_ast=5,n_pow=5,i,angle=0,prevangle = 10;
 
 		//this block initializes the game
 		//Set starting parameters
-		int pp=0x10000000;
+		int pp=0x10000000,reload_timer=0;
 
 		// make arrays of all objects
 		bullet all_bullets[n_bul];
