@@ -175,88 +175,6 @@ void lcd_update(char* string, char* tbu, uint8_t slice, uint16_t line, uint8_t* 
 
 
 /*****************************/
-/* Joystick Control Functions*/
-/*****************************/
-void initJoystick() {
-	// Exercise 5
-	RCC->AHBENR |= RCC_AHBPeriph_GPIOA; // Enable clock for GPIO Port A
-	RCC->AHBENR |= RCC_AHBPeriph_GPIOB;
-	RCC->AHBENR |= RCC_AHBPeriph_GPIOC;
-
-	// Set pin PA0 to input
-	GPIOA->MODER &= ~(0x00000003 << (0 * 2)); // Clear mode register
-	GPIOA->MODER |=  (0x00000000 << (0 * 2)); // Set mode register (0x00 –Input, 0x01 -Output, 0x02 -Alternate Function, 0x03 -Analog in/out)
-	GPIOA->PUPDR &= ~(0x00000003 << (0 * 2)); // Clear push/pull register
-	GPIOA->PUPDR |=  (0x00000002 << (0 * 2)); // Set push/pull register (0x00 -No pull, 0x01 -Pull-up, 0x02 -Pull-down)
-
-	uint16_t val = GPIOA->IDR & (0x0001 << 2); //Read from pin PA0
-
-	// Set pin PA1 to output
-	GPIOA->OSPEEDR &= ~(0x00000003 << (1 * 2)); // Clear speed register
-	GPIOA->OSPEEDR |=  (0x00000002 << (1 * 2)); // set speed register (0x01 -10 MHz, 0x02 -2 MHz, 0x03 -50 MHz)
-	GPIOA->OTYPER &= ~(0x0001 << (1 * 1)); // Clear output type register
-	GPIOA->OTYPER |=  (0x0000 << (1)); // Set output type register (0x00 -Push pull, 0x01 -Open drain)
-
-	GPIOA->MODER &= ~(0x00000003 << (1 * 2)); // Clear mode register
-	GPIOA->MODER |=  (0x00000001 << (1 * 2)); // Set mode register (0x00 –Input, 0x01 -Output, 0x02 -Alternate Function, 0x03 -Analog in/out)
-
-	GPIOA->ODR |= (0x0001 << 1); //Set pin PA1 to high
-
-
-
-	//Set PA9, PB4, PC7 to outputs
-	GPIOA->OSPEEDR &= ~(0x00000003 << (9 * 2));
-	GPIOA->OSPEEDR |=  (0x00000002 << (9 * 2));
-	GPIOA->OTYPER &= ~(0x0001 << (9 * 1));
-	GPIOA->OTYPER |=  (0x0000 << (9));
-
-	GPIOA->MODER &= ~(0x00000003 << (9 * 2));
-	GPIOA->MODER |=  (0x00000001 << (9 * 2));
-
-
-	GPIOB->OSPEEDR &= ~(0x00000003 << (4 * 2));
-	GPIOB->OSPEEDR |=  (0x00000002 << (4 * 2));
-	GPIOB->OTYPER &= ~(0x0001 << (4 * 1));
-	GPIOB->OTYPER |=  (0x0000 << (4));
-
-	GPIOB->MODER &= ~(0x00000003 << (4 * 2));
-	GPIOB->MODER |=  (0x00000001 << (4 * 2));
-
-
-	GPIOC->OSPEEDR &= ~(0x00000003 << (7 * 2));
-	GPIOC->OSPEEDR |=  (0x00000002 << (7 * 2));
-	GPIOC->OTYPER &= ~(0x0001 << (7 * 1));
-	GPIOC->OTYPER |=  (0x0000 << (7));
-
-	GPIOC->MODER &= ~(0x00000003 << (7 * 2));
-	GPIOC->MODER |=  (0x00000001 << (7 * 2));
-
-	GPIOA->ODR |= (0x0001 << 9);
-	GPIOB->ODR |= (0x0001 << 4);
-	GPIOC->ODR |= (0x0001 << 7);
-}
-
-uint8_t readJoystick() {
-
-	uint8_t X = 00000000;
-	uint8_t lval = GPIOC -> IDR & (0x0001 << 1);
-	uint8_t cval = GPIOB -> IDR & (0x0001 << 5);
-	uint8_t upval = GPIOA -> IDR & (0x0001 << 4);
-	uint8_t nval = GPIOB -> IDR & (0x0001 << 0);
-	uint8_t rval = GPIOC -> IDR & (0x0001 << 0);
-
-	X|= upval >> 4;		//00000001	Up
-	X|= nval << 1;		//00000010	Down
-	X|= lval << 1;		//00000100	Left
-	X|= rval << 3;		//00001000	Right
-	X|= cval >> 1;		//00010000	Center
-
-		return X;
-}
-
-
-
-/*****************************/
 /******* LCD Functions *******/
 /*****************************/
 void init_radar(uint8_t *buffer) {
@@ -404,49 +322,6 @@ void radar(uint8_t* buffer, uint8_t angle, uint8_t prevangle) {
 		lcd_push_buffer(buffer);
 	}
 	prevangle = angle;
-}
-
-
-void joystick_2_radar(uint8_t* buffer, uint8_t X, uint8_t angle, uint8_t prevangle) {
-
-	X = readJoystick();
-	if(((0x0001 << 3) & X) && !((0x0001 << 0) & X) && !((0x0001 << 1) & X)) { 	//Right
-		angle = 3;
-		radar(buffer, angle, prevangle);
-
-	} else if (((0x0001 << 0) & X) && !((0x0001 << 3) & X) && !((0x0001 << 2) & X)) {	//Up
-		angle = 1;
-		radar(buffer, angle, prevangle);
-
-	} else if (((0x0001 << 2) & X) && !((0x0001 << 0) & X) && !((0x0001 << 1) & X)) {	//Left
-		angle = 7;
-		radar(buffer, angle, prevangle);
-
-	} else if (((0x0001 << 1) & X) && !((0x0001 << 3) & X) && !((0x0001 << 2) & X)) {	//Down
-		angle = 5;
-		radar(buffer, angle, prevangle);
-		X = readJoystick();
-
-	} else if (((0x0001 << 0) & X) && ((0x0001 << 3) & X)) {		// Up-right
-		angle = 2;
-		radar(buffer, angle, prevangle);
-
-	} else if (((0x0001 << 0) & X) && ((0x0001 << 2) & X)) {		//Up-left
-		angle = 8;
-		radar(buffer, angle, prevangle);
-
-	} else if (((0x0001 << 1) & X) && ((0x0001 << 3) & X)) {		//Down-right
-		angle = 4;
-		radar(buffer, angle, prevangle);
-
-	} else if (((0x0001 << 1) & X) && ((0x0001 << 2) & X)) {		//Down-left
-		angle = 6;
-		radar(buffer, angle, prevangle);
-
-	} else if ((X == 0x0000)) {										//No input
-		angle = 0;
-		radar(buffer, angle, prevangle);
-	}
 }
 
 

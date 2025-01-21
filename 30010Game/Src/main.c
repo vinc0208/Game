@@ -47,7 +47,7 @@ int main(void) {
 	while(1){
 
 		while(gamestart == 0){
-			menuSelect(menu, &difficulty, &gamestart, &first);
+			menuSelect(menu, difficulty, &gamestart, &first);
 		}
 		uint8_t n_bul=6-difficulty,style=1,n_ene = 4+difficulty,n_ast=5,n_pow=5,i,angle=0,prevangle = 10,reload_timer=0;
 
@@ -125,27 +125,28 @@ int main(void) {
 			}
 			//This is the bullet refresh section
 			if(bulletTime >= 33 ){
-				//fireBullet(&playership, &all_bullets, pp, reload_timer);
-				UpdateBulletPos(&playership,&all_bullets, n_bul);
-				CheckBulletCollisions(&playership, &all_enemies, &all_bullets, &all_asteroids,&all_powerups, n_ene, n_ast, n_bul, n_pow);
+				char shoot = uartKeyRead();
+				fireBullet(&playership, all_bullets, pp, &reload_timer, shoot);
+				UpdateBulletPos(&playership,all_bullets, n_bul);
+				CheckBulletCollisions(&playership, all_enemies, all_bullets, all_asteroids,all_powerups, n_ene, n_ast, n_bul, n_pow);
 				bulletTime = 0;
 			}
 			//This is the enemy refresh section
 			if(enemyTime >= enemyTimeRefresh){
-				UpdateEnemyPos(&playership,&all_enemies,n_ene);
-				SpawnEnemy(&all_enemies,n_ene,difficulty);
-				updateEnemy(&all_enemies, n_ene);
+				UpdateEnemyPos(&playership,all_enemies,n_ene);
+				SpawnEnemy(all_enemies,n_ene,difficulty);
+				updateEnemy(all_enemies, n_ene);
 				enemyTime = 0;
 			}
 			//This is the player refresh section
 			if(playerTime >= playerTimeRefresh){
-				playerMove(&all_bullets, &all_asteroids, &all_enemies, &all_powerups, &playership, n_ene, n_ast, n_bul, n_pow);
-				updateAsteroid(&all_asteroids, n_ast);
-				updatePowerup(&all_powerups, n_pow);
-				CheckSpaceshipCollisions(&playership, &all_enemies, &all_asteroids,&all_powerups, n_ene, n_ast, n_pow, &pp);
-				SpawnAsteroid(&all_asteroids,n_ast);
-				updateEnemy(&all_enemies, n_ene);
-				update_stats(playership, &buffer);
+				playerMove(all_bullets, all_asteroids, all_enemies, all_powerups, &playership, n_ene, n_ast, n_bul, n_pow);
+				updateAsteroid(all_asteroids, n_ast);
+				updatePowerup(all_powerups, n_pow);
+				CheckSpaceshipCollisions(&playership, all_enemies, all_asteroids,all_powerups, n_ene, n_ast, n_pow, &pp);
+				SpawnAsteroid(all_asteroids,n_ast);
+				updateEnemy(all_enemies, n_ene);
+				update_stats(playership, buffer);
 				RGB_life_detector(playership, gamestart);
 				playerTime = 0;
 			}
