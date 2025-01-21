@@ -151,8 +151,8 @@ int main(void) {
 				playerTime = 0;
 			}
 			//This last counter s and if statement is for the increase of enemy speed based on progression of game
-			if(s>=1000 && (enemyTimeRefresh > 80)){
-				enemyTimeRefresh-=10;
+			if(s>=1000 && (enemyTimeRefresh > 100)){
+				enemyTimeRefresh-=5;
 				s=0;
 			}
 		}

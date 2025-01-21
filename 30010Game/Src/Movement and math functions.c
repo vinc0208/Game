@@ -130,7 +130,7 @@ void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,poweru
 			}}}
 	for(k=0;k<n_ene;k++){ // check for enemy collision
 			if(ene[k].status !=0){
-				if((shp->x >= ene[k].x-2) && (shp->x <= ene[k].x+2) && (shp->y >= ene[k].y-1) && (shp->y <= ene[k].y+1)) {
+				if((shp->x >= ene[k].x-3) && (shp->x <= ene[k].x+3) && (shp->y >= ene[k].y-2) && (shp->y <= ene[k].y+2)) {
 					ene[k].status=0; // enemies are removed on collision and their sprite deleted
 					ene[k].hp=0;
 					shp->hp-=1;
