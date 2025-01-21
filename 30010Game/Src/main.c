@@ -39,9 +39,8 @@ int main(void) {
 	int menu = 0;
 	uint8_t difficulty=1;
 	uint8_t buffer[512];
+	uint8_t key = 0;
 
-
-	StopTime();
 	StartTime();
 
 	while(1){
@@ -99,6 +98,11 @@ int main(void) {
 		while(playership.hp > 0){
 			int8_t static t = 0;
 			int static s = 0;
+			uint8_t c = uartKeyRead();
+			if(c != 0){
+				key = c;
+			}
+
 
 			//This sets the player movement speed based on which powerups are active
 			switch (pp & 0x00000011) {
@@ -125,11 +129,11 @@ int main(void) {
 			}
 			//This is the bullet refresh section
 			if(bulletTime >= 33 ){
-				char shoot = uartKeyRead();
-				fireBullet(&playership, all_bullets, pp, &reload_timer, shoot);
+				fireBullet(&playership, all_bullets, pp, &reload_timer, &key);
 				UpdateBulletPos(&playership,all_bullets, n_bul);
 				CheckBulletCollisions(&playership, all_enemies, all_bullets, all_asteroids,all_powerups, n_ene, n_ast, n_bul, n_pow);
 				bulletTime = 0;
+
 			}
 			//This is the enemy refresh section
 			if(enemyTime >= enemyTimeRefresh){
@@ -140,7 +144,7 @@ int main(void) {
 			}
 			//This is the player refresh section
 			if(playerTime >= playerTimeRefresh){
-				playerMove(all_bullets, all_asteroids, all_enemies, all_powerups, &playership, n_ene, n_ast, n_bul, n_pow);
+				playerMove(all_bullets, all_asteroids, all_enemies, all_powerups, &playership, n_ene, n_ast, n_bul, n_pow, &key);
 				updateAsteroid(all_asteroids, n_ast);
 				updatePowerup(all_powerups, n_pow);
 				CheckSpaceshipCollisions(&playership, all_enemies, all_asteroids,all_powerups, n_ene, n_ast, n_pow, &pp);
@@ -149,6 +153,7 @@ int main(void) {
 				update_stats(playership, buffer);
 				RGB_life_detector(playership, gamestart);
 				playerTime = 0;
+
 			}
 			//This last counter s and if statement is for the increase of enemy speed based on progression of game
 			if(s>=1000 && (enemyTimeRefresh > 100)){

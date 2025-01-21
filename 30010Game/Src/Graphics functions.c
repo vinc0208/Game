@@ -87,8 +87,8 @@ uint8_t CheckOnScr(uint8_t x, uint8_t y) {
 //this function is for FIRING BULLETS ONLY as it places them at the spaceship if they are active.
 //consider changing function to take player input and setting bullet status from Powerup array (by searching for an active dmg power with status=1)
 //to make it actually fire the bullet rather than initializing its trajectory
-void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, char shoot){
-	if ((shoot == (1 << 5)) && (ship->bullets > 0)){
+void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t* shoot){
+	if ((*shoot == (1 << 5)) && (ship->bullets > 0)){
 			int n = 5 - ship->bullets;
 			bul[n].status = pp;
 
@@ -224,6 +224,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, char sho
 			}
 		}
 		ship->bullets -= 1;
+		*shoot = 0;
 	}
 	if ((ship->bullets <= 0) && (reload_timer = 0)) {
 		*reload_timer = TimeMaster15.second + 60*TimeMaster15.minute;

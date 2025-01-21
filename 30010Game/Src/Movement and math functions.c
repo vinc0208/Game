@@ -260,14 +260,16 @@ void add_power(powerup pow, int* pp) {	//Takes powerup status and adds correspon
 	}
 }
 //rotates the player
-void playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int n_ene, int n_ast, int n_bul, int n_pow){
-	switch (uartKeyRead()) {
+void playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int n_ene, int n_ast, int n_bul, int n_pow, uint8_t* key){
+	switch (*key) {
 	  case 100: //D
 		eraseSpaceship(player);
 	    if(player->dir < 8){
 	    	player->dir++;
+	    	*key = 0;
 	    }else{
 	    	player->dir = 1;
+	    	*key = 0;
 	    }
 	    drawSpaceship(player);
 	    break;
@@ -275,16 +277,20 @@ void playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powar
 		eraseSpaceship(player);
 		if(player->dir > 1){
 			player->dir--;
+			*key = 0;
 		}else{
 			player->dir = 8;
+			*key = 0;
 		}
 		drawSpaceship(player);
 	    break;
 	  case 119: //W
 		  playerMovePosAdd(bullarr, astarr, enearr, powarr, player, n_ene, n_ast, n_bul, n_pow);
+		  *key = 0;
 		break;
 	  case 115: //S
 		  playerMovePosAdd(bullarr, astarr, enearr, powarr, player, n_ene,n_ast,n_bul, n_pow);
+		  *key = 0;
 	    break;
 	}
 
