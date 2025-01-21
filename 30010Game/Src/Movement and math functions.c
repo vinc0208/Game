@@ -85,8 +85,14 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 					uint8_t dmg = (bul[i].status & 0x20 ? 1 : 0) + (bul[i].status & 0x40 ? 2 : 0) + (bul[i].status & 0x80 ? 3 : 0) + (bul[i].status & 0x04 ? 1 : 0) + (bul[i].status & 0x08 ? 1 : 0);
 					ene[k].hp-=dmg;
 					if (ene[k].hp <= 0){ //check for enemy death
-						ene[k].status=0;
-						ScoreTracker(100);
+						ene[k].status=0; //set status to zero and erase it
+						gotoxy(ene[i].x-1,ene[k].y-1);
+						printf("     ");
+						gotoxy(ene[k].x-3,ene[k].y);
+						printf("      ");
+						gotoxy(ene[k].x-2,ene[k].y+1);
+						printf("      ");
+						ScoreTracker(100); // add score on kills
 						r=rand() % (4 + 1);
 						if(r==4){ //randomly spawn a powerup
 							for(m=0;m<n_pow;m++){
