@@ -681,7 +681,7 @@ void SpawnEnemy(enemy* all_enemies,int n_ene, int difficulty){
 					all_enemies[i].y=rand() % (45 - 3 + 1)+ 3;
 					all_enemies[i].dir=7;
 		}}}}
-
+//spawns an asteroid near the edge of the screen.
 void SpawnAsteroid(asteroid* ast,int n_ast){
 	int i,k;
 		for(i=0;i<n_ast;i++){
