@@ -142,6 +142,7 @@ int main(void) {
 				SpawnAsteroid(&all_asteroids,n_ast);
 				updateEnemy(&all_enemies, n_ene);
 				update_stats(playership, &buffer);
+				RGB_life_detector(playership, gamestart);
 				playerTime = 0;
 			}
 			//This last counter s and if statement is for the increase of enemy speed based on progression of game
