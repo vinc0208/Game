@@ -33,7 +33,8 @@ typedef struct {
 //define bullets as a position and a direction([1,8]).
 	//status is an on/off bol indicating wether the bullet is active
 	//status>0 corresponds to it's dmg.
-	int16_t x,y,velx,vely,status,dir;
+	int16_t x,y,velx,vely,dir;
+	int status;
 } bullet;
 
 typedef struct {
