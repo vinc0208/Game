@@ -47,7 +47,7 @@ int main(void) {
 	while(1){
 
 		while(gamestart == 0){
-			menuSelect(menu, difficulty, &gamestart, &first);
+			menuSelect(menu, &difficulty, &gamestart, &first);
 		}
 		uint8_t n_bul=6-difficulty,style=1,n_ene = 4+difficulty,n_ast=5,n_pow=5,i,angle=0,prevangle = 10,reload_timer=0;
 

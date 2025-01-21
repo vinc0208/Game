@@ -86,11 +86,15 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 					ene[k].hp-=dmg;
 					if (ene[k].hp <= 0){ //check for enemy death
 						ene[k].status=0; //set status to zero and erase it
+						gotoxy(ene[i].x-2,ene[k].y-2);
+						printf("      ");
 						gotoxy(ene[i].x-2,ene[k].y-1);
 						printf("      ");
 						gotoxy(ene[k].x-4,ene[k].y);
 						printf("       ");
 						gotoxy(ene[k].x-3,ene[k].y+1);
+						printf("       ");
+						gotoxy(ene[k].x-3,ene[k].y+2);
 						printf("       ");
 						ScoreTracker(100); // add score on kills
 						r=rand() % (4 + 1);
