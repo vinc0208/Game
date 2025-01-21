@@ -7,6 +7,7 @@
 
 #include "stdio.h"
 #include "stdint.h"
+#include "Movement and math functions.h"
 
 typedef struct {
 	uint16_t hour, minute, second, hsecond, msecond;
@@ -25,7 +26,7 @@ void lcd_update(char* string, char* tbu, uint8_t slice, uint16_t line, uint8_t* 
 void StartTime();
 void StopTime();
 void ResetTime();
-void GameSpeed(int* level);
+void GameSpeed(int* level, uint16_t* currentscore);
 
 char uartKeyRead();
 
@@ -33,7 +34,7 @@ void init_radar(uint8_t *buffer);
 void init_lcd(uint8_t* buffer, spaceship ship);
 void radar(uint8_t* buffer, uint8_t angle, uint8_t prevangle);
 void RGB_life_detector(spaceship ship, int gamestart);
-void update_stats(spaceship ship, uint8_t* buffer);
+void update_stats(spaceship ship, uint8_t* buffer, uint16_t* currentscore);
 
 
 

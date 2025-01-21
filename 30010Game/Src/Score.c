@@ -11,11 +11,15 @@
 #include "30010_io.h"
 #include "stm32f30x_conf.h"
 #include "string.h"
+#include "Hardware interface functions.h"
 
-uint16_t ScoreTracker(uint16_t points){
-	uint16_t static score = 0;
-	score += points;
-	return score;
+uint16_t ScoreTracker(uint16_t points, uint16_t* currentscore){
+	*currentscore += points;
+	return *currentscore;
+}
+
+void ResetScore(uint16_t* currentscore){
+	*currentscore = 0;
 }
 
 void PrepareFlashIfNeeded(){
