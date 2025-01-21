@@ -27,9 +27,28 @@ int main(void) {
 
 	//Prepare Highscores
 	Highscore HighscoreArray[10];
-	Highscore player;
+	Highscore coolplayer;
 	PrepareFlashIfNeeded();
 	ReadHighscores(HighscoreArray);
+
+	//Prepare LED
+	RCC->AHBENR |= RCC_AHBPeriph_GPIOA; // Enable clock for GPIO Port A
+	RCC->AHBENR |= RCC_AHBPeriph_GPIOB; // Enable clock for GPIO Port B
+	RCC->AHBENR |= RCC_AHBPeriph_GPIOC; // Enable clock for GPIO Port C
+
+	GPIOB->MODER &= ~(0x00000003 << (4 * 2)); // Clear mode register
+	GPIOB->MODER |= (0x00000001 << (4 * 2)); // Set mode register (0x00 – Input, 0x01 - Output, 0x02 - Alternate Function, 0x03 - Analog in/out)
+
+	GPIOC->MODER &= ~(0x00000003 << (7 * 2));
+	GPIOC->MODER |= (0x00000001 << (7 * 2));
+
+	GPIOA->MODER &= ~(0x00000003 << (9 * 2));
+	GPIOA->MODER |= (0x00000001 << (9 * 2));
+
+	GPIOB->ODR |= (0x0001 << 4);
+	GPIOC->ODR |= (0x0001 << 7);
+	GPIOA->ODR |= (0x0001 << 9);
+
 
 
 	int gamestart = 0;
@@ -37,8 +56,10 @@ int main(void) {
 	int initLCD = 1;
 	int speed = 1;
 	int menu = 0;
+	uint16_t currentscore = 0;
 	uint8_t difficulty=1;
 	uint8_t buffer[512];
+	ResetScore(&currentscore);
 
 
 	StopTime();
@@ -128,7 +149,7 @@ int main(void) {
 				char shoot = uartKeyRead();
 				fireBullet(&playership, all_bullets, pp, &reload_timer, shoot);
 				UpdateBulletPos(&playership,all_bullets, n_bul);
-				CheckBulletCollisions(&playership, all_enemies, all_bullets, all_asteroids,all_powerups, n_ene, n_ast, n_bul, n_pow);
+				CheckBulletCollisions(&playership, all_enemies, all_bullets, all_asteroids,all_powerups, n_ene, n_ast, n_bul, n_pow, &currentscore);
 				bulletTime = 0;
 			}
 			//This is the enemy refresh section
@@ -143,7 +164,7 @@ int main(void) {
 				playerMove(all_bullets, all_asteroids, all_enemies, all_powerups, &playership, n_ene, n_ast, n_bul, n_pow);
 				updateAsteroid(all_asteroids, n_ast);
 				updatePowerup(all_powerups, n_pow);
-				CheckSpaceshipCollisions(&playership, all_enemies, all_asteroids,all_powerups, n_ene, n_ast, n_pow, &pp);
+				CheckSpaceshipCollisions(&playership, all_enemies, all_asteroids,all_powerups, n_ene, n_ast, n_pow, &pp, &currentscore);
 				SpawnAsteroid(all_asteroids,n_ast);
 				updateEnemy(all_enemies, n_ene);
 				update_stats(playership, buffer);
@@ -157,6 +178,12 @@ int main(void) {
 			}
 		}
 		gamestart = 0;
+		update_stats(playership, buffer, &currentscore);
+		coolplayer.score = currentscore;
+		strncpy(coolplayer.name, "ABC", 4);
+		HighscoreUpdater(HighscoreArray, coolplayer);
+		ResetScore(&currentscore);
+		WriteToFlash(HighscoreArray);
 		menu = 3;
 		first = 1;
 		StopTime();

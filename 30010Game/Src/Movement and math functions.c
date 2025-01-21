@@ -67,7 +67,7 @@ int32_t cosinus(int angle){
 //Movement
 
 //looks for bullet collisions with all relevant objects
-void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_bul, int n_pow) {
+void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_bul, int n_pow, uint16_t* currentscore) {
 	int8_t i,k,m,r;
 	for(i=0;i<n_bul;i++){
 		if(bul[i].status !=0){
@@ -85,6 +85,7 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 					uint8_t dmg = (bul[i].status & 0x00100000 ? 1 : 0) + (bul[i].status & 0x01000000 ? 2 : 0) + (bul[i].status & 0x10000000 ? 3 : 0) + (bul[i].status & 0x00000100 ? 1 : 0) + (bul[i].status & 0x00001000 ? 1 : 0);
 					ene[k].hp-=dmg;
 					if (ene[k].hp <= 0){ //check for enemy death
+						ScoreTracker(100, &*currentscore);
 						ene[k].status=0; //set status to zero and erase it
 						gotoxy(ene[i].x-2,ene[k].y-2);
 						printf("      ");
@@ -114,7 +115,7 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 				}}}}}
 
 //checks for spaceship collision with enemies, asteroids or powerups
-void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_pow, int * pp) {
+void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_pow, int * pp, uint16_t* currentscore) {
 	int8_t k;
 
 	for(k=0;k<n_ast;k++){ // check for asteroid collision
@@ -122,6 +123,7 @@ void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,poweru
 			if((shp->x >= ast[k].x-3) && (shp->x <= ast[k].x+2) && (shp->y >= ast[k].y-1) && (shp->y <= ast[k].y+2)) {
 				ast[k].status=0; // asteroids are removed on collision
 				shp->hp-=1;
+				ScoreTracker(100, &*currentscore);
 				gotoxy(ast[k].x-3,ast[k].y-1);
 				printf("     ");
 				gotoxy(ast[k].x-4,ast[k].y);
@@ -138,6 +140,7 @@ void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,poweru
 					ene[k].status=0; // enemies are removed on collision and their sprite deleted
 					ene[k].hp=0;
 					shp->hp-=1;
+					ScoreTracker(100, &*currentscore);
 					gotoxy(ene[k].x-1,ene[k].y-1);
 					printf("     ");
 					gotoxy(ene[k].x-3,ene[k].y);
