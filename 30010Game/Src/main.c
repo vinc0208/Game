@@ -34,12 +34,9 @@ int main(void) {
 	powerup all_powerups[n_pow];
 	spaceship playership;
 
-
-
-
-
-
-
+	//initialize LCD
+	uint8_t buffer[512];
+	init_lcd(buffer, playership);
 
 
 	int level = 1;
@@ -66,9 +63,6 @@ int main(void) {
 		initPowerup(all_powerups, n_pow);
 		initEnemy(all_enemies,n_ene,difficulty);
 		initAsteroid(all_asteroids,n_ast);
-		//initialize LCD
-		uint8_t buffer[512];
-		init_lcd(buffer, playership);
 
 		ResetTime();
 		StartTime();
@@ -102,6 +96,7 @@ int main(void) {
 				CheckSpaceshipCollisions(&playership, &all_enemies, &all_asteroids,&all_powerups, n_ene, n_ast, n_pow, &pp);
 				SpawnAsteroid(&all_asteroids,n_ast);
 				updateEnemy(&all_enemies, n_ene);
+				update_stats(playership, &buffer);
 				playerTime = 0;
 			}
 		}
