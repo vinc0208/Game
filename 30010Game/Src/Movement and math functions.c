@@ -292,7 +292,7 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 	switch (player->dir) {
 	    case 1:
 	      for(int8_t i = 0; i < n_bul; i++){
-	    	  if(bullarr->status!=0){
+	    	  if(bullarr[i].status!=0){
 	    		  gotoxy(bullarr[i].x,bullarr[i].y);
 	    		  printf(" ");
 	    		  bullarr[i].y += 1;
@@ -333,7 +333,7 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 	      break;
 	    case 2:
 		  for(int8_t i = 0; i < n_bul; i++){
-			  if(bullarr->status!=0){
+			  if(bullarr[i].status!=0){
 				gotoxy(bullarr[i].x,bullarr[i].y);
 				printf(" ");
 			  bullarr[i].x -= 3;
@@ -377,7 +377,7 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 	      break;
 	    case 3:
 		  for(int8_t i = 0; i < n_bul; i++){
-			  if(bullarr->status!=0){
+			  if(bullarr[i].status!=0){
 			  	  gotoxy(bullarr[i].x,bullarr[i].y);
 			  	  printf(" ");
 			  	  bullarr[i].x -= 3;
@@ -416,7 +416,7 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 	      break;
 	    case 4:
 		  for(int8_t i = 0; i < n_bul; i++){
-			  if(bullarr->status!=0){
+			  if(bullarr[i].status!=0){
 			  	  gotoxy(bullarr[i].x,bullarr[i].y);
 			  	  printf(" ");
 			  	  bullarr[i].x -= 3;
@@ -460,7 +460,7 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 	      break;
 	    case 5:
 		  for(int8_t i = 0; i < n_bul; i++){
-			  if(bullarr->status!=0){
+			  if(bullarr[i].status!=0){
 			  	  gotoxy(bullarr[i].x,bullarr[i].y);
 			  	  printf(" ");
 			  	  bullarr[i].y -= 1;
@@ -499,7 +499,7 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 	      break;
 	    case 6:
 		  for(int8_t i = 0; i < n_bul; i++){
-			  if(bullarr->status!=0){
+			  if(bullarr[i].status!=0){
 			  	  gotoxy(bullarr[i].x,bullarr[i].y);
 			  	  printf(" ");
 			  	  bullarr[i].x += 3;
@@ -543,7 +543,7 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 	      break;
 	    case 7:
 	      for(int8_t i = 0; i < n_bul; i++){
-	    	  if(bullarr->status!=0){
+	    	  if(bullarr[i].status!=0){
 	    	  	  gotoxy(bullarr[i].x,bullarr[i].y);
 	    	  	  printf(" ");
 	    	  	  bullarr[i].x += 3;
@@ -583,7 +583,7 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 	      break;
 	    case 8:
 	      for(int8_t i = 0; i < n_bul; i++){
-	    	  if(bullarr->status!=0){
+	    	  if(bullarr[i].status!=0){
 	    	  	  gotoxy(bullarr[i].x,bullarr[i].y);
 	    	  	  printf(" ");
 	    	  	  bullarr[i].x += 3;
