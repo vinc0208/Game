@@ -167,7 +167,7 @@ int main(void) {
 				CheckSpaceshipCollisions(&playership, all_enemies, all_asteroids,all_powerups, n_ene, n_ast, n_pow, &pp, &currentscore);
 				SpawnAsteroid(all_asteroids,n_ast);
 				updateEnemy(all_enemies, n_ene);
-				update_stats(playership, buffer);
+				update_stats(playership, buffer, &currentscore);
 				RGB_life_detector(playership, gamestart);
 				playerTime = 0;
 			}

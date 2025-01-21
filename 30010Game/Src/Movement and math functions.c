@@ -97,7 +97,7 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 						printf("       ");
 						gotoxy(ene[k].x-3,ene[k].y+2);
 						printf("       ");
-						ScoreTracker(100); // add score on kills
+						ScoreTracker(100, &*currentscore); // add score on kills
 						r=rand() % (4 + 1);
 						if(r==4){ //randomly spawn a powerup
 							for(m=0;m<n_pow;m++){
