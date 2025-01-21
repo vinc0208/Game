@@ -90,123 +90,132 @@ uint8_t CheckOnScr(uint8_t x, uint8_t y) {
 void fireBullet(spaceship *ship, bullet*bul, int pp, uint8_t* reload_timer){
 	char shoot = uartKeyRead();
 	if ((shoot == (1 << 5)) && (ship->bullets > 0)){
-		bul[ship->bullets].status = (pp & 0x11101100);
+			int n = 5 - ship->bullets;
+			bul[n].status = pp;
 
 		fgcolor(11);
 		char *ud, *ur, *lr;
-		if((bul[ship->bullets].status & 0x00100000) || (bul[ship->bullets].status & 0x01000000)){
-			ud = "|";
-			ur = "/";
-			lr = "-";
-		} else{
+		if((bul[n].status & 0x10000000)){
 			ud = "o";
 			ur = "o";
 			lr = "o";
+		} else{
+			ud = "|";
+			ur = "/";
+			lr = "-";
 		}
-		if(bul->status==0){
+
+		if(bul[n].status==0){
 		//if it is not active dont draw it
-		} else if(bul->status > 0){; //corresponds to 1 dmg
+		} else if(bul[n].status > 0){; //corresponds to 1 dmg
 			if(ship->dir==1){				//Up
-				bul->dir=ship->dir;
-				bul->x=ship->x;
-				bul->y=ship->y-2;
-				bul->velx=0;
-				bul->vely=-1;
-				gotoxy(bul->x,bul->y);
-				if (!(pp & 0x01000000)){
+				bul[n].dir=ship->dir;
+				bul[n].x=ship->x;
+				bul[n].y=ship->y-2;
+				bul[n].velx=0;
+				bul[n].vely=-1;
+				gotoxy(bul[n].x,bul[n].y);
+				if (!(bul[n].status & 0x01000000)){
 					printf("%c", *ud);
-				} else if (pp & 0x01000000){
+				} else if (bul[n].status & 0x01000000){
 					bold(1);
 					printf("%c", *ud);
 					bold(0);
 				}
 			}else if(ship->dir==5){			// Down
-				bul->x=ship->x,bul->dir=ship->dir;
-				bul->y=ship->y+1;
-				bul->velx=0;
-				bul->vely=1;
-				gotoxy(bul->x,bul->y);
-				if (!(pp & 0x01000000)){
+				bul[n].dir=ship->dir;
+				bul[n].x=ship->x;
+				bul[n].y=ship->y+1;
+				bul[n].velx=0;
+				bul[n].vely=1;
+				gotoxy(bul[n].x,bul[n].y);
+				if (!(bul[n].status & 0x01000000)){
 					printf("%c", *ud);
-				} else if (pp & 0x01000000){
+				} else if (bul[n].status & 0x01000000){
 					bold(1);
 					printf("%c", *ud);
 					bold(0);
 				}
 			}else if(ship->dir==2){			// Up-right
-				bul->x=ship->x+1,bul->dir=ship->dir;
-				bul->y=ship->y-1;
-				bul->velx=3;
-				bul->vely=-1;
-				gotoxy(bul->x,bul->y);
-				if (!(pp & 0x01000000)){
+				bul[n].dir=ship->dir;
+				bul[n].x=ship->x+1;
+				bul[n].y=ship->y-1;
+				bul[n].velx=3;
+				bul[n].vely=-1;
+				gotoxy(bul[n].x,bul[n].y);
+				if (!(bul[n].status & 0x01000000)){
 					printf("%c", *ur);
-				} else if (pp & 0x01000000){
+				} else if (bul[n].status & 0x01000000){
 					bold(1);
 					printf("%c", *ur);
 					bold(0);
 				}
 			}else if(ship->dir==3){			// Right
-				bul->x=ship->x+2,bul->dir=ship->dir;
-				bul->y=ship->y;
-				gotoxy(bul->x,bul->y);
-				bul->velx=1;
-				bul->vely=0;
-				if (!(pp & 0x01000000)){
+				bul[n].dir=ship->dir;
+				bul[n].x=ship->x+2;
+				bul[n].y=ship->y;
+				gotoxy(bul[n].x,bul[n].y);
+				bul[n].velx=1;
+				bul[n].vely=0;
+				if (!(bul[n].status & 0x01000000)){
 					printf("%c", *lr);
-				} else if (pp & 0x01000000){
+				} else if (bul[n].status & 0x01000000){
 					bold(1);
 					printf("%c", *lr);
 					bold(0);
 				}
 			}else if(ship->dir==7){			// Left
-				bul->x=ship->x-2,bul->dir=ship->dir;
-				bul->y=ship->y;
-				gotoxy(bul->x,bul->y);
-				bul->velx=-1;
-				bul->vely=0;
-				if (!(pp & 0x01000000)){
+				bul[n].dir=ship->dir;
+				bul[n].x=ship->x-2;
+				bul[n].y=ship->y;
+				gotoxy(bul[n].x,bul[n].y);
+				bul[n].velx=-1;
+				bul[n].vely=0;
+				if (!(bul[n].status & 0x01000000)){
 					printf("%c", *lr);
-				} else if (pp & 0x01000000){
+				} else if (bul[n].status & 0x01000000){
 					bold(1);
 					printf("%c", *lr);
 					bold(0);
 				}
 			}else if(ship->dir==4){			// Down-right
-				bul->x=ship->x+1,bul->dir=ship->dir;
-				bul->y=ship->y+1;
-				gotoxy(bul->x,bul->y);
-				bul->velx=3;
-				bul->vely=1;
-				if (!(pp & 0x01000000)){
+				bul[n].dir=ship->dir;
+				bul[n].x=ship->x+1;
+				bul[n].y=ship->y+1;
+				gotoxy(bul[n].x,bul[n].y);
+				bul[n].velx=3;
+				bul[n].vely=1;
+				if (!(bul[n].status & 0x01000000)){
 					printf("%c", 92);
-				} else if (pp & 0x01000000){
+				} else if (bul[n].status & 0x01000000){
 					bold(1);
 					printf("%c", 92);
 					bold(0);
 				}
 			}else if(ship->dir==6){			// Down-left
-				bul->x=ship->x-2,bul->dir=ship->dir;
-				bul->y=ship->y+1;
-				gotoxy(bul->x,bul->y);
-				bul->velx=-3;
-				bul->vely=1;
-				if (!(pp & 0x01000000)){
+				bul[n].dir=ship->dir;
+				bul[n].x=ship->x-2;
+				bul[n].y=ship->y+1;
+				gotoxy(bul[n].x,bul[n].y);
+				bul[n].velx=-3;
+				bul[n].vely=1;
+				if (!(bul[n].status & 0x01000000)){
 					printf("%c", *ur);
-				} else if (pp & 0x01000000){
+				} else if (bul[n].status & 0x01000000){
 					bold(1);
 					printf("%c", *ur);
 					bold(0);
 				}
 			}else if(ship->dir==8){			// Up-left
-				bul->x=ship->x-2,bul->dir=ship->dir;
-				bul->y=ship->y-1;
-				gotoxy(bul->x,bul->y);
-				bul->velx=0;
-				bul->vely=1;
-				if (!(pp & 0x01000000)){
+				bul[n].dir=ship->dir;
+				bul[n].x=ship->x-2;
+				bul[n].y=ship->y-1;
+				gotoxy(bul[n].x,bul[n].y);
+				bul[n].velx=0;
+				bul[n].vely=1;
+				if (!(bul[n].status & 0x01000000)){
 					printf("%c", 92);
-				} else if (pp & 0x01000000){
+				} else if (bul[n].status & 0x01000000){
 					bold(1);
 					printf("%c", 92);
 					bold(0);

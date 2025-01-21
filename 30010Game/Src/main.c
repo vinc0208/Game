@@ -99,6 +99,7 @@ int main(void) {
 			}
 
 			if(bulletTime >= 33 ){
+				fireBullet(&playership, all_bullets, pp, reload_timer);
 				UpdateBulletPos(&playership,&all_bullets, n_bul);
 				CheckBulletCollisions(&playership, &all_enemies, &all_bullets, &all_asteroids,&all_powerups, n_ene, n_ast, n_bul, n_pow);
 				bulletTime = 0;
