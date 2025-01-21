@@ -30,7 +30,7 @@ int main(void) {
 
 	//this block initializes the game
 	clrscr(); //clear screen and set starting parameters
-	uint8_t difficulty=1,n_bul=5-(difficulty-1),style=1,n_ene = 5,n_ast=5,n_pow=5,i,angle=0,prevangle = -1,reload_timer=-10;
+	uint8_t difficulty=1,n_bul=5-(difficulty-1),style=1,n_ene = 4+difficulty,n_ast=5,n_pow=5,i,angle=0,prevangle = -1,reload_timer=-10;
 	int player_powers = 0x00100000;
 	int pp=0x00100000;
 	bullet all_bullets[n_bul]; // make arrays of all objects
@@ -47,8 +47,9 @@ int main(void) {
 	int level = 1;
 	int gamestart = 0;
 	int first = 1;
-	int speed = 1;
 	int menu = 0;
+	int playerTimeRefresh = 50;
+	int enemyTimeRefresh = 150;
 
 
 	StopTime();
@@ -72,6 +73,18 @@ int main(void) {
 
 		while(playership.hp > 0){
 			int8_t static t = 0;
+
+			switch (pp & 0x00000011) {
+			  case 1:
+			    playerTimeRefresh = 40;
+			    break;
+			  case 17:
+				playerTimeRefresh = 30;
+			    break;
+			  default:
+				playerTimeRefresh = 50;
+			}
+
 			if(TimeMaster15.hsecond != t){
 				bulletTime++;
 				enemyTime++;
@@ -85,15 +98,15 @@ int main(void) {
 				bulletTime = 0;
 			}
 
-			if(enemyTime >= 200){
+			if(enemyTime >= enemyTimeRefresh){
 				UpdateEnemyPos(&playership,&all_enemies,n_ene);
 				SpawnEnemy(&all_enemies,n_ene,difficulty);
 				updateEnemy(&all_enemies, n_ene);
 				enemyTime = 0;
 			}
 
-			if(playerTime >= 50){
-				playerMove(&all_bullets, &all_asteroids, &all_enemies, &all_powerups, &playership, speed, n_ene, n_ast, n_bul, n_pow);
+			if(playerTime >= playerTimeRefresh){
+				playerMove(&all_bullets, &all_asteroids, &all_enemies, &all_powerups, &playership, n_ene, n_ast, n_bul, n_pow);
 				updateAsteroid(&all_asteroids, n_ast);
 				updatePowerup(&all_powerups, n_pow);
 				CheckSpaceshipCollisions(&playership, &all_enemies, &all_asteroids,&all_powerups, n_ene, n_ast, n_pow, &pp);
@@ -106,7 +119,6 @@ int main(void) {
 		gamestart = 0;
 		menu = 3;
 		first = 1;
-		speed = 1;
 		StopTime();
 
 
