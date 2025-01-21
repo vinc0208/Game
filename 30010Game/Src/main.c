@@ -31,27 +31,12 @@ int main(void) {
 	PrepareFlashIfNeeded();
 	ReadHighscores(HighscoreArray);
 
-	//this block initializes the game
-	clrscr(); //clear screen and set starting parameters
-	uint8_t difficulty=1,n_bul=5-(difficulty-1),style=1,n_ene = 5,n_ast=5,n_pow=5,i,angle=0,prevangle = -1,reload_timer=-10;
-	int player_powers = 0x00100000;
-	int pp=0x00100000;
-	bullet all_bullets[n_bul]; // make arrays of all objects
-	asteroid all_asteroids[n_ast];
-	enemy all_enemies[n_ene];
-	powerup all_powerups[n_pow];
-	spaceship playership;
 
-	//initialize LCD
-	uint8_t buffer[512];
-	init_lcd(buffer, playership);
-
-
-	int level = 1;
 	int gamestart = 0;
 	int first = 1;
 	int speed = 1;
 	int menu = 0;
+	uint8_t difficulty=1;
 
 
 	StopTime();
@@ -60,15 +45,46 @@ int main(void) {
 	while(1){
 
 		while(gamestart == 0){
-			menuSelect(menu, &level, &gamestart, &first);
+			menuSelect(menu, &difficulty, &gamestart, &first);
 		}
+		uint8_t n_bul=5-(difficulty-1),style=1,n_ene = 4+difficulty,n_ast=5,n_pow=5,i,angle=0,prevangle = -1,reload_timer=-10;
 
+		//this block initializes the game
+		//Set starting parameters
+		int player_powers = 0x00100000;
+		int pp=0x00100000;
+
+		// make arrays of all objects
+		bullet all_bullets[n_bul];
+		asteroid all_asteroids[n_ast];
+		enemy all_enemies[n_ene];
+		powerup all_powerups[n_pow];
+		spaceship playership;
+
+		//initialize and draw all objects
 		clrscr();
-		initSpaceship(&playership,difficulty,style); //initialize and draw all objects
+		initSpaceship(&playership,difficulty,style);
 		initBullet(all_bullets, n_bul);
 		initPowerup(all_powerups, n_pow);
 		initEnemy(all_enemies,n_ene,difficulty);
 		initAsteroid(all_asteroids,n_ast);
+
+		//initialize LCD
+		uint8_t buffer[512];
+		init_lcd(buffer, playership);
+
+		switch (difficulty) {
+		  case 1:
+		    enemyTimeRefresh = 200;
+		    break;
+		  case 2:
+			  enemyTimeRefresh = 180;
+		    break;
+		  case 3:
+			  enemyTimeRefresh = 160;
+			break;
+
+		}
 
 		ResetTime();
 		StartTime();
@@ -99,7 +115,7 @@ int main(void) {
 			}
 
 			if(bulletTime >= 33 ){
-				fireBullet(&playership, all_bullets, pp, reload_timer);
+				//fireBullet(&playership, all_bullets, pp, reload_timer);
 				UpdateBulletPos(&playership,&all_bullets, n_bul);
 				CheckBulletCollisions(&playership, &all_enemies, &all_bullets, &all_asteroids,&all_powerups, n_ene, n_ast, n_bul, n_pow);
 				bulletTime = 0;
