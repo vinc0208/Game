@@ -97,7 +97,7 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 						if(r==4){ //randomly spawn a powerup
 							for(m=0;m<n_pow;m++){
 								if(pow[m].status==0){
-									r=(rand() % (5 + 1))+1;
+									r=(rand() % (5 + 1))+1; //number between [1,6]
 									pow[m].status=r;
 									pow[m].x=ene[k].x;
 									pow[m].y=ene[k].y;
