@@ -112,6 +112,13 @@ void ResetTime(){ //Resets the time
 }
 
 void GameSpeed(int* level){
+	/*
+	int8_t difficulty;
+	if (*level == 1){ //If level is easy
+		difficulty =
+	}
+	*/
+
 	if (SpeedIncrease.hsecond >= *level){
 		SpeedIncrease.hsecond %= *level;
 		SpeedIncrease.second += 1;
@@ -270,7 +277,7 @@ void init_radar(uint8_t *buffer) {
 void init_lcd(uint8_t* buffer, spaceship ship) {
 	//Prepare byte array and strings to be updated (buffer)
 	memset(buffer,0x00,512);
-	char score[] = "Score:0";
+	char score[] = "Score: 0";
 	char life[] = "Lives: ";
 	char bullets[] = "Ammo : ";
 
@@ -443,30 +450,35 @@ void joystick_2_radar(uint8_t* buffer, uint8_t X, uint8_t angle, uint8_t prevang
 }
 
 
-void RGB_life_detector(spaceship ship){
-	if (ship.hp > 3 /* && game_in_progress == True/1*/){
+void RGB_life_detector(spaceship ship, int gamestart){
+	if (ship.hp > 3 && gamestart == 1){ //Set blue
 		GPIOA->ODR &= ~(0x0001 << 9);
 
 		GPIOC->ODR |= (0x0001 << 7);
 		GPIOB->ODR |= (0x0001 << 4);
 	}
-	else if (ship.hp == 3 /* && game_in_progress == True/1*/){
+	else if (ship.hp == 3 && gamestart == 1){ //Set green
 		GPIOC->ODR &= ~(0x0001 << 7);
 
 		GPIOB->ODR |= (0x0001 << 4);
 		GPIOA->ODR |= (0x0001 << 9);
 	}
 
-	else if (ship.hp == 2 /* && game_in_progress == True/1*/){
+	else if (ship.hp == 2 && gamestart == 1){ //Set yellow
 		GPIOC->ODR &= ~(0x0001 << 7);
 		GPIOB->ODR &= ~(0x0001 << 4);
 
 		GPIOA->ODR |= (0x0001 << 9);
 	}
 
-	else if (ship.hp <= 1 /* && game_in_progress == True/1*/){
+	else if (ship.hp == 1 && gamestart == 1){ //Set red
 		GPIOB->ODR &= ~(0x0001 << 4);
 
+		GPIOC->ODR |= (0x0001 << 7);
+		GPIOA->ODR |= (0x0001 << 9);
+	}
+	else if (ship.hp <= 0 && gamestart == 1){ //Turn off LED
+		GPIOB->ODR |= (0x0001 << 4);
 		GPIOC->ODR |= (0x0001 << 7);
 		GPIOA->ODR |= (0x0001 << 9);
 	}
@@ -507,5 +519,9 @@ void update_stats(spaceship ship, uint8_t* buffer){
 			buffer[(2)*128 + 81 - n*11 + j] = game_char_data[0][0];			//Clears bullets
 		}
 	}
+	char temp[6];
+	sprintf(temp,"%d",ScoreTracker(0));
+	lcd_update("Score: ", temp, 1, 1, buffer);
+
 	lcd_push_buffer(buffer);
 }

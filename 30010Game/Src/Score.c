@@ -12,9 +12,10 @@
 #include "stm32f30x_conf.h"
 #include "string.h"
 
-void ScoreTracker(uint16_t points){
+uint16_t ScoreTracker(uint16_t points){
 	uint16_t static score = 0;
-		score += points;
+	score += points;
+	return score;
 }
 
 void PrepareFlashIfNeeded(){
