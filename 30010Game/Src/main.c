@@ -18,6 +18,9 @@ int main(void) {
 	int16_t bulletTime = 0;
 	int16_t playerTime = 0;
 	int16_t enemyTime = 0;
+	int16_t enemyTimeRefresh = 200;
+	int16_t playerTimeRefresh = 50;
+
 
 	//set the seed
 	srand(5);
@@ -72,10 +75,26 @@ int main(void) {
 
 		while(playership.hp > 0){
 			int8_t static t = 0;
+			int static s = 0;
+
+			switch (pp & 0x00000011) {
+			  case 1:
+			    playerTimeRefresh = 40;
+			    break;
+			  case 17:
+				playerTimeRefresh = 32;
+			    break;
+			  case 0:
+				playerTimeRefresh = 50;
+				break;
+
+			}
+
 			if(TimeMaster15.hsecond != t){
 				bulletTime++;
 				enemyTime++;
 				playerTime++;
+				s++;
 				t = TimeMaster15.hsecond;
 			}
 
@@ -85,14 +104,14 @@ int main(void) {
 				bulletTime = 0;
 			}
 
-			if(enemyTime >= 200){
+			if(enemyTime >= enemyTimeRefresh){
 				UpdateEnemyPos(&playership,&all_enemies,n_ene);
 				SpawnEnemy(&all_enemies,n_ene,difficulty);
 				updateEnemy(&all_enemies, n_ene);
 				enemyTime = 0;
 			}
 
-			if(playerTime >= 50){
+			if(playerTime >= playerTimeRefresh){
 				playerMove(&all_bullets, &all_asteroids, &all_enemies, &all_powerups, &playership, speed, n_ene, n_ast, n_bul, n_pow);
 				updateAsteroid(&all_asteroids, n_ast);
 				updatePowerup(&all_powerups, n_pow);
@@ -101,6 +120,10 @@ int main(void) {
 				updateEnemy(&all_enemies, n_ene);
 				update_stats(playership, &buffer);
 				playerTime = 0;
+			}
+			if(s>=1000 && (enemyTimeRefresh > 80)){
+				enemyTimeRefresh-=10;
+				s=0;
 			}
 		}
 		gamestart = 0;

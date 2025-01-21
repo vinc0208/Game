@@ -472,7 +472,7 @@ void initBullet(bullet* bul,int n_bull){
 
 //turns all powerups off and puts them at (0,0)
 void initPowerup(powerup *pow,int n_pow){
-	//x and y for all powerups get a (0,0) value
+	//x and y for all powerups get a (0,0) value to avoid garbage down the line
 	//status is turned off as no powerups are present on game start
 	int i;
 	for(i=0;i<n_pow;i++){
@@ -545,7 +545,7 @@ void initAsteroid(asteroid* all_asteroids,int n_ast){
 		}
 
 		all_asteroids[i].status=1; // indicates that they are active when true
-		drawAsteroid(&all_asteroids[i],2); //finishes by drawing them
+		drawAsteroid(&all_asteroids[i],2); //finishes by drawing them. 2 is the unsued style parameter
 		}}
 
 
