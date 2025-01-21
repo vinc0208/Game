@@ -18,6 +18,7 @@
 #include "Graphics functions.h"
 #include "Score.h"
 #include "Hardware interface functions.h"
+#include "Gravity.h"
 
 //Typedefs
 //these functions are from the excersices and are currently unused
@@ -643,7 +644,7 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 }
 
 
-uint8_t closestEnemy(uint8_t angle, spaceship ship, enemy ene, uint8_t n_ene){
+uint8_t closestEnemy(uint8_t angle, spaceship ship, enemy* ene, uint8_t n_ene){
 	uint8_t dist, closest, i, prev_dist = 0;
 	for(i=0;i<n_ene;i++){
 		if(ene[i].status != 0){

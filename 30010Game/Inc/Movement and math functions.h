@@ -68,7 +68,7 @@ void UpdateEnemyPos(spaceship* ship,enemy* all_ene,int n_ene);
 void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int n_ene, int n_ast, int n_bul, int n_pow);
 void playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int n_ene, int n_ast, int n_bul, int n_pow, uint8_t* key);
 
-uint8_t closestEnemy(uint8_t angle, spaceship ship, enemy ene, uint8_t n_ene);
+uint8_t closestEnemy(uint8_t angle, spaceship ship, enemy* ene, uint8_t n_ene);
 
 
 #endif /* MOVEMENT_AND_MATH_FUNCTIONS_H_ */
