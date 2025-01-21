@@ -224,12 +224,12 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, uint8_t* reload_timer){
 		}
 		ship->bullets -= 1;
 	}
-	if ((ship->bullets <= 0) && (*reload_timer < 0)) {
-		*reload_timer = TimeMaster15.second + 60*TimeMaster15.minute;
+	if ((ship->bullets <= 0) && (*reload_timer = 0)) {
+		reload_timer = TimeMaster15.second + 60*TimeMaster15.minute;
 	}
-	if ((TimeMaster15.second + 60*TimeMaster15.minute) == *reload_timer + 3){
+	if (((TimeMaster15.second + 60*TimeMaster15.minute) == *reload_timer + 3) && (ship->bullets <= 0)){
 		ship->bullets = ship->maxbullets;
-		*reload_timer = -10;
+		reload_timer = 0;
 	}
 }
 

@@ -47,12 +47,11 @@ int main(void) {
 		while(gamestart == 0){
 			menuSelect(menu, &difficulty, &gamestart, &first);
 		}
-		uint8_t n_bul=5-(difficulty-1),style=1,n_ene = 4+difficulty,n_ast=5,n_pow=5,i,angle=0,prevangle = -1,reload_timer=-10;
+		uint8_t n_bul=6-difficulty,style=1,n_ene = 4+difficulty,n_ast=5,n_pow=5,i,angle=0,prevangle = 10,reload_timer=0;
 
 		//this block initializes the game
 		//Set starting parameters
-		int player_powers = 0x00100000;
-		int pp=0x00100000;
+		int pp=0x10000000;
 
 		// make arrays of all objects
 		bullet all_bullets[n_bul];
@@ -115,7 +114,7 @@ int main(void) {
 			}
 
 			if(bulletTime >= 33 ){
-				//fireBullet(&playership, all_bullets, pp, reload_timer);
+				fireBullet(&playership, &all_bullets, pp, reload_timer);
 				UpdateBulletPos(&playership,&all_bullets, n_bul);
 				CheckBulletCollisions(&playership, &all_enemies, &all_bullets, &all_asteroids,&all_powerups, n_ene, n_ast, n_bul, n_pow);
 				bulletTime = 0;
