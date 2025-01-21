@@ -511,11 +511,11 @@ void drawPowerup(powerup *pow){
 	}else if(pow->status==3) {
 		fgcolor(5);
 	}else if(pow->status==4) {
-		fgcolor(51);
+		fgcolor(12);
 	}else if(pow->status==5) {
-		fgcolor(21);
+		fgcolor(6);
 	}else if(pow->status==6) {
-		fgcolor(19);
+		fgcolor(4);
 	} else{
 		fgcolor(15); //white is an error color
 	} printf("%c%c",219,219);
