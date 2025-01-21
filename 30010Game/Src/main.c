@@ -34,9 +34,11 @@ int main(void) {
 
 	int gamestart = 0;
 	int first = 1;
+	int initLCD = 1;
 	int speed = 1;
 	int menu = 0;
 	uint8_t difficulty=1;
+	uint8_t buffer[512];
 
 
 	StopTime();
@@ -47,11 +49,11 @@ int main(void) {
 		while(gamestart == 0){
 			menuSelect(menu, &difficulty, &gamestart, &first);
 		}
-		uint8_t n_bul=6-difficulty,style=1,n_ene = 4+difficulty,n_ast=5,n_pow=5,i,angle=0,prevangle = 10;
+		uint8_t n_bul=6-difficulty,style=1,n_ene = 4+difficulty,n_ast=5,n_pow=5,i,angle=0,prevangle = 10,reload_timer=0;
 
 		//this block initializes the game
 		//Set starting parameters
-		int pp=0x10000000,reload_timer=0;
+		int pp=0x10000000;
 
 		// make arrays of all objects
 		bullet all_bullets[n_bul];
@@ -68,9 +70,12 @@ int main(void) {
 		initEnemy(all_enemies,n_ene,difficulty);
 		initAsteroid(all_asteroids,n_ast);
 
-		//initialize LCD
-		uint8_t buffer[512];
-		init_lcd(buffer, playership);
+		if(initLCD){
+			//initialize LCD
+			init_lcd(buffer, playership);
+			initLCD = 0;
+		}
+
 
 		//Set enemy starting speed based on chosen difficulty
 		switch (difficulty) {
@@ -120,7 +125,7 @@ int main(void) {
 			}
 			//This is the bullet refresh section
 			if(bulletTime >= 33 ){
-				fireBullet(&playership, &all_bullets, pp, reload_timer);
+				//fireBullet(&playership, &all_bullets, pp, reload_timer);
 				UpdateBulletPos(&playership,&all_bullets, n_bul);
 				CheckBulletCollisions(&playership, &all_enemies, &all_bullets, &all_asteroids,&all_powerups, n_ene, n_ast, n_bul, n_pow);
 				bulletTime = 0;
@@ -134,7 +139,7 @@ int main(void) {
 			}
 			//This is the player refresh section
 			if(playerTime >= playerTimeRefresh){
-				playerMove(&all_bullets, &all_asteroids, &all_enemies, &all_powerups, &playership, speed, n_ene, n_ast, n_bul, n_pow);
+				playerMove(&all_bullets, &all_asteroids, &all_enemies, &all_powerups, &playership, n_ene, n_ast, n_bul, n_pow);
 				updateAsteroid(&all_asteroids, n_ast);
 				updatePowerup(&all_powerups, n_pow);
 				CheckSpaceshipCollisions(&playership, &all_enemies, &all_asteroids,&all_powerups, n_ene, n_ast, n_pow, &pp);
@@ -153,7 +158,6 @@ int main(void) {
 		gamestart = 0;
 		menu = 3;
 		first = 1;
-		speed = 1;
 		StopTime();
 
 
