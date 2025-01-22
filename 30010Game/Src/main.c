@@ -59,7 +59,7 @@ int main(void) {
 
 		//this block initializes the game
 		//Set starting parameters
-		int pp=0x10000000;
+		int pp=0x00100000;
 
 		// make arrays of all objects
 		bullet all_bullets[n_bul];

@@ -652,13 +652,15 @@ void pauseMenu() {
 void bossMenu() {
 	clrscr();
 	fgcolor(15);
-	window(50, 25, 130, 32, 1);
-	gotoxy(60, 27);
+	window(85, 22, 105, 30, 1);
+	gotoxy(89, 24);
 	printf("Working hard,");
-	gotoxy(65, 29);
+	gotoxy(94, 26);
 	printf("or");
-	gotoxy(60, 31);
+	gotoxy(89, 28);
 	printf("hardly working");
+	gotoxy(84, 50);
+	printf("B to continue working");
 }
 
 
