@@ -163,15 +163,15 @@ void UpdateBulletPos(spaceship* ship,bullet* all_bul, int n_bul){
 	//bullets first
 	for(i=0;i<n_bul;i++){
 		if(all_bul[i].status!=0){ //check status
-			if(all_bul[i].x+all_bul[i].velx>=189||all_bul[i].x+all_bul[i].velx<=1||all_bul[i].y+all_bul[i].vely<=1||all_bul[i].y+all_bul[i].vely>=49){
+			if(all_bul[i].x+from88(all_bul[i].velx)>=189||all_bul[i].x+from88(all_bul[i].velx)<=1||all_bul[i].y+from88(all_bul[i].vely)<=1||all_bul[i].y+from88(all_bul[i].vely)>=49){
 				all_bul[i].status=0; // removes out of bounds bullets
 				gotoxy(all_bul[i].x,all_bul[i].y);
 				printf(" ");
 			} else {
 				gotoxy(all_bul[i].x,all_bul[i].y);
 				printf(" ");
-				all_bul[i].x+= all_bul[i].velx;
-				all_bul[i].y+= all_bul[i].vely;
+				all_bul[i].x+= from88(all_bul[i].velx);
+				all_bul[i].y+= from88(all_bul[i].vely);
 				drawBullet(&all_bul[i]);
 			}}}}
 
