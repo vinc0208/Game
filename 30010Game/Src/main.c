@@ -144,6 +144,8 @@ int main(void) {
 			//This is the enemy refresh section
 			if(enemyTime >= enemyTimeRefresh){
 				UpdateEnemyPos(&playership,all_enemies,n_ene);
+				closestEnemy(&angle, playership, all_enemies, n_ene);
+				radar(buffer, angle, &prevangle);
 				SpawnEnemy(all_enemies,n_ene,difficulty);
 				updateEnemy(all_enemies, n_ene);
 				enemyTime = 0;
