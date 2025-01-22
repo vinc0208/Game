@@ -32,7 +32,7 @@ char uartKeyRead();
 
 void init_radar(uint8_t *buffer);
 void init_lcd(uint8_t* buffer, spaceship ship);
-void radar(uint8_t* buffer, uint8_t angle, uint8_t prevangle);
+void radar(uint8_t* buffer, uint8_t angle, uint8_t* prevangle);
 void RGB_life_detector(spaceship ship, int gamestart);
 void update_stats(spaceship ship, uint8_t* buffer, uint16_t* currentscore);
 
