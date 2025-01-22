@@ -189,22 +189,4 @@ int main(void) {
 	}
 }
 
-/*For playermovement
- * playerMove()
- * updateAsteroid
- * updatePowerup
- * CheckSpaceshipCollisions
- * SpawnAsteroid
- */
 
-/*For bullet refresh
- * LorentzForce
- * UpdateBulletPos
- * CheckBulletCollisions
- */
-
-/*For enemy refresh
- * UpdateEnemyPos
- * SpawnEnemy
- * UpdateEnemy
- */
