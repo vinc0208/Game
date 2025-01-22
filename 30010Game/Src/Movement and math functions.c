@@ -68,7 +68,7 @@ int32_t cosinus(int angle){
 //Movement
 
 //looks for bullet collisions with all relevant objects
-void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_bul, int n_pow, uint16_t* currentscore) {
+void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_bul, int n_pow, uint16_t* currentscore, int pp) {
 	int8_t i,k,m,r;
 	for(i=0;i<n_bul;i++){
 		if(bul[i].status !=0){
@@ -86,7 +86,7 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 					uint8_t dmg = (bul[i].status & 0x00100000 ? 1 : 0) + (bul[i].status & 0x01000000 ? 2 : 0) + (bul[i].status & 0x10000000 ? 3 : 0) + (bul[i].status & 0x00000100 ? 1 : 0) + (bul[i].status & 0x00001000 ? 1 : 0);
 					ene[k].hp-=dmg;
 					if (ene[k].hp <= 0){ //check for enemy death
-						ScoreTracker(100, &*currentscore);
+						ScoreTracker((100 + 50 * (pp & 0x00010000 ? 1 : 0)), &*currentscore);
 						ene[k].status=0; //set status to zero and erase it
 						gotoxy(ene[i].x-2,ene[k].y-2);
 						printf("        ");
