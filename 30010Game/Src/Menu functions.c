@@ -561,7 +561,6 @@ void deathMenu() {
 			}
 			else{
 				printf("  %d", *(uint16_t*) (address + (i*5+j)*2));
-				printf("\n");
 			}
 		}
 	}
