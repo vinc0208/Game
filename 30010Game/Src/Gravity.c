@@ -58,11 +58,16 @@ vector vecFromPoints(point p1, point p2){
 
 void lorentzForce(bullet* bullarr, asteroid* astarr, uint8_t n_bul, uint8_t n_ast){
 	for(int8_t i = 0; i < n_bul; i++){
-		for(int8_t j = 0; j < n_ast; j++){
-			if(bullarr[i].status != 0){
+		if(bullarr[i].status != 0){
+			for(int8_t j = 0; j < n_ast; j++){
+				vector v = initVector(astarr[j].x - bullarr[i].x, astarr[j].y - bullarr[i].y);
+				if(v.len < (5<<8)){
+
+				}
 
 			}
 		}
+
 	}
 }
 
