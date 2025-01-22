@@ -112,7 +112,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 				bul[n].x=ship->x;
 				bul[n].y=ship->y-2;
 				bul[n].velx=0;
-				bul[n].vely=-1;
+				bul[n].vely=to88(-1);
 				gotoxy(bul[n].x,bul[n].y);
 				if (!(bul[n].status & 0x01000000)){
 					printf("%c", ud);
@@ -126,7 +126,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 				bul[n].x=ship->x;
 				bul[n].y=ship->y+1;
 				bul[n].velx=0;
-				bul[n].vely=1;
+				bul[n].vely=to88(1);
 				gotoxy(bul[n].x,bul[n].y);
 				if (!(bul[n].status & 0x01000000)){
 					printf("%c", ud);
@@ -139,8 +139,8 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 				bul[n].dir=ship->dir;
 				bul[n].x=ship->x+1;
 				bul[n].y=ship->y-1;
-				bul[n].velx=3;
-				bul[n].vely=-1;
+				bul[n].velx=to88(3);
+				bul[n].vely=to88(-1);
 				gotoxy(bul[n].x,bul[n].y);
 				if (!(bul[n].status & 0x01000000)){
 					printf("%c", ur);
@@ -154,7 +154,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 				bul[n].x=ship->x+2;
 				bul[n].y=ship->y;
 				gotoxy(bul[n].x,bul[n].y);
-				bul[n].velx=3;
+				bul[n].velx=to88(3);
 				bul[n].vely=0;
 				if (!(bul[n].status & 0x01000000)){
 					printf("%c", lr);
@@ -168,7 +168,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 				bul[n].x=ship->x-2;
 				bul[n].y=ship->y;
 				gotoxy(bul[n].x,bul[n].y);
-				bul[n].velx=-3;
+				bul[n].velx=to88(-3);
 				bul[n].vely=0;
 				if (!(bul[n].status & 0x01000000)){
 					printf("%c", lr);
@@ -182,8 +182,8 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 				bul[n].x=ship->x+1;
 				bul[n].y=ship->y+1;
 				gotoxy(bul[n].x,bul[n].y);
-				bul[n].velx=3;
-				bul[n].vely=1;
+				bul[n].velx=to88(3);
+				bul[n].vely=to88(1);
 				if (!(bul[n].status & 0x01000000)){
 					printf("%c", ul);
 				} else{
@@ -196,8 +196,8 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 				bul[n].x=ship->x-2;
 				bul[n].y=ship->y+1;
 				gotoxy(bul[n].x,bul[n].y);
-				bul[n].velx=-3;
-				bul[n].vely=1;
+				bul[n].velx=to88(-3);
+				bul[n].vely=to88(1);
 				if (!(bul[n].status & 0x01000000)){
 					printf("%c", ur);
 				} else{
@@ -210,8 +210,8 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 				bul[n].x=ship->x-2;
 				bul[n].y=ship->y-1;
 				gotoxy(bul[n].x,bul[n].y);
-				bul[n].velx=-3;
-				bul[n].vely=-1;
+				bul[n].velx=to88(-3);
+				bul[n].vely=to88(-1);
 				if (!(bul[n].status & 0x01000000)){
 					printf("%c", ul);
 				} else{

@@ -13,36 +13,35 @@
 
 //The necessary math functions:
 
-int16_t square(int16_t number){
-	int16_t x = 1;
+int32_t square(int32_t number){
+	int32_t x = 1;
 	while(x*x < number){
 		x++;
 	}
 	return x << 4;
 	//Returns the approximated square root in 8.8 format
-}
+}	//number argument has to be in x.8 format
 
-int16_t to88(int16_t number){
+int32_t to88(int32_t number){
 	return number << 8;
 }
 
-int16_t from88(int16_t number){
-	int16_t temp = (number & 0x00FF);
-	int16_t numb = number >> 8;
+int32_t from88(int32_t number){
+	int32_t temp = (number & 0x00FF);
+	int32_t numb = number >> 8;
 	if(temp >= 127){
 		numb++;
-	}else if(temp < 127){
-		numb--;
 	}
 	return numb;
 }
 
 vector initVector(int8_t x, int8_t y){
-	//vec.len is in 8.8 format!
+	//All is in 8.8 format!
 	vector vec;
-	vec.x = x;
-	vec.y = y;
-	vec.len = square(to88(vec.x*vec.x+vec.y*vec.y));
+	vec.x = to88(x);
+	vec.y = to88(y);
+	vec.len = square(((vec.x/3*vec.x/3)>>8) + ((vec.y*vec.y)>>8));
+	//					24.8	  *   24.8 		24.8 * 24.8   bitshifting >>8 to get result in x.8
 	return vec;
 }
 
@@ -57,16 +56,11 @@ vector vecFromPoints(point p1, point p2){
 
 //The functions related to Lorentz force:
 
-void lorentzForce(bullet* bullarr[], asteroid* astarr[]){
-	for(int8_t i = 0; i < sizeof *bullarr; i++){
-		if(bullarr[i]->status != 0){
-			vector v = initVector(astarr[i]->x - bullarr[i]->x, astarr[i]->y - bullarr[i]->y);
-			if(v.len < to88(10)){
-				if(bullarr[i]->y >= astarr[i]->y){
+void lorentzForce(bullet* bullarr, asteroid* astarr, uint8_t n_bul, uint8_t n_ast){
+	for(int8_t i = 0; i < n_bul; i++){
+		for(int8_t j = 0; j < n_ast; j++){
+			if(bullarr[i].status != 0){
 
-				}else if(bullarr[i]->y < astarr[i]->y){
-
-				}
 			}
 		}
 	}
