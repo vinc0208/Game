@@ -243,14 +243,17 @@ void init_lcd(uint8_t* buffer, spaceship ship) {
 }
 
 
-void radar(uint8_t* buffer, uint8_t angle, uint8_t prevangle) {
+void radar(uint8_t* buffer, uint8_t angle, uint8_t* prevangle) {
 	uint8_t slice, line;
 
-	if ((angle == 0) || (prevangle == angle)) {		//No input
+	if (*prevangle == angle){
+
+	}else{
 		init_radar(buffer);
 	}
-	if (angle == 3) {						//Right
-		slice = 116;
+	if (angle == 0) {							//No input
+
+	}else if (angle == 3) {						//Right
 		line = 1;
 		for (uint8_t j=0; j<5; j++) {
 			buffer[(line-1)*128+slice+j] = game_char_data[9][j];

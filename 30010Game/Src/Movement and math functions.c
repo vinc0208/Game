@@ -644,18 +644,38 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 }
 
 
-uint8_t closestEnemy(uint8_t angle, spaceship ship, enemy* ene, uint8_t n_ene){
-	uint8_t dist, closest, i, prev_dist = 0;
+void closestEnemy(uint8_t* angle, spaceship ship, enemy* ene, uint8_t n_ene){
+	uint8_t dist, closest, i, prev_dist = 100000;
 	for(i=0;i<n_ene;i++){
 		if(ene[i].status != 0){
-			uint8_t x = abs(ship.x - ene[i].x);
-			uint8_t y = abs(ship.y - ene[i].y);
+			int x = abs(ship.x - ene[i].x);
+			int y = abs(ship.y - ene[i].y);
 			vector vec = initVector(x,y);
 			dist = vec.len;
-			if(dist > prev_dist){
+			if(dist < prev_dist){
 				closest = i;
 			}
 		}
 		prev_dist = dist;
 	}
+	if((ene[closest].x > ship.x) && (ene[closest].y>ship.y) && !(abs(ene[closest].x-95) / abs(ene[closest].y-25) >=4 ) && !(abs(ene[closest].y-25) / abs(ene[closest].x-95) >=1 )){ //ship.x=95 ship.y=25
+		*angle = 4;
+	} else if((ene[closest].x < ship.x) && (ene[closest].y>ship.y)&& !(abs(ene[closest].x-95) / abs(ene[closest].y-25) >=4 )  && !(abs(ene[closest].y-25) / abs(ene[closest].x-95) >=1 )){
+		*angle = 6;
+	}else if((ene[closest].x < ship.x) && (ene[closest].y < ship.y)&& !(abs(ene[closest].x-95) / abs(ene[closest].y-25) >=4 )  && !(abs(ene[closest].y-25) / abs(ene[closest].x-95) >=1 )){
+		*angle = 8;
+	}else if((ene[closest].x > ship.x) && (ene[closest].y < ship.y) && !(abs(ene[closest].x-95) / abs(ene[closest].y-25) >=4 )  && !(abs(ene[closest].y-25) / abs(ene[closest].x-95) >=1 )){
+		*angle = 2;
+	}else if(((ene[closest].x) < (ship.x))  && !(abs(ene[closest].y-25) / abs(ene[closest].x-95) >=1 )){
+		*angle = 7;
+	}else if((ene[closest].x > ship.x) && !(abs(ene[closest].y-25) / abs(ene[closest].x-95) >=1 )){
+		*angle = 3;
+	}else if(ene[closest].y > ship.y){
+		*angle = 5;
+	}else if(ene[closest].y < ship.y){
+		*angle = 1;
+	}else{
+		*angle = 0;
+	}
 }
+
