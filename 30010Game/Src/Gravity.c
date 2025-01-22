@@ -42,6 +42,7 @@ vector initVector(int8_t x, int8_t y){
 	vec.y = to88(y);
 	vec.len = square(((vec.x/3*vec.x/3)>>8) + ((vec.y*vec.y)>>8));
 	//					24.8	  *   24.8 		24.8 * 24.8   bitshifting >>8 to get result in x.8
+	//The function also returns the perceived length of the vector, not the actual length, as y = 3x approx.
 	return vec;
 }
 
@@ -61,9 +62,18 @@ void lorentzForce(bullet* bullarr, asteroid* astarr, uint8_t n_bul, uint8_t n_as
 		if(bullarr[i].status != 0){
 			for(int8_t j = 0; j < n_ast; j++){
 				vector v = initVector(astarr[j].x - bullarr[i].x, astarr[j].y - bullarr[i].y);
-				if(v.len < (5<<8)){
-
+				if(bullarr[i].y <= astarr[j].y){
+					if(v.len < (10<<8)){
+						bullarr[i].velx += (v.x/40) * (to88(10)/v.len);
+						bullarr[i].vely += (v.y/40) * (to88(10)/v.len);
+					}
+				}else if(bullarr[i].y >= astarr[j].y){
+					if(v.len < (11<<8)){
+						bullarr[i].velx += (v.x/40) * (to88(11)/v.len);
+						bullarr[i].vely += (v.y/40) * (to88(11)/v.len);
+					}
 				}
+
 
 			}
 		}
