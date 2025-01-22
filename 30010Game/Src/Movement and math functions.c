@@ -89,9 +89,9 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 						ScoreTracker(100, &*currentscore);
 						ene[k].status=0; //set status to zero and erase it
 						gotoxy(ene[i].x-2,ene[k].y-2);
-						printf("      ");
+						printf("        ");
 						gotoxy(ene[i].x-2,ene[k].y-1);
-						printf("      ");
+						printf("        ");
 						gotoxy(ene[k].x-4,ene[k].y);
 						printf("       ");
 						gotoxy(ene[k].x-3,ene[k].y+1);
@@ -100,7 +100,7 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 						printf("       ");
 						ScoreTracker(100, &*currentscore); // add score on kills
 						r=rand() % (4 + 1);
-						if(r==4){ //randomly spawn a powerup
+						if(r<=4){ //randomly spawn a powerup
 							for(m=0;m<n_pow;m++){
 								if(pow[m].status==0){
 									r=(rand() % (5 + 1))+1; //number between [1,6]
@@ -174,7 +174,7 @@ void UpdateBulletPos(spaceship* ship,bullet* all_bul, int n_bul){
 				printf(" ");
 			} else {
 				gotoxy(all_bul[i].x,all_bul[i].y);
-				printf(" ");
+				printf("  ");
 				all_bul[i].x+= all_bul[i].velx;
 				all_bul[i].y+= all_bul[i].vely;
 				drawBullet(&all_bul[i]);
