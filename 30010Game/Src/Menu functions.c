@@ -17,7 +17,7 @@
 
 
 void menuSelect(int menu, int* level, int* gamestart, int* first){
-	//For menu input: 0 = main menu, 1 = help, 2 = difficulty, 3 = death, 4 = pause
+	//For menu input: 0 = main menu, 1 = help, 2 = difficulty, 3 = death, 4 = pause, 5 = boss
 	uint8_t static sel = 0;
 	uint8_t static options;
 	point static selXY[5];
@@ -43,6 +43,8 @@ void menuSelect(int menu, int* level, int* gamestart, int* first){
 		  case 4:
 		    pauseMenu();
 		    break;
+		  case 5:
+			bossMenu();
 		}
 		*first = 0;
 	}
@@ -84,7 +86,7 @@ void menuSelect(int menu, int* level, int* gamestart, int* first){
 		selXY[0].y = 33;
 		options = 2;
 		break;
-		}
+	}
 
 	switch (c) {
 	  case 97: //A
@@ -123,6 +125,9 @@ void menuSelect(int menu, int* level, int* gamestart, int* first){
 		currmenu = menuConfirm(currmenu, sel, gamestart);
     	gotoxy(selXY[sel].x, selXY[sel].y);
     	sel = 0;
+		break;
+	  case 27:
+		currmenu = menuConfirm(currmenu, sel, gamestart);
 		break;
 	}
 	*level = lvl;
@@ -165,21 +170,30 @@ int menuConfirm(int menu, uint8_t sel, int* gamestart){
 	}else if(menu == 4){
 		switch (sel) {
 		  case 1:
+			  clrscr();
+			  StartTime();
 			  *gamestart = 1;
 			  return 0;
-		    break;
+			  break;
 		  case 0:
-		    //mainMenu()
-			mainMenu();
+			  //mainMenu()
+			  mainMenu();
 			  return 0;
-		    break;
+			  break;
 		}
+	}else if(menu == 5){
+		clrscr();
+		StartTime();
+		*gamestart = 1;
+		return 0;
+
 	}else{
 		return 0;
 	}
 
 	return 0;
 }
+
 
 void mainMenu(){
 
@@ -629,17 +643,38 @@ void pauseMenu() {
 
 }
 
-void pause_unpause(int *gamestart){
-	int8_t key = uartKeyRead();
+void bossMenu() {
+	clrscr();
+	window(50, 30, 130, 40, 1);
+	gotoxy(60, 32);
+	printf("Working hard,");
+	gotoxy(65, 34);
+	printf("or");
+	gotoxy(60, 36);
+	printf("hardly working");
+}
 
-	if ((key == 27) && (*gamestart == 1)){
+
+void pause_unpause(int *gamestart, int *menu){
+	char key = uartKeyRead();
+	gotoxy(1,1);
+	if(key != 0){
+		printf("%d",key);
+	}else{
+		printf("   ");
+	}
+	if (key == 27){
 		StopTime();
-		pauseMenu();
+		*menu = 4;
 		*gamestart = 0;
 	}
-	else if ((key == 27) && (*gamestart == 0)){
-		//Here is supposed to be a function that redraws the game
-		StartTime();
-		*gamestart = 1;
+}
+
+void boss_screen(int *gamestart, int *menu){
+	char key = uartKeyRead();
+	if (key == 98){
+		StopTime();
+		*menu = 5;
+		*gamestart = 0;
 	}
 }

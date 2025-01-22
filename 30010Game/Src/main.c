@@ -136,6 +136,9 @@ int main(void) {
 			}
 			//This is the bullet refresh section
 			if(bulletTime >= 33 ){
+				pause_unpause(&gamestart, &menu);
+				boss_screen(&gamestart, &menu);
+
 				fireBullet(&playership, all_bullets, pp, &reload_timer, &key, TimeMaster15.second, TimeMaster15.minute);
 				UpdateBulletPos(&playership,all_bullets, n_bul);
 				CheckBulletCollisions(&playership, all_enemies, all_bullets, all_asteroids,all_powerups, n_ene, n_ast, n_bul, n_pow, &currentscore, pp);
