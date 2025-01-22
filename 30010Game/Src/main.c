@@ -86,13 +86,13 @@ int main(void) {
 		//Set enemy starting speed based on chosen difficulty
 		switch (difficulty) {
 		  case 1:
-		    enemyTimeRefresh = 200;
+		    enemyTimeRefresh = 140;
 		    break;
 		  case 2:
-			  enemyTimeRefresh = 180;
+			  enemyTimeRefresh = 120;
 		    break;
 		  case 3:
-			  enemyTimeRefresh = 160;
+			  enemyTimeRefresh = 100;
 			break;
 
 		}
@@ -114,13 +114,13 @@ int main(void) {
 			//This sets the player movement speed based on which powerups are active
 			switch (pp & 0x00000011) {
 			  case 1:
-			    playerTimeRefresh = 40;
+			    playerTimeRefresh = 15;
 			    break;
 			  case 17:
-				playerTimeRefresh = 32;
+				playerTimeRefresh = 10;
 			    break;
 			  case 0:
-				playerTimeRefresh = 50;
+				playerTimeRefresh = 20;
 				break;
 
 			}
@@ -135,7 +135,7 @@ int main(void) {
 				t = TimeMaster15.hsecond;
 			}
 			//This is the bullet refresh section
-			if(bulletTime >= 33 ){
+			if(bulletTime >= 5 ){
 				pause_unpause(&gamestart, &menu);
 				boss_screen(&gamestart, &menu);
 
@@ -166,7 +166,7 @@ int main(void) {
 				playerTime = 0;
 			}
 			//This last counter s and if statement is for the increase of enemy speed based on progression of game
-			if(s>=1000 && (enemyTimeRefresh > 100)){
+			if(s>=1000 && (enemyTimeRefresh > 20)){
 				enemyTimeRefresh-=5;
 				s=0;
 			}
