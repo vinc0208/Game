@@ -418,19 +418,9 @@ void diffMenu(){
 	//Window print
 	window(61,29,125,36,1);
 
-	//Changing parameters
-	gotoxy(70, 39);
-	printf("Player HP:");
-	gotoxy(70, 41);
-	printf("# bullets:");
-	gotoxy(100, 39);
-	printf("Enemy  HP:");
-	gotoxy(100, 41);
-	printf("# enemies:");
-
 	//Controls at bottom of screen
 	gotoxy(140,50);
-	printf("Press ENTER to confirm and return to Main Menu");
+	printf("Press ENTER to return to Main Menu");
 
 }
 
@@ -464,16 +454,6 @@ void printMode(int lvl){
 	      printf("     |_____%c__,_|___/%c__, |",92,92);
 	      gotoxy(77,35);
 	      printf("                     |___/   ");
-
-	      //Changing parameters
-		  gotoxy(81, 39);
-		  printf("5");
-		  gotoxy(81, 41);
-		  printf("5");
-		  gotoxy(111, 39);
-		  printf("3");
-		  gotoxy(111, 41);
-		  printf("5");
 	    break;
 	  case 2:
 		  //Erase old mode
@@ -501,16 +481,6 @@ void printMode(int lvl){
 	      printf("| |%c  | %c_%c | |  | | | | | | %c_| | |",92,40,41,40);
 	      gotoxy(75,34);
 	      printf("|_| %c_|%c___/|_|  |_| |_| |_|%c__,_|_|",92,92,92);
-
-	      //Changing parameters
-		  gotoxy(81, 39);
-		  printf("4");
-		  gotoxy(81, 41);
-		  printf("3");
-		  gotoxy(111, 39);
-		  printf("4");
-		  gotoxy(111, 41);
-		  printf("6");
 	    break;
 	  case 3:
 		  //Erase old mode
@@ -538,16 +508,6 @@ void printMode(int lvl){
 	      printf("    |  _  | %c_| | | | %c_| |",40,40);
 	      gotoxy(78,34);
 	      printf("    |_| |_|%c__,_|_|  %c__,_|",92,92);
-
-	      //Changing parameters
-		  gotoxy(81, 39);
-		  printf("3");
-		  gotoxy(81, 41);
-		  printf("1");
-		  gotoxy(111, 39);
-		  printf("5");
-		  gotoxy(111, 41);
-		  printf("7");
 	    break;
 	}
 
