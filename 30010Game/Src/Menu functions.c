@@ -545,6 +545,27 @@ void deathMenu() {
 	gotoxy(114,32);
 	printf("|_| %c_%c___||___/%c__%c__,_|_|   %c__|",92,92,92,92,92);
 
+	//Highscore print
+	window(2, 28, 23, 38, 1);
+	gotoxy(3,28);
+	printf(" Highscore ");
+
+	uint32_t address = 0x0800F800;
+	for (int i = 0; i < 9; i++) {
+		gotoxy(3,29+i);
+		printf("%d  ", (i+1));
+
+		for (int j = 0; j < 5; j++) {
+			if (j < 4){
+				printf("%c", *(char*) (address + (i*5+j)*2));
+			}
+			else{
+				printf("  %d", *(uint16_t*) (address + (i*5+j)*2));
+				printf("\n");
+			}
+		}
+	}
+
 	//Controls at bottom of screen
 	gotoxy(140,50);
 	printf("A for left, D for right, ENTER for select");
