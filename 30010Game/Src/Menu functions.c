@@ -370,13 +370,39 @@ void helpMenu(){
 	gotoxy(50,26);
 	printf("Filled with sorrow and anger, you must fight back and survive against these monsters!");
 	gotoxy(50,30);
-	printf("Just use your spaceship controls: A & D to rotate and W & D to go forwards/backwards.");
+	printf("Just use your spaceship controls: A & D to rotate and W to go forwards.");
 	gotoxy(50,32);
 	printf("You've been supplied with a state of the art enemy detection radar and a laser rifle.");
 	gotoxy(50,34);
 	printf("Press SPACE to fire away, but watch your ammo! it's prone to overheating.");
 	gotoxy(50,36);
 	printf("New supply packages and upgrades can be looted from your enemies. Good luck!");
+	gotoxy(87,43);
+	printf("Powerups:");
+	gotoxy(63,46);
+	printf("Dmg boost:          Speed boost:        Score multiplier:");
+	gotoxy(74,46);
+	fgcolor(1);
+	printf("%c%c",219,219);
+	gotoxy(96,46);
+	fgcolor(3);
+	printf("%c%c",219,219);
+	gotoxy(121,46);
+	fgcolor(5);
+	printf("%c%c",219,219);
+	gotoxy(63,48);
+	fgcolor(15);
+	printf("Weapon type 1:      Weapon type 2:      Weapon type 3:");
+	gotoxy(78,48);
+	fgcolor(6);
+	printf("%c%c",219,219);
+	gotoxy(98,48);
+	fgcolor(12);
+	printf("%c%c",219,219);
+	gotoxy(118,48);
+	fgcolor(4);
+	printf("%c%c",219,219);
+	fgcolor(15);
 
 
 

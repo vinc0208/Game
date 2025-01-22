@@ -92,12 +92,17 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 
 		fgcolor(11);
 		int ud, ur, lr, ul;
-		if((bul[n].status & 0x10000000)){
+		if(bul[n].status & 0x10000000){
 			ud = 111;
 			ur = 111;
 			lr = 111;
 			ul = 111;
-		} else{
+		}else if(bul[n].status & 0x01000000){
+			ud = 124;
+			ur = 47;
+			lr = 61;
+			ul = 92;
+		}else{
 			ud = 124;
 			ur = 47;
 			lr = 45;
@@ -118,7 +123,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 					printf("%c", ud);
 				} else{
 					bold(1);
-					printf("%c", ud);
+					printf("%c%c", ud, ud);
 					bold(0);
 				}
 			}else if(ship->dir==5){			// Down
@@ -132,7 +137,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 					printf("%c", ud);
 				} else{
 					bold(1);
-					printf("%c", ud);
+					printf("%c%c", ud, ud);
 					bold(0);
 				}
 			}else if(ship->dir==2){			// Up-right
@@ -146,7 +151,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 					printf("%c", ur);
 				} else{
 					bold(1);
-					printf("%c", ur);
+					printf("%c%c", ur, ur);
 					bold(0);
 				}
 			}else if(ship->dir==3){			// Right
@@ -160,7 +165,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 					printf("%c", lr);
 				} else{
 					bold(1);
-					printf("%c", lr);
+					printf("%c%c", lr, lr);
 					bold(0);
 				}
 			}else if(ship->dir==7){			// Left
@@ -174,7 +179,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 					printf("%c", lr);
 				} else{
 					bold(1);
-					printf("%c", lr);
+					printf("%c%c", lr, lr);
 					bold(0);
 				}
 			}else if(ship->dir==4){			// Down-right
@@ -188,7 +193,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 					printf("%c", ul);
 				} else{
 					bold(1);
-					printf("%c", ul);
+					printf("%c%c", ul, ul);
 					bold(0);
 				}
 			}else if(ship->dir==6){			// Down-left
@@ -202,7 +207,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 					printf("%c", ur);
 				} else{
 					bold(1);
-					printf("%c", ur);
+					printf("%c%c", ur, ur);
 					bold(0);
 				}
 			}else if(ship->dir==8){			// Up-left
@@ -216,7 +221,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 					printf("%c", ul);
 				} else{
 					bold(1);
-					printf("%c", ul);
+					printf("%c%c", ul, ul);
 					bold(0);
 				}
 			}
@@ -459,9 +464,9 @@ void drawPowerup(powerup *pow){
 	}else if(pow->status==3) {
 		fgcolor(5);
 	}else if(pow->status==4) {
-		fgcolor(12);
-	}else if(pow->status==5) {
 		fgcolor(6);
+	}else if(pow->status==5) {
+		fgcolor(12);
 	}else if(pow->status==6) {
 		fgcolor(4);
 	} else{
@@ -566,12 +571,17 @@ void initAsteroid(asteroid* all_asteroids,int n_ast){
 void drawBullet(bullet* bul){
 	fgcolor(11);
 	char ud, ur, lr, ul;
-	if((bul->status & 0x10000000)){
+	if(bul->status & 0x10000000){
 		ud = 111;
 		ur = 111;
 		lr = 111;
 		ul = 111;
-	} else{
+	}else if(bul->status & 0x01000000){
+		ud = 124;
+		ur = 47;
+		lr = 61;
+		ul = 92;
+	}else{
 		ud = 124;
 		ur = 47;
 		lr = 45;
@@ -586,7 +596,7 @@ void drawBullet(bullet* bul){
 				printf("%c", ud);
 			} else if (bul->status & 0x01000000){
 				bold(1);
-				printf("%c", ud);
+				printf("%c%c", ud, ud);
 				bold(0);
 			}
 		} else if(bul->dir==5){			// Down
@@ -595,7 +605,7 @@ void drawBullet(bullet* bul){
 				printf("%c", ud);
 			} else if (bul->status & 0x01000000){
 				bold(1);
-				printf("%c", ud);
+				printf("%c%c", ud, ud);
 				bold(0);
 			}
 		}else if(bul->dir==2){			// Up-right
@@ -604,7 +614,7 @@ void drawBullet(bullet* bul){
 				printf("%c", ur);
 			} else if (bul->status & 0x01000000){
 				bold(1);
-				printf("%c", ur);
+				printf("%c%c", ur, ur);
 				bold(0);
 			}
 		}else if(bul->dir==3){			// Right
@@ -613,7 +623,7 @@ void drawBullet(bullet* bul){
 				printf("%c", lr);
 			} else if (bul->status & 0x01000000){
 				bold(1);
-				printf("%c", lr);
+				printf("%c%c", lr, lr);
 				bold(0);
 			}
 		}else if(bul->dir==7){			// Left
@@ -622,7 +632,7 @@ void drawBullet(bullet* bul){
 				printf("%c", lr);
 			} else if (bul->status & 0x01000000){
 				bold(1);
-				printf("%c", lr);
+				printf("%c%c", lr, lr);
 				bold(0);
 			}
 		}else if(bul->dir==4){			// Down-right
@@ -631,7 +641,7 @@ void drawBullet(bullet* bul){
 				printf("%c", ul);
 			} else if (bul->status & 0x01000000){
 				bold(1);
-				printf("%c", ul);
+				printf("%c%c", ul, ul);
 				bold(0);
 			}
 		}else if(bul->dir==6){			// Down-left
@@ -640,7 +650,7 @@ void drawBullet(bullet* bul){
 				printf("%c", ur);
 			} else if (bul->status & 0x01000000){
 				bold(1);
-				printf("%c", ur);
+				printf("%c%c", ur, ur);
 				bold(0);
 			}
 		}else if(bul->dir==8){			// Up-left
@@ -649,7 +659,7 @@ void drawBullet(bullet* bul){
 				printf("%c", ul);
 			} else if (bul->status & 0x01000000){
 				bold(1);
-				printf("%c", ul);
+				printf("%c%c", ul, ul);
 				bold(0);
 			}
 		}

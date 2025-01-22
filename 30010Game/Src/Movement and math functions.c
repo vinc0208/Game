@@ -78,7 +78,7 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 				if((bul[i].x >= ast[k].x-3) && (bul[i].x <= ast[k].x+2) && (bul[i].y >= ast[k].y-1) && (bul[i].y <= ast[k].y+2)) {
 					bul[i].status=0; // bullets are removed on collision
 					gotoxy(bul[i].x,bul[i].y);
-					printf(" ");
+					printf("  ");
 				}}
 
 			for(k=0;k<n_ene;k++){ // check for enemy collision
@@ -108,7 +108,7 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 							}}}}
 					bul[i].status=0; //bullets are removed on collision
 					gotoxy(bul[i].x,bul[i].y);
-					printf(" ");
+					printf("  ");
 				}}}}}
 
 //checks for spaceship collision with enemies, asteroids or powerups
@@ -166,10 +166,10 @@ void UpdateBulletPos(spaceship* ship,bullet* all_bul, int n_bul){
 			if(all_bul[i].x+from88(all_bul[i].velx)>=189||all_bul[i].x+from88(all_bul[i].velx)<=1||all_bul[i].y+from88(all_bul[i].vely)<=1||all_bul[i].y+from88(all_bul[i].vely)>=49){
 				all_bul[i].status=0; // removes out of bounds bullets
 				gotoxy(all_bul[i].x,all_bul[i].y);
-				printf(" ");
+				printf("  ");
 			} else {
 				gotoxy(all_bul[i].x,all_bul[i].y);
-				printf(" ");
+				printf("  ");
 				all_bul[i].x+= from88(all_bul[i].velx);
 				all_bul[i].y+= from88(all_bul[i].vely);
 				drawBullet(&all_bul[i]);
