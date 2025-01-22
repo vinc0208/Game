@@ -137,8 +137,8 @@ void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,poweru
 					ene[k].hp=0;
 					shp->hp-=1;
 					ScoreTracker(100, &*currentscore);
-					gotoxy(ene[k].x-1,ene[k].y-1);
-					printf("     ");
+					gotoxy(ene[k].x-2,ene[k].y-1);
+					printf("      ");
 					gotoxy(ene[k].x-3,ene[k].y);
 					printf("      ");
 					gotoxy(ene[k].x-2,ene[k].y+1);
