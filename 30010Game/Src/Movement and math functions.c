@@ -100,7 +100,7 @@ void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* 
 						printf("       ");
 						ScoreTracker(100, &*currentscore); // add score on kills
 						r=rand() % (4 + 1);
-						if(r<=4){ //randomly spawn a powerup
+						if(r==4){ //randomly spawn a powerup
 							for(m=0;m<n_pow;m++){
 								if(pow[m].status==0){
 									r=(rand() % (5 + 1))+1; //number between [1,6]
@@ -154,7 +154,7 @@ void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,poweru
 					if((shp->x >= pow[k].x-2) && (shp->x <= pow[k].x+2) && (shp->y >= pow[k].y-1) && (shp->y <= pow[k].y+1)) {
 						add_power(pow[k], pp); // add to player powerups
 						pow[k].status=0; // powerups are removed on collision and their sprite deleted
-						gotoxy(pow[k].x-1,pow[k].y-1);
+						gotoxy(pow[k].x-1,pow[k].y);
 						printf("  ");
 						drawSpaceship(shp);
 					}}}}
