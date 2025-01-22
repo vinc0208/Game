@@ -354,9 +354,11 @@ void helpMenu(){
 	gotoxy(50,30);
 	printf("Just use your spaceship controls: A & D to rotate and W & D to go forwards/backwards.");
 	gotoxy(50,32);
-	printf("Press SPACE to shoot, and don't hesitate!");
+	printf("You've been supplied with a state of the art enemy detection radar and a laser rifle.");
 	gotoxy(50,34);
-	printf("New supply packages and upgrades will be sent to you over time. Good luck");
+	printf("Press SPACE to fire away, but watch your ammo! it's prone to overheating.");
+	gotoxy(50,36);
+	printf("New supply packages and upgrades can be looted from your enemies. Good luck!");
 
 
 
