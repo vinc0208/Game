@@ -10,6 +10,7 @@
 #include <stdint.h> // whatever
 #include <stdio.h>
 #include <stdlib.h>
+#include <30010_io.h>
 #include "Movement and math functions.h"
 #include "Menu functions.h"
 #include "Hardware interface functions.h"
@@ -127,6 +128,9 @@ void menuSelect(int menu, int* level, int* gamestart, int* first){
     	sel = 0;
 		break;
 	  case 27:
+		currmenu = menuConfirm(currmenu, sel, gamestart);
+		break;
+	  case 98:
 		currmenu = menuConfirm(currmenu, sel, gamestart);
 		break;
 	}
@@ -647,36 +651,44 @@ void pauseMenu() {
 
 void bossMenu() {
 	clrscr();
-	window(50, 30, 130, 40, 1);
-	gotoxy(60, 32);
+	fgcolor(15);
+	window(50, 25, 130, 32, 1);
+	gotoxy(60, 27);
 	printf("Working hard,");
-	gotoxy(65, 34);
+	gotoxy(65, 29);
 	printf("or");
-	gotoxy(60, 36);
+	gotoxy(60, 31);
 	printf("hardly working");
 }
 
 
-void pause_unpause(int *gamestart, int *menu){
-	char key = uartKeyRead();
-	gotoxy(1,1);
-	if(key != 0){
-		printf("%d",key);
-	}else{
-		printf("   ");
-	}
-	if (key == 27){
+void pause_unpause(int *gamestart, int *menu, uint8_t *key, int *level, int *first){
+	if (*key == 27){
+
 		StopTime();
 		*menu = 4;
 		*gamestart = 0;
+		*key = 0;
+		*first = 1;
+
+		while(*gamestart == 0){
+			menuSelect(*menu, &level, gamestart, first);
+		}
+		clrscr();
 	}
 }
 
-void boss_screen(int *gamestart, int *menu){
-	char key = uartKeyRead();
-	if (key == 98){
+void boss_screen(int *gamestart, int *menu, uint8_t *key, int *level, int *first){
+	if (*key == 98){
 		StopTime();
 		*menu = 5;
 		*gamestart = 0;
+		*key = 0;
+		*first = 1;
+
+		while(*gamestart == 0){
+			menuSelect(*menu, &level, gamestart, first);
+		}
+		clrscr();
 	}
 }

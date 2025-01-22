@@ -18,6 +18,10 @@ void diffMenu();
 void printMode(int lvl);
 void deathMenu();
 void pauseMenu();
+void bossMenu();
+
+void pause_unpause(int *gamestart, int *menu, uint8_t *key, int *level, int *first);
+void boss_screen(int *gamestart, int *menu, uint8_t *key, int *level, int *first);
 
 
 #endif /* MENU_FUNCTIONS_H_ */

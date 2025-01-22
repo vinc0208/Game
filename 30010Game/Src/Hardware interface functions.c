@@ -195,7 +195,7 @@ void init_radar(uint8_t *buffer) {
 void init_lcd(uint8_t* buffer, spaceship ship) {
 	//Prepare byte array and strings to be updated (buffer)
 	memset(buffer,0x00,512);
-	char score[] = "Score: 0";
+	char score[] = "Score: 0    ";
 	char life[] = "Lives: ";
 	char bullets[] = "Ammo : ";
 

@@ -136,13 +136,14 @@ int main(void) {
 			}
 			//This is the bullet refresh section
 			if(bulletTime >= 5 ){
-				pause_unpause(&gamestart, &menu);
-				boss_screen(&gamestart, &menu);
 				lorentzForce(&all_bullets, &all_asteroids, n_bul, n_ast);
 				fireBullet(&playership, all_bullets, pp, &reload_timer, &key, TimeMaster15.second, TimeMaster15.minute);
 				UpdateBulletPos(&playership,all_bullets, n_bul);
 				CheckBulletCollisions(&playership, all_enemies, all_bullets, all_asteroids,all_powerups, n_ene, n_ast, n_bul, n_pow, &currentscore, pp);
 				bulletTime = 0;
+
+				pause_unpause(&gamestart, &menu);
+				boss_screen(&gamestart, &menu);
 			}
 			//This is the enemy refresh section
 			if(enemyTime >= enemyTimeRefresh){
