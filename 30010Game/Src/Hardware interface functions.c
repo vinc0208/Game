@@ -251,9 +251,10 @@ void radar(uint8_t* buffer, uint8_t angle, uint8_t* prevangle) {
 	}else{
 		init_radar(buffer);
 	}
-	if (angle == 0) {							//No input
+	if (angle == 0) {						//No input
 
-	}else if (angle == 3) {						//Right
+	}else if (angle == 3) {					//Right
+		slice = 116;
 		line = 1;
 		for (uint8_t j=0; j<5; j++) {
 			buffer[(line-1)*128+slice+j] = game_char_data[9][j];

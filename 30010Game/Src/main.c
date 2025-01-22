@@ -142,8 +142,8 @@ int main(void) {
 				CheckBulletCollisions(&playership, all_enemies, all_bullets, all_asteroids,all_powerups, n_ene, n_ast, n_bul, n_pow, &currentscore, pp);
 				bulletTime = 0;
 
-				pause_unpause(&gamestart, &menu);
-				boss_screen(&gamestart, &menu);
+				pause_unpause(&gamestart, &menu, &key, &difficulty, &first);
+				boss_screen(&gamestart, &menu, &key, &difficulty, &first);
 			}
 			//This is the enemy refresh section
 			if(enemyTime >= enemyTimeRefresh){
