@@ -403,3 +403,22 @@ void update_stats(spaceship ship, uint8_t* buffer, uint16_t* currentscore){
 
 	lcd_push_buffer(buffer);
 }
+
+void LEDprep(){
+	RCC->AHBENR |= RCC_AHBPeriph_GPIOA; // Enable clock for GPIO Port A
+	RCC->AHBENR |= RCC_AHBPeriph_GPIOB; // Enable clock for GPIO Port B
+	RCC->AHBENR |= RCC_AHBPeriph_GPIOC; // Enable clock for GPIO Port C
+
+	GPIOB->MODER &= ~(0x00000003 << (4 * 2)); // Clear mode register
+	GPIOB->MODER |= (0x00000001 << (4 * 2)); // Set mode register (0x00 – Input, 0x01 - Output, 0x02 - Alternate Function, 0x03 - Analog in/out)
+
+	GPIOC->MODER &= ~(0x00000003 << (7 * 2));
+	GPIOC->MODER |= (0x00000001 << (7 * 2));
+
+	GPIOA->MODER &= ~(0x00000003 << (9 * 2));
+	GPIOA->MODER |= (0x00000001 << (9 * 2));
+
+	GPIOB->ODR |= (0x0001 << 4);
+	GPIOC->ODR |= (0x0001 << 7);
+	GPIOA->ODR |= (0x0001 << 9);
+}
