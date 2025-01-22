@@ -174,7 +174,7 @@ void UpdateBulletPos(spaceship* ship,bullet* all_bul, int n_bul){
 				printf(" ");
 			} else {
 				gotoxy(all_bul[i].x,all_bul[i].y);
-				printf("  ");
+				printf(" ");
 				all_bul[i].x+= all_bul[i].velx;
 				all_bul[i].y+= all_bul[i].vely;
 				drawBullet(&all_bul[i]);

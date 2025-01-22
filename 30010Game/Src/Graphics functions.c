@@ -608,6 +608,7 @@ void drawBullet(bullet* bul){
 				bold(0);
 			}
 		}else if(bul->dir==3){			// Right
+			gotoxy(bul->x,bul->y);
 			if (!(bul->status & 0x01000000)){
 				printf("%c", lr);
 			} else if (bul->status & 0x01000000){
