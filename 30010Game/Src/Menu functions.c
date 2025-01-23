@@ -248,6 +248,11 @@ void mainMenu(){
 				printf("   ");
 				shp1.x += 1;
 				drawSpaceship(&shp1);
+				if(i < 1000000){
+					fgcolor(15);
+					gotoxy(shp1.x-2, shp1.y);
+					printf("%c", 219);
+				}
 
 				//Update ship 2
 				gotoxy(shp2.x-1,y-1);
@@ -258,6 +263,11 @@ void mainMenu(){
 				printf("  ");
 				shp2.x -= 1;
 				drawSpaceship(&shp2);
+				if(i < 1000000){
+					fgcolor(15);
+					gotoxy(shp2.x+1, shp2.y);
+					printf("%c", 219);
+				}
 			}
 
 
