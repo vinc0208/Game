@@ -53,7 +53,6 @@ void TIM1_BRK_TIM15_IRQHandler(void) { //Needed to count the time
 	if (TimeMaster15.msecond >= 10){
 		TimeMaster15.msecond %= 10;
 		TimeMaster15.hsecond += 1;
-		SpeedIncrease.hsecond += 1;
 	}
 	if (TimeMaster15.hsecond >= 100){
 		TimeMaster15.hsecond %= 100;
@@ -110,30 +109,6 @@ void ResetTime(){ //Resets the time
 
 	SpeedIncrease = TimeMaster15;
 }
-
-void GameSpeed(int* level, uint16_t* currentscore){
-	/*
-	int8_t difficulty;
-	if (*level == 1){ //If level is easy
-		difficulty =
-	}
-	*/
-
-	if (SpeedIncrease.hsecond >= *level){
-		SpeedIncrease.hsecond %= *level;
-		SpeedIncrease.second += 1;
-	}
-	if (SpeedIncrease.second >= 60){
-		SpeedIncrease.second %= 60;
-		SpeedIncrease.minute += 1;
-		ScoreTracker(600, currentscore);
-	}
-	if (SpeedIncrease.minute >= 60){
-		SpeedIncrease.minute %= 60;
-		SpeedIncrease.hour += 1;
-	}
-}
-
 
 void lcd_write_string(char* string, uint8_t slice, uint16_t line, uint8_t* buffer){
 	uint8_t strleng = strlen(string);

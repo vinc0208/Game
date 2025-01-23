@@ -13,7 +13,6 @@ typedef struct {
 	uint16_t hour, minute, second, hsecond, msecond;
 } TimeFormat;
 TimeFormat TimeMaster15; // The reason why we have a global variable here is because we need to be able to access the time anywhere
-TimeFormat SpeedIncrease;// Another global variable needed for increasing game speed over time
 
 #ifndef HARDWARE_INTERFACE_FUNCTIONS_H_
 #define HARDWARE_INTERFACE_FUNCTIONS_H_
@@ -26,7 +25,6 @@ void lcd_update(char* string, char* tbu, uint8_t slice, uint16_t line, uint8_t* 
 void StartTime();
 void StopTime();
 void ResetTime();
-void GameSpeed(int* level, uint16_t* currentscore);
 
 char uartKeyRead();
 
