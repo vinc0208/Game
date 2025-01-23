@@ -117,7 +117,7 @@ void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,poweru
 
 	for(k=0;k<n_ast;k++){ // check for asteroid collision
 		if(ast[k].status !=0){
-			if((shp->x >= ast[k].x-3) && (shp->x <= ast[k].x+2) && (shp->y >= ast[k].y-1) && (shp->y <= ast[k].y+2)) {
+			if((shp->x >= ast[k].x-5) && (shp->x <= ast[k].x+3) && (shp->y >= ast[k].y-2) && (shp->y <= ast[k].y+3)) {
 				ast[k].status=0; // asteroids are removed on collision
 				shp->hp-=1;
 				gotoxy(ast[k].x-3,ast[k].y-1);
