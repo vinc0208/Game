@@ -26,6 +26,7 @@ void menuSelect(int8_t menu, int8_t* level, int8_t* gamestart, int8_t* first){
 	int static currmenu;
 	int static lvl = 1;
 
+	//Initialize the starting menu (draw menu)
 	if(*first == 1){
 		currmenu = menu;
 		switch (menu) {
@@ -50,9 +51,8 @@ void menuSelect(int8_t menu, int8_t* level, int8_t* gamestart, int8_t* first){
 		*first = 0;
 	}
 
-	c = uartKeyRead();
 
-
+	//Set the marker coordinates and number of options according to the current menu
 	switch (currmenu) {
 	  case 0:
 		selXY[0].x = 32;
@@ -88,6 +88,10 @@ void menuSelect(int8_t menu, int8_t* level, int8_t* gamestart, int8_t* first){
 		options = 2;
 		break;
 	}
+
+
+	//Choose what to do based on user keyboard input
+	c = uartKeyRead();
 
 	switch (c) {
 	  case 97: //A
@@ -138,8 +142,13 @@ void menuSelect(int8_t menu, int8_t* level, int8_t* gamestart, int8_t* first){
 
 }
 
+//menuConfirm is just an extension to the menuSelect function to make it more manageble
+//Is only called when enter is hit in menuSelect (hence (menu)Confirm)
+//This function returns the value of the menu that is being initiated, so that currmenu in menuSelect is being updated,
+//and the menuSelect function can keep track of what menu we are in
 int menuConfirm(int8_t menu, uint8_t sel, int8_t* gamestart){
-
+	//If statement for each menu containing switch statement switching between actions based on what
+	//options are currently selected
 	if(menu == 0){
 		switch (sel) {
 		  case 0:
@@ -198,13 +207,12 @@ int menuConfirm(int8_t menu, uint8_t sel, int8_t* gamestart){
 	return 0;
 }
 
-
+//Draw mainMenu function
 void mainMenu(){
 
 	clrscr();
 	fgcolor(15);
 	reverse(0);
-	srand(5);
 		//draw stars
 		for(uint8_t i = 0; i<100; i++){
 			uint8_t x = rand() % 189;
@@ -228,6 +236,7 @@ void mainMenu(){
 		shp2.dir = 7;
 		shp2.style = 1;
 
+		//Draw the space stations
 		fgcolor(15);
 		gotoxy(4,21);
 		printf("%c%c%c%c%c%c%c%c[%dD%c[%dB%c%c%c%c%c%c%c%c%c%c[%dD%c[%dB",220,219,219,219,219,219,220,ESC,8,ESC,1,   219,219,219,219,219,219,219,219,223,ESC,9,ESC,1);
@@ -269,11 +278,7 @@ void mainMenu(){
 					printf("%c", 219);
 				}
 			}
-
-
-
 		}
-
 
 		fgcolor(15);
 		//Title print
@@ -333,10 +338,10 @@ void mainMenu(){
 		printf("A for left, D for right, ENTER for select");
 }
 
+//Draw the help menu
 void helpMenu(){
 	clrscr();
 
-	srand(5);
 	//draw stars
 	for(uint8_t i = 0; i<100; i++){
 		uint8_t x = rand() % 189;
@@ -411,6 +416,7 @@ void helpMenu(){
 
 }
 
+//Draw the mode or difficulty menu
 void diffMenu(){
 	clrscr();
 
@@ -459,6 +465,7 @@ void diffMenu(){
 
 }
 
+//printMode is an extension of the diffMenu, and prints the mode according to what the level/difficulty variable is set to
 void printMode(int lvl){
 	switch (lvl) {
 	  case 1:
@@ -578,6 +585,7 @@ void printMode(int lvl){
 
 }
 
+//Death menu for when the player dies
 void deathMenu() {
 
 	clrscr();
@@ -656,6 +664,7 @@ void deathMenu() {
 
 }
 
+//Pause menu - drawing the pause menu
 void pauseMenu() {
 
 	clrscr();
@@ -714,6 +723,7 @@ void pauseMenu() {
 
 }
 
+//Draw the boss menu
 void bossMenu() {
 	clrscr();
 	fgcolor(15);
@@ -728,7 +738,8 @@ void bossMenu() {
 	printf("B to continue working");
 }
 
-
+//This is the pause/unpause function, which starts/stops and prints the pause menu
+//by using the gamestart variable and input key from the gameloop
 void pause_unpause(int8_t *gamestart, int8_t *menu, uint8_t *key, int8_t *level, int8_t *first){
 	if (*key == 27){
 
@@ -745,6 +756,7 @@ void pause_unpause(int8_t *gamestart, int8_t *menu, uint8_t *key, int8_t *level,
 	}
 }
 
+//Similar to the pause function, just with the boss menu instead
 void boss_screen(int8_t *gamestart, int8_t *menu, uint8_t *key, int8_t *level, int8_t *first){
 	if (*key == 98){
 		StopTime();

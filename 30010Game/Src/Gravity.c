@@ -13,6 +13,7 @@
 
 //The necessary math functions:
 
+//Algorithm approximating the square root of a number in fixed point x.8 format
 int32_t square(int32_t number){
 	int32_t x = 1;
 	while(x*x < number){
@@ -20,12 +21,14 @@ int32_t square(int32_t number){
 	}
 	return x << 4;
 	//Returns the approximated square root in 8.8 format
-}	//number argument has to be in x.8 format
+}
 
+//Converts x.0 fixed point format to x-8.8 format
 int32_t to88(int32_t number){
 	return number << 8;
 }
 
+//Converts x-8.8 format to x.0 format
 int32_t from88(int32_t number){
 	int32_t temp = (number & 0x00FF);
 	int32_t numb = number >> 8;
@@ -35,6 +38,7 @@ int32_t from88(int32_t number){
 	return numb;
 }
 
+//initializes a vector, returning a type struct vector that stores the coordinates and length in 24.8 format
 vector initVector(int8_t x, int8_t y){
 	//All is in 8.8 format!
 	vector vec;
@@ -46,6 +50,7 @@ vector initVector(int8_t x, int8_t y){
 	return vec;
 }
 
+//Same as above, but not used in this program. Also coordinates stored in normal integers
 vector vecFromPoints(point p1, point p2){
 	vector vec;
 	vec.x = p2.x - p1.x;
@@ -57,11 +62,15 @@ vector vecFromPoints(point p1, point p2){
 
 //The functions related to Lorentz force:
 
+//Lorentzforce function manipulating the bullets velocities in x and y direction based on how far
+//away they are from asteroids
 void lorentzForce(bullet* bullarr, asteroid* astarr, uint8_t n_bul, uint8_t n_ast){
 	for(int8_t i = 0; i < n_bul; i++){
 		if(bullarr[i].status != 0){
 			for(int8_t j = 0; j < n_ast; j++){
 				vector v = initVector(astarr[j].x - bullarr[i].x, astarr[j].y - bullarr[i].y);
+
+				//The asteroids do not have a center point on the y axis, therefore correction is needed
 				if(bullarr[i].y <= astarr[j].y){
 					if(v.len < (10<<8)){
 						bullarr[i].velx += (v.x/40) * (to88(10)/v.len);
@@ -81,23 +90,7 @@ void lorentzForce(bullet* bullarr, asteroid* astarr, uint8_t n_bul, uint8_t n_as
 	}
 }
 
-/*len vec(Bpos->astoroid) < value{
-	case over centery astoroid
-		find vector between top of astoroid and Bpos
-		find angle between above vector and bullet velocityvector
-		calculate magnitude of Lorentz force as a vector perpendicular to velocity
-		(add Lorentz force to the position of bullet) - maybe not necessary
-		accelerate velocity composants of the bullet velocity based on the Lorentz force
 
-	case under centery astoroid
-		find vector between bottom of astoroid and Bpos
-		find angle between above vector and bullet velocityvector
-		calculate magnitude of Lorentz force as a vector perpendicular to velocity
-		(add Lorentz force to the position of bullet) - maybe not necessary
-		accelerate velocity composants of the bullet velocity based on the Lorentz force
-
-}
- */
 
 
 

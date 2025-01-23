@@ -296,6 +296,7 @@ void playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powar
 
 }
 //moves the player by updating positions of all objects
+//erases all objects before updating their positions to avoid the need for storing the old positions
 void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int n_ene, int n_ast, int n_bul, int n_pow){
 // uses a switch statement to determine outcome based on player direction
 	switch (player->dir) {
