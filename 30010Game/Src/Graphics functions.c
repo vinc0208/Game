@@ -86,6 +86,7 @@ uint8_t CheckOnScr(uint8_t x, uint8_t y) {
 //this function is for FIRING BULLETS ONLY as it places them at the spaceship if they are active.
 //consider changing function to take player input and setting bullet status from Powerup array (by searching for an active dmg power with status=1)
 //to make it actually fire the bullet rather than initializing its trajectory
+//Note from Vincent - Had to make the bullet velocities run in a 8.8 format for the lorentz force
 void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t* shoot, uint16_t time_s, uint16_t time_m){
 	if ((*shoot == (1 << 5)) && (ship->bullets > 0)){
 			int n = ship->maxbullets - ship->bullets;

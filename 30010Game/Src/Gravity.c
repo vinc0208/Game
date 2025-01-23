@@ -89,13 +89,3 @@ void lorentzForce(bullet* bullarr, asteroid* astarr, uint8_t n_bul, uint8_t n_as
 
 	}
 }
-
-
-
-
-
-
-
-
-
-
