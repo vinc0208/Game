@@ -35,9 +35,8 @@ int main(void) {
 	LEDprep();
 
 	int gamestart = 0;
-	int first = 1;
+	int menuInit = 1;
 	int initLCD = 1;
-	int speed = 1;
 	int menu = 0;
 	uint16_t currentscore = 0;
 	uint8_t difficulty=1;
@@ -52,9 +51,9 @@ int main(void) {
 	while(1){
 
 		while(gamestart == 0){
-			menuSelect(menu, &difficulty, &gamestart, &first);
+			menuSelect(menu, &difficulty, &gamestart, &menuInit);
 		}
-		uint8_t n_bul=6-difficulty,style=1,n_ene = 4+difficulty,n_ast=5,n_pow=5,i,angle=0,prevangle = 10;
+		uint8_t n_bul=6-difficulty,style=1,n_ene = 4+difficulty,n_ast=5,n_pow=5,angle=0,prevangle = 10;
 		int reload_timer=0;
 
 		//this block initializes the game
@@ -104,20 +103,20 @@ int main(void) {
 		//This is the beginning of the game loop
 		while(playership.hp > 0){
 			int8_t static t = 0;
-			int static s = 0;
-			uint8_t k = uart_get_char();
+			int static speedup = 0;
+			uint8_t keyread = uart_get_char();
 
-			if(k != 0){
-				key = k;
+			if(keyread != 0){
+				key = keyread;
 			}
 
 			//This sets the player movement speed based on which powerups are active
 			switch (pp & 0x00000011) {
 			  case 1:
-			    playerTimeRefresh = 15;
+			    playerTimeRefresh = 10;
 			    break;
 			  case 17:
-				playerTimeRefresh = 10;
+				playerTimeRefresh = 5;
 			    break;
 			  case 0:
 				playerTimeRefresh = 20;
@@ -131,7 +130,7 @@ int main(void) {
 				bulletTime++;
 				enemyTime++;
 				playerTime++;
-				s++;
+				speedup++;
 				t = TimeMaster15.hsecond;
 			}
 			//This is the bullet refresh section
@@ -142,8 +141,8 @@ int main(void) {
 				CheckBulletCollisions(&playership, all_enemies, all_bullets, all_asteroids,all_powerups, n_ene, n_ast, n_bul, n_pow, &currentscore, pp);
 				bulletTime = 0;
 
-				pause_unpause(&gamestart, &menu, &key, &difficulty, &first);
-				boss_screen(&gamestart, &menu, &key, &difficulty, &first);
+				pause_unpause(&gamestart, &menu, &key, &difficulty, &menuInit);
+				boss_screen(&gamestart, &menu, &key, &difficulty, &menuInit);
 			}
 			//This is the enemy refresh section
 			if(enemyTime >= enemyTimeRefresh){
@@ -167,9 +166,9 @@ int main(void) {
 				playerTime = 0;
 			}
 			//This last counter s and if statement is for the increase of enemy speed based on progression of game
-			if(s>=1000 && (enemyTimeRefresh > 20)){
+			if(speedup>=400 && (enemyTimeRefresh > 5)){
 				enemyTimeRefresh-=5;
-				s=0;
+				speedup=0;
 			}
 		}
 		gamestart = 0;
@@ -180,7 +179,7 @@ int main(void) {
 		ResetScore(&currentscore);
 		WriteToFlash(HighscoreArray);
 		menu = 3;
-		first = 1;
+		menuInit = 1;
 		StopTime();
 
 
