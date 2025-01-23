@@ -134,7 +134,7 @@ void WriteToFlash(Highscore* data){
 /*                                         */
 /*******************************************/
 
-//Function that erases last page of flash memory so i can test if "PrepareFlashIfNeeded" works
+//Function that erases last page of flash memory so i can test "PrepareFlashIfNeeded"
 void EraseMemoryLastPage(){
 	FLASH_Unlock();
 	FLASH_ClearFlag( FLASH_FLAG_EOP | FLASH_FLAG_PGERR |FLASH_FLAG_WRPERR );
