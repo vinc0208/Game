@@ -5,8 +5,8 @@
  *      Author: vince
  */
 
-#include "stdio.h"
-#include "stdint.h"
+#include <stdio.h>
+#include <stdint.h>
 #include "Movement and math functions.h"
 #include "Gravity.h"
 

@@ -8,8 +8,8 @@
 #ifndef GAMECHAR_H_
 #define GAMECHAR_H_
 
-#include "stdio.h"
-#include "stdint.h"
+#include <stdio.h>
+#include <stdint.h>
 
 extern const char game_char_data[][5];
 

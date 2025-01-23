@@ -6,10 +6,10 @@
  */
 
 #define ESC 0x1B
-#include "stdint.h"
-#include "stdio.h"
-#include <ansi.h>
-#include <lut.h>
+#include <stdint.h>
+#include <stdio.h>
+#include "ansi.h"
+#include "lut.h"
 #include <math.h>
 #include <stdlib.h>
 #include "stm32f30x_conf.h"

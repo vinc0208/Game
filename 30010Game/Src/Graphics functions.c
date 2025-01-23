@@ -6,14 +6,15 @@
  */
 #include "stm32f30x_conf.h" // STM32 config
 #include "30010_io.h"
-#include <Graphics functions.h>
+#include "Graphics functions.h"
 
-#include <ansi.h>
+#include "ansi.h"
 #define ESC 0x1B
 #include <stdint.h> // whatever
 #include <stdio.h>
 #include <stdlib.h>
-#include <Hardware interface functions.h>
+#include "Hardware interface functions.h"
+#include "Gravity.h"
 
 //draws a window as decribed in the excersises
 void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, short style){
@@ -170,7 +171,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 				}
 			}else if(ship->dir==7){			// Left
 				bul[n].dir=ship->dir;
-				bul[n].x=ship->x-2;
+				bul[n].x=ship->x-3;
 				bul[n].y=ship->y;
 				gotoxy(bul[n].x,bul[n].y);
 				bul[n].velx=to88(-3);
