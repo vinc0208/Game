@@ -213,12 +213,8 @@ void mainMenu(){
 			printf("%c",250);
 		}
 
-		//Start time for spaceship animation
-		StopTime();
-		ResetTime();
-		StartTime();
 
-		//Create spaceship animation
+		//Create spaceships for animation
 		int y = 23;
 		spaceship shp1;
 		shp1.x = 13;
@@ -239,8 +235,11 @@ void mainMenu(){
 		gotoxy(175,21);
 		printf("%c%c%c%c%c%c%c%c[%dD%c[%dB%c%c%c%c%c%c%c%c%c%c[%dD%c[%dB",220,219,219,219,219,219,220,ESC,8,ESC,1,   223,219,219,219,219,219,219,219,219,ESC,8,ESC,1);
 		printf("%c%c%c%c%c%c%c%c%c[%dD%c[%dB%c%c%c%c%c%c%c%c%c%c[%dD%c[%dB %c%c%c%c%c%c%c",219,219,219,219,219,219,219,219,ESC,9,ESC,1,   220,219,219,219,219,219,219,219,219,ESC,9,ESC,1,223,219,219,219,219,219,223);
-		while(1){
-			if(TimeMaster15.hsecond % 4 == 0){
+
+		//Animation of the two spaceships
+		for(int i = 0; i < 2000000; i++){
+			if(i % 50000 == 0){
+				//Update ship 1
 				gotoxy(shp1.x-1,y-1);
 				printf("   ");
 				gotoxy(shp1.x-2,y);
@@ -249,11 +248,8 @@ void mainMenu(){
 				printf("   ");
 				shp1.x += 1;
 				drawSpaceship(&shp1);
-				if(TimeMaster15.second <= 1){
-					fgcolor(15);
-					gotoxy(shp1.x-2,y);
-					printf("%c",219);
-				}
+
+				//Update ship 2
 				gotoxy(shp2.x-1,y-1);
 				printf("  ");
 				gotoxy(shp2.x-1,y);
@@ -262,19 +258,12 @@ void mainMenu(){
 				printf("  ");
 				shp2.x -= 1;
 				drawSpaceship(&shp2);
-				if(TimeMaster15.second <= 1){
-					fgcolor(15);
-					gotoxy(shp2.x+1,y);
-					printf("%c",219);
-				}
-
 			}
 
-			if(TimeMaster15.second == 2){
-				StopTime();
-				break;
-			}
+
+
 		}
+
 
 		fgcolor(15);
 		//Title print

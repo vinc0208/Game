@@ -12,7 +12,7 @@
 #include "Gravity.h"
 int main(void) {
 
-	uart_init(115200);
+	uart_init(901600);
 
 	//Set seed based on time
 	srand((unsigned int)time(NULL));
@@ -137,7 +137,7 @@ int main(void) {
 			}
 			//This is the bullet refresh section
 			if(bulletTime >= 5 ){
-				lorentzForce(&all_bullets, &all_asteroids, n_bul, n_ast);
+				lorentzForce(all_bullets, all_asteroids, n_bul, n_ast);
 				fireBullet(&playership, all_bullets, pp, &reload_timer, &key, TimeMaster15.second, TimeMaster15.minute);
 				UpdateBulletPos(&playership,all_bullets, n_bul);
 				CheckBulletCollisions(&playership, all_enemies, all_bullets, all_asteroids,all_powerups, n_ene, n_ast, n_bul, n_pow, &currentscore, pp);
