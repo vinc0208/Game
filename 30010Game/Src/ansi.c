@@ -1,7 +1,7 @@
 #define ESC 0x1B
-#include "stdint.h"
-#include "stdio.h"
-#include "string.h"
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
 
 
 void underline(uint8_t on) {

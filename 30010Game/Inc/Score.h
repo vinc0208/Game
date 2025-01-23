@@ -8,8 +8,8 @@
 #ifndef SCORE_H_
 #define SCORE_H_
 
-#include "stdio.h"
-#include "stdint.h"
+#include <stdio.h>
+#include <stdint.h>
 
 typedef struct {
     char name[4];   // Fixed-length name (3 characters + '\0')

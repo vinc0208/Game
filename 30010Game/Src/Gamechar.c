@@ -1,4 +1,4 @@
-#include "Gamechar.h"
+#include <Gamechar.h>
 
 const char game_char_data[][5] = {
 		{0x00, 0x00, 0x00, 0x00, 0x00}, //0 Clear

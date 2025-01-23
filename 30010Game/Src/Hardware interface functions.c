@@ -7,8 +7,8 @@
 
 #include "stm32f30x_conf.h" // STM32 config
 #include "30010_io.h"
-#include <Graphics functions.h>
-#include <ansi.h>
+#include "Graphics functions.h"
+#include "ansi.h"
 #define ESC 0x1B
 #include <stdint.h> // whatever
 #include <stdio.h>
