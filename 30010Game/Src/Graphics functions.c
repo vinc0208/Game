@@ -676,20 +676,20 @@ void SpawnEnemy(enemy* all_enemies,int n_ene, int difficulty){
 				all_enemies[i].status=1; // indicates that they are active when true
 				all_enemies[i].hp=2+difficulty; //consider adding scaling here <<<<<<
 				if(k==0){
-					all_enemies[i].x=rand() % (185 - 5 + 1)+ 5; // assigns initial coords to each enemy
-					all_enemies[i].y=rand() % (10 - 3 + 1)+ 3;
+					all_enemies[i].x=rand() % (170 - 5 + 1)+ 5; // assigns initial coords to each enemy
+					all_enemies[i].y=rand() % (10 - 5 + 1)+ 5;
 					all_enemies[i].dir=5; // a direction somewhat facing the player
 				} else if(k==1){
-					all_enemies[i].x=rand() % (185 - 5 + 1)+ 5;
-					all_enemies[i].y=rand() % (45 - 37 + 1)+ 37;
+					all_enemies[i].x=rand() % (170 - 5 + 1)+ 5;
+					all_enemies[i].y=rand() % (40 - 32 + 1)+ 32;
 					all_enemies[i].dir=1;
 				}else if(k==2){
 					all_enemies[i].x=rand() % (50 - 5 + 1)+ 5;
-					all_enemies[i].y=rand() % (45 - 3 + 1)+ 3;
+					all_enemies[i].y=rand() % (45 - 5 + 1)+ 5;
 					all_enemies[i].dir=3;
 				}else if(k==3){
-					all_enemies[i].x=rand() % (185 - 145 + 1)+ 105;
-					all_enemies[i].y=rand() % (45 - 3 + 1)+ 3;
+					all_enemies[i].x=rand() % (170 - 135 + 1)+ 135;
+					all_enemies[i].y=rand() % (40 - 3 + 1)+ 3;
 					all_enemies[i].dir=7;
 		}}}}
 //spawns an asteroid near the edge of the screen.
@@ -700,19 +700,19 @@ void SpawnAsteroid(asteroid* ast,int n_ast){
 				ast[i].status=1; // indicates that they are active when true
 				k=rand() % (3 + 1); // assigns each a random part of the screen in which to appear
 				if(k==0){
-					ast[i].x=rand() % (185 - 5 + 1)+ 5; // assigns initial coords to each asteroid
+					ast[i].x=rand() % (170 - 5 + 1)+ 5; // assigns initial coords to each asteroid
 					ast[i].y=rand() % (10 - 3 + 1)+ 3;
 					drawAsteroid(&ast[i],2); //finishes by drawing them
 				} else if(k==1){
-					ast[i].x=rand() % (185 - 5 + 1)+ 5;
-					ast[i].y=rand() % (45 - 37 + 1)+ 37;
+					ast[i].x=rand() % (170 - 5 + 1)+ 5;
+					ast[i].y=rand() % (40 - 35 + 1)+ 35;
 					drawAsteroid(&ast[i],2); //finishes by drawing them
 				}else if(k==2){
 					ast[i].x=rand() % (85 - 5 + 1)+ 5;
 					ast[i].y=rand() % (45 - 3 + 1)+ 3;
 					drawAsteroid(&ast[i],2); //finishes by drawing them
 				}else if(k==3){
-					ast[i].x=rand() % (185 - 105 + 1)+ 105;
+					ast[i].x=rand() % (170 - 105 + 1)+ 105;
 					ast[i].y=rand() % (45 - 3 + 1)+ 3;
 					drawAsteroid(&ast[i],2); //finishes by drawing them
 

@@ -180,7 +180,7 @@ void UpdateEnemyPos(spaceship* ship,enemy* all_ene,int n_ene){
 	int i;
 	for(i=0;i<n_ene;i++){
 			if(all_ene[i].status!=0){ //check status
-				if(CheckOnScr(all_ene[i].x,all_ene[i].y)==0){
+				if((CheckOnScr(all_ene[i].x-3,all_ene[i].y)==0) || (CheckOnScr(all_ene[i].x+3,all_ene[i].y)==0) || (CheckOnScr(all_ene[i].x,all_ene[i].y-2)==0) || (CheckOnScr(all_ene[i].x,all_ene[i].y+2)==0)){
 					all_ene[i].status=0; // deactivate and delete enemies that are off screen
 					gotoxy(all_ene[i].x-1,all_ene[i].y-1);
 					printf("     ");
