@@ -10,8 +10,8 @@
 #ifndef MENU_FUNCTIONS_H_
 #define MENU_FUNCTIONS_H_
 
-void menuSelect(int menu, int* level, int* gamestart, int* first);
-int menuConfirm(int menu, uint8_t sel, int* gamestart);
+void menuSelect(int8_t menu, int8_t* level, int8_t* gamestart, int8_t* first);
+int menuConfirm(int8_t menu, uint8_t sel, int8_t* gamestart);
 void mainMenu();
 void helpMenu();
 void diffMenu();
@@ -20,8 +20,8 @@ void deathMenu();
 void pauseMenu();
 void bossMenu();
 
-void pause_unpause(int *gamestart, int *menu, uint8_t *key, int *level, int *first);
-void boss_screen(int *gamestart, int *menu, uint8_t *key, int *level, int *first);
+void pause_unpause(int8_t *gamestart, int8_t *menu, uint8_t *key, int8_t *level, int8_t *first);
+void boss_screen(int8_t *gamestart, int8_t *menu, uint8_t *key, int8_t *level, int8_t *first);
 
 
 #endif /* MENU_FUNCTIONS_H_ */

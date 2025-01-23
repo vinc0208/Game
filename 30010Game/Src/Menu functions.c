@@ -17,7 +17,7 @@
 #include "Graphics functions.h"
 
 
-void menuSelect(int menu, int* level, int* gamestart, int* first){
+void menuSelect(int8_t menu, int8_t* level, int8_t* gamestart, int8_t* first){
 	//For menu input: 0 = main menu, 1 = help, 2 = difficulty, 3 = death, 4 = pause, 5 = boss
 	uint8_t static sel = 0;
 	uint8_t static options;
@@ -138,7 +138,7 @@ void menuSelect(int menu, int* level, int* gamestart, int* first){
 
 }
 
-int menuConfirm(int menu, uint8_t sel, int* gamestart){
+int menuConfirm(int8_t menu, uint8_t sel, int8_t* gamestart){
 
 	if(menu == 0){
 		switch (sel) {
@@ -730,7 +730,7 @@ void bossMenu() {
 }
 
 
-void pause_unpause(int *gamestart, int *menu, uint8_t *key, int *level, int *first){
+void pause_unpause(int8_t *gamestart, int8_t *menu, uint8_t *key, int8_t *level, int8_t *first){
 	if (*key == 27){
 
 		StopTime();
@@ -740,13 +740,13 @@ void pause_unpause(int *gamestart, int *menu, uint8_t *key, int *level, int *fir
 		*first = 1;
 
 		while(*gamestart == 0){
-			menuSelect(*menu, &level, gamestart, first);
+			menuSelect(*menu, level, gamestart, first);
 		}
 		clrscr();
 	}
 }
 
-void boss_screen(int *gamestart, int *menu, uint8_t *key, int *level, int *first){
+void boss_screen(int8_t *gamestart, int8_t *menu, uint8_t *key, int8_t *level, int8_t *first){
 	if (*key == 98){
 		StopTime();
 		*menu = 5;
@@ -755,7 +755,7 @@ void boss_screen(int *gamestart, int *menu, uint8_t *key, int *level, int *first
 		*first = 1;
 
 		while(*gamestart == 0){
-			menuSelect(*menu, &level, gamestart, first);
+			menuSelect(*menu, level, gamestart, first);
 		}
 		clrscr();
 	}

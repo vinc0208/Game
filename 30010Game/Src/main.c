@@ -8,9 +8,14 @@
 #include "ansi.h"
 #include "sinusoid.h"
 #include "Score.h"
+#include <time.h>
+#include "Gravity.h"
 int main(void) {
 
 	uart_init(115200);
+
+	//Set seed based on time
+	srand((unsigned int)time(NULL));
 
 	//Initialize time
 	Timer15Config();
@@ -22,9 +27,6 @@ int main(void) {
 	int16_t playerTimeRefresh = 50;
 
 
-	//set the seed
-	srand(5);
-
 	//Prepare Highscores
 	Highscore HighscoreArray[10];
 	Highscore coolplayer;
@@ -34,12 +36,12 @@ int main(void) {
 	//Prepare LED
 	LEDprep();
 
-	int gamestart = 0;
-	int menuInit = 1;
-	int initLCD = 1;
-	int menu = 0;
+	int8_t gamestart = 0;
+	int8_t menuInit = 1;
+	int8_t initLCD = 1;
+	int8_t menu = 0;
 	uint16_t currentscore = 0;
-	uint8_t difficulty=1;
+	int8_t difficulty=1;
 	uint8_t buffer[512];
 	uint8_t key;
 	ResetScore(&currentscore);
@@ -166,7 +168,7 @@ int main(void) {
 				playerTime = 0;
 			}
 			//This last counter s and if statement is for the increase of enemy speed based on progression of game
-			if(speedup>=400 && (enemyTimeRefresh > 5)){
+			if(speedup>=700 && (enemyTimeRefresh > 5)){
 				enemyTimeRefresh-=5;
 				speedup=0;
 			}
