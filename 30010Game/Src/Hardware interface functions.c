@@ -106,8 +106,6 @@ void ResetTime(){ //Resets the time
 	TimeMaster15.second = 0;
 	TimeMaster15.hsecond = 0;
 	TimeMaster15.msecond = 0;
-
-	SpeedIncrease = TimeMaster15;
 }
 
 void lcd_write_string(char* string, uint8_t slice, uint16_t line, uint8_t* buffer){
