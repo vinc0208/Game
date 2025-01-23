@@ -18,7 +18,8 @@
 #include "Gamechar.h"
 #include "Score.h"
 
-
+//Function for modifying a string, however not used in this program
+//also incorrect use of sizeof
 void uartStringModifier(char arr[]){
 	int static n = 0;
 	char static i = 0;
@@ -41,6 +42,8 @@ void uartStringModifier(char arr[]){
 
 }
 
+//function for reading the keys and also clearing the buffer after.
+//only used in menuSelect, and maybe not necessary there either instead of uart_get_char()
 char uartKeyRead(){
 	char key=uart_get_char();
 	uart_clear();

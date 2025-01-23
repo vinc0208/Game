@@ -16,7 +16,8 @@
 #include "Hardware interface functions.h"
 #include "Graphics functions.h"
 
-
+//Menu master function, intended to be run in a loop (therefore the use of static variables)
+//int's should also be int8_t, but I forgot.
 void menuSelect(int8_t menu, int8_t* level, int8_t* gamestart, int8_t* first){
 	//For menu input: 0 = main menu, 1 = help, 2 = difficulty, 3 = death, 4 = pause, 5 = boss
 	uint8_t static sel = 0;
