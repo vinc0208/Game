@@ -12,7 +12,7 @@
 
 typedef struct {
 	int32_t x,y,len;
-	//x, y is in 16.0, len in 8.8
+	//All in 24.8 format!
 } vector;
 
 int32_t square(int32_t number);
