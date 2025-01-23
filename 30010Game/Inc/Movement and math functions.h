@@ -4,8 +4,8 @@
  *  Created on: 13 Jan 2025
  *      Author: vince
  */
-#include "stdio.h"
-#include "stdint.h"
+#include <stdio.h>
+#include <stdint.h>
 
 #ifndef MOVEMENT_AND_MATH_FUNCTIONS_H_
 #define MOVEMENT_AND_MATH_FUNCTIONS_H_

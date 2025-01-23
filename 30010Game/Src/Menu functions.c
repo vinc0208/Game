@@ -5,12 +5,12 @@
  *      Author: vince
  */
 
-#include <ansi.h>
+#include "ansi.h"
 #define ESC 0x1B
 #include <stdint.h> // whatever
 #include <stdio.h>
 #include <stdlib.h>
-#include <30010_io.h>
+#include "30010_io.h"
 #include "Movement and math functions.h"
 #include "Menu functions.h"
 #include "Hardware interface functions.h"

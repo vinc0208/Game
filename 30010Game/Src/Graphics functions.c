@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <Hardware interface functions.h>
+#include <Gravity.h>
 
 //draws a window as decribed in the excersises
 void window(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2, short style){
@@ -170,7 +171,7 @@ void fireBullet(spaceship *ship, bullet*bul, int pp, int* reload_timer, uint8_t*
 				}
 			}else if(ship->dir==7){			// Left
 				bul[n].dir=ship->dir;
-				bul[n].x=ship->x-2;
+				bul[n].x=ship->x-3;
 				bul[n].y=ship->y;
 				gotoxy(bul[n].x,bul[n].y);
 				bul[n].velx=to88(-3);
