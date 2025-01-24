@@ -55,12 +55,6 @@ typedef struct {
 //functions
 void CheckBulletCollisions(spaceship * shp, enemy * ene, bullet* bul, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_bul, int n_pow, uint16_t* currentscore, int pp);
 void CheckSpaceshipCollisions(spaceship * shp, enemy * ene, asteroid* ast,powerup* pow, int n_ene, int n_ast, int n_pow, int * pp, uint16_t* currentscore);
-void printFix(int32_t i);
-int32_t expand(int32_t i);
-int16_t vecsinus(int angle);
-int32_t vecosinus(int angle);
-int32_t sinus(int angle);
-int32_t cosinus(int angle);
 void UpdateBulletPos(spaceship* ship,bullet* all_bul, int n_bul);
 void add_power(powerup pow, int* pp);
 void UpdateEnemyPos(spaceship* ship,enemy* all_ene,int n_ene);
