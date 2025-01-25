@@ -52,6 +52,7 @@ char uartKeyRead(){
 
 
 void TIM1_BRK_TIM15_IRQHandler(void) { //Needed to count the time
+	//Everytime an interrupt is reached miliseconds increase by 1
 	TimeMaster15.msecond += 1;
 	if (TimeMaster15.msecond >= 10){
 		TimeMaster15.msecond %= 10;
@@ -73,9 +74,11 @@ void TIM1_BRK_TIM15_IRQHandler(void) { //Needed to count the time
 	TIM15->SR &= ~0x0001; // Clear interrupt bit
  }
 
-void Timer15Config(void){ //Needed to have time
-	RCC->APB2ENR |= RCC_APB2Periph_TIM15; // Enable clock line to timer 15;
-	TIM15->CR1 &= ~(0x0001<<0); // Configure timer 15
+//Configures the built in timer in the microprocessor which is needed for time to
+//be implemented
+void Timer15Config(void){
+	RCC->APB2ENR |= RCC_APB2Periph_TIM15;
+	TIM15->CR1 &= ~(0x0001<<0); //Disable the timer to allow configuring
 	TIM15->CR1 &= ~(0x0001<<1);
 	TIM15->CR1 &= ~(0x0001<<2);
 	TIM15->CR1 &= ~(0x0001<<3);
@@ -86,7 +89,7 @@ void Timer15Config(void){ //Needed to have time
 	TIM15->ARR = 64000; // Set reload value
 	TIM15->PSC = 0x0000; // Set prescale value
 
-	TIM15->CR1 |= (0x0001<<0);
+	TIM15->CR1 |= (0x0001<<0); //Enable the timer after configuring
 
 	TIM15->DIER |= 0x0001; // Enable timer 15 interrupts
 	NVIC_SetPriority(TIM1_BRK_TIM15_IRQn, 1); // Set interrupt priority
@@ -94,15 +97,19 @@ void Timer15Config(void){ //Needed to have time
 
 }
 
-void StartTime(){ //Starts time
+//Starts time by enabling interrupts in the built in timer
+void StartTime(){
 	NVIC_EnableIRQ(TIM1_BRK_TIM15_IRQn); // Enable interrupt
 }
 
-void StopTime(){ //Stops time
+//Stops time by disabling interrupts in the built in timer
+void StopTime(){
 	NVIC_DisableIRQ(TIM1_BRK_TIM15_IRQn); // Disable interrupt
 }
 
-void ResetTime(){ //Resets the time
+//Resets time by disabling interrupts in the built in timer and setting all values
+//of TimeMaster15 to 0
+void ResetTime(){
 	NVIC_DisableIRQ(TIM1_BRK_TIM15_IRQn); // Disable interrupt
 	TimeMaster15.hour = 0;
 	TimeMaster15.minute = 0;
@@ -111,6 +118,7 @@ void ResetTime(){ //Resets the time
 	TimeMaster15.msecond = 0;
 }
 
+//Function that writes a string into an array that can further send it to the LCD
 void lcd_write_string(char* string, uint8_t slice, uint16_t line, uint8_t* buffer){
 	uint8_t strleng = strlen(string);
 	uint8_t temp1[strleng]; //We make an array with the length of string to hold the individual values of each character
@@ -133,6 +141,7 @@ void lcd_write_string(char* string, uint8_t slice, uint16_t line, uint8_t* buffe
 	}
 }
 
+//Function that takes a string, and updates it depending on what tbu is
 void lcd_update(char* string, char* tbu, uint8_t slice, uint16_t line, uint8_t* buffer){
 	uint8_t strleng = strlen(string);
 	uint8_t tbuleng = strlen(tbu);
@@ -305,6 +314,7 @@ void radar(uint8_t* buffer, uint8_t angle, uint8_t* prevangle) {
 }
 
 
+//Function that shows a certain color on the RGB LED depending on how much life is left
 void RGB_life_detector(spaceship ship, int gamestart){
 	if (ship.hp > 3 && gamestart == 1){ //Set blue
 		GPIOA->ODR &= ~(0x0001 << 9);
@@ -381,6 +391,7 @@ void update_stats(spaceship ship, uint8_t* buffer, uint16_t* currentscore){
 	lcd_push_buffer(buffer);
 }
 
+//Function that prepares the RGB LED to be used, necessary for it to even work
 void LEDprep(){
 	RCC->AHBENR |= RCC_AHBPeriph_GPIOA; // Enable clock for GPIO Port A
 	RCC->AHBENR |= RCC_AHBPeriph_GPIOB; // Enable clock for GPIO Port B
