@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include "Movement and math functions.h"
 
+//Struct used to only need a single variable for counting time
 typedef struct {
 	uint16_t hour, minute, second, hsecond, msecond;
 } TimeFormat;

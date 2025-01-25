@@ -13,15 +13,19 @@
 #include <string.h>
 #include "Hardware interface functions.h"
 
+//Function that both update the score and return it
 uint16_t ScoreTracker(uint16_t points, uint16_t* currentscore){
 	*currentscore += points;
 	return *currentscore;
 }
 
+//Function that resets the current score before starting a new game
 void ResetScore(uint16_t* currentscore){
 	*currentscore = 0;
 }
 
+//Function that looks at last page of flash memory, and prepares some default values
+//in it if the relevant locations aren't filled with highscores
 void PrepareFlashIfNeeded(){
 	uint32_t address = 0x0800F800;
 	int Unprepared = 1;
@@ -67,6 +71,8 @@ void PrepareFlashIfNeeded(){
 	}
 }
 
+//Function that looks at last page of flash memory and saves the highscores there into
+//an array that can be updated
 void ReadHighscores(Highscore* data) {
     uint32_t address = 0x0800F800;
 
@@ -82,6 +88,8 @@ void ReadHighscores(Highscore* data) {
     }
 }
 
+//Updates a highscore array to sort it from high to low, if the player gets a high
+//enough score they go on the highscore board
 void HighscoreUpdater(Highscore* array, Highscore player){
 	Highscore larger[11];
 	for (int i = 0; i < 10; i++){
@@ -104,7 +112,7 @@ void HighscoreUpdater(Highscore* array, Highscore player){
 }
 
 
-//offset is the location we write to, and data is a byte array
+//Function that takes a highscore array, and writes it into the flash memory
 void WriteToFlash(Highscore* data){
 	uint32_t address = 0x0800F800;
 
@@ -140,17 +148,5 @@ void EraseMemoryLastPage(){
 	FLASH_ClearFlag( FLASH_FLAG_EOP | FLASH_FLAG_PGERR |FLASH_FLAG_WRPERR );
 	FLASH_ErasePage(0x0800F800);
 	FLASH_Lock();
-}
-
-//Function that read values from 0x0800F800 and forward (0x0800F800 is the beginning of the last page)
-uint16_t ReadFlashLastPage(uint16_t offset) {
-
-	// Calculate the address in flash memory
-    uint32_t address = 0x0800F800 + (offset * 2); // Offset is multiplied by 2 for 16-bit alignment
-
-    // Read the value at the calculated address
-    uint16_t value = *(uint16_t *)address;
-
-    return value;
 }
 

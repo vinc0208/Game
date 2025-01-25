@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
+//Struct that holds a 3 character name, and a score
 typedef struct {
     char name[4];   // Fixed-length name (3 characters + '\0')
     uint16_t score;  // Score
