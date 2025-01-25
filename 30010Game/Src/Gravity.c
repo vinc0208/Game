@@ -13,14 +13,15 @@
 
 //The necessary math functions:
 
-//Algorithm approximating the square root of a number in fixed point x.8 format
+//Algorithm approximating the square root of a number in fixed point 24.8 format
+//Input number must be in x.8 fixed point format
 int32_t square(int32_t number){
 	int32_t x = 1;
 	while(x*x < number){
 		x++;
 	}
 	return x << 4;
-	//Returns the approximated square root in 8.8 format
+	//Returns the approximated square root in 24.8 format
 }
 
 //Converts x.0 fixed point format to x-8.8 format
