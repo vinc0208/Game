@@ -742,7 +742,7 @@ void bossMenu() {
 //This is the pause/unpause function, which starts/stops and prints the pause menu
 //by using the gamestart variable and input key from the gameloop
 void pause_unpause(int8_t *gamestart, int8_t *menu, uint8_t *key, int8_t *level, int8_t *first){
-	if (*key == 27){
+	if (*key == 27){		//If ESC is pressed, game timer stops and pauseMenu is shown.
 
 		StopTime();
 		*menu = 4;
@@ -759,7 +759,7 @@ void pause_unpause(int8_t *gamestart, int8_t *menu, uint8_t *key, int8_t *level,
 
 //Similar to the pause function, just with the boss menu instead
 void boss_screen(int8_t *gamestart, int8_t *menu, uint8_t *key, int8_t *level, int8_t *first){
-	if (*key == 98){
+	if (*key == 98){		//If b is pressed, game timer stops and bossMenu is shown.
 		StopTime();
 		*menu = 5;
 		*gamestart = 0;
