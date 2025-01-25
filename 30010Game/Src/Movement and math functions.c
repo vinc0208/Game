@@ -217,6 +217,8 @@ void add_power(powerup pow, int* pp) {	//Takes powerup status and adds correspon
 }
 //rotates the player
 void playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int n_ene, int n_ast, int n_bul, int n_pow, uint8_t* key){
+
+	//If a key is pressed, different actions are performed based on which key. Also the imported variable key is reset to 0
 	switch (*key) {
 	  case 100: //D
 		eraseSpaceship(player);
@@ -254,8 +256,10 @@ void playerMove(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powar
 }
 //moves the player by updating positions of all objects
 //erases all objects before updating their positions to avoid the need for storing the old positions
+//Only erases active objects, to avoid bugs with the terminal scrolling down when printing spaces close to right bottom border of the screen
 void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup* powarr, spaceship* player, int n_ene, int n_ast, int n_bul, int n_pow){
 // uses a switch statement to determine outcome based on player direction
+//Then one for loop for each object type to be erased and position updated
 	switch (player->dir) {
 	    case 1:
 	      for(int8_t i = 0; i < n_bul; i++){
