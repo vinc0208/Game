@@ -604,17 +604,17 @@ void playerMovePosAdd(bullet* bullarr, asteroid* astarr, enemy* enearr, powerup*
 void closestEnemy(uint8_t* angle, spaceship ship, enemy* ene, uint8_t n_ene){
 	uint8_t dist, closest, i, prev_dist = 100000;
 	for(i=0;i<n_ene;i++){
-		if(ene[i].status != 0){
+		if(ene[i].status != 0){		//Calculate distance between each enemy
 			int x = abs(ship.x - ene[i].x);
 			int y = abs(ship.y - ene[i].y);
 			vector vec = initVector(x,y);
 			dist = vec.len;
-			if(dist < prev_dist){
+			if(dist < prev_dist){	//Safe index of closest enemy
 				closest = i;
 			}
 		}
 		prev_dist = dist;
-	}
+	}		//Find angle between player and enemy from enemy coordinates.
 	if((ene[closest].x > ship.x) && (ene[closest].y>ship.y) && !(abs(ene[closest].x-95) / abs(ene[closest].y-25) >=4 ) && !(abs(ene[closest].y-25) / abs(ene[closest].x-95) >=1 )){ //ship.x=95 ship.y=25
 		*angle = 4;
 	} else if((ene[closest].x < ship.x) && (ene[closest].y>ship.y)&& !(abs(ene[closest].x-95) / abs(ene[closest].y-25) >=4 )  && !(abs(ene[closest].y-25) / abs(ene[closest].x-95) >=1 )){
