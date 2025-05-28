@@ -1,8 +1,7 @@
-Score.c:16:10:ScoreTracker	16	static
-Score.c:21:6:ResetScore	16	static
-Score.c:25:6:PrepareFlashIfNeeded	96	static
-Score.c:70:6:ReadHighscores	32	static
-Score.c:85:6:HighscoreUpdater	112	static
-Score.c:108:6:WriteToFlash	32	static
-Score.c:138:6:EraseMemoryLastPage	8	static
-Score.c:146:10:ReadFlashLastPage	24	static
+Score.c:17:10:ScoreTracker	16	static
+Score.c:23:6:ResetScore	16	static
+Score.c:29:6:PrepareFlashIfNeeded	96	static
+Score.c:76:6:ReadHighscores	32	static
+Score.c:93:6:HighscoreUpdater	112	static
+Score.c:116:6:WriteToFlash	32	static
+Score.c:146:6:EraseMemoryLastPage	8	static
